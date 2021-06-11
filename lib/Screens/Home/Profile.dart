@@ -1,6 +1,6 @@
 
 
-
+/*
 
 import 'package:appf/Screens/Authenticate/Login/LoginPage.dart';
 import 'package:appf/Screens/Home/ProfileScreen.dart';
@@ -54,8 +54,8 @@ class _ProfileState extends State<Profile> {
                
                   padding: const EdgeInsets.all(16.0),
           );}
-               )*/);
-      }),
+               )*/
+      ,
       
     );
     
@@ -70,4 +70,4 @@ class _ProfileState extends State<Profile> {
 _fetchEmail() async {
 
    
-  }
+  }*/
