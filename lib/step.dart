@@ -134,8 +134,8 @@ class RadialProgress extends StatefulWidget {
 
 class _RadialProgressState extends State<RadialProgress>
     with SingleTickerProviderStateMixin {
-  AnimationController _radialProgressAnimationController;
-  Animation<double> _progressAnimation;
+  late AnimationController _radialProgressAnimationController;
+  late Animation<double> _progressAnimation;
   final Duration fadeInDuration = Duration(milliseconds: 500);
   final Duration fillDuration = Duration(seconds: 2);
   var date1 = DateTime.now();
@@ -151,8 +151,8 @@ class _RadialProgressState extends State<RadialProgress>
   var count = 0;
   
 
-   Stream<StepCount> _stepCountStream;
-  Stream<PedestrianStatus> _pedestrianStatusStream;
+   late Stream<StepCount> _stepCountStream;
+  late Stream<PedestrianStatus> _pedestrianStatusStream;
   String _status = '?', _steps = '?';
 
   @override
@@ -268,8 +268,8 @@ if (diff < 1  ) {
   Widget build(BuildContext context) {
     return CustomPaint(
       child: Container(
-        height: 220.0,
-        width: 220.0,
+        height: 200.0,
+        width: 200.0,
         padding: EdgeInsets.symmetric(vertical: 40.0),
         child: AnimatedOpacity(
           opacity: progressDegrees > 30 ? 1.0 : 0.0,
@@ -285,8 +285,9 @@ if (diff < 1  ) {
                 style: TextStyle(fontSize: 15),
               ),
               Text(
-                _steps?.toString() ??'0' ,
-                style: TextStyle(fontSize: 30),
+                
+                _steps.toString() ,
+                style: TextStyle(fontSize: 20),
               ),
               Divider(
                 //height: 100,
@@ -295,7 +296,7 @@ if (diff < 1  ) {
               ),
               Text(
                 'Votre état',
-                style: TextStyle(fontSize: 18 , color: Colors.black),
+                style: TextStyle(fontSize: 15 , color: Colors.black),
               ),
               Icon(
                 _status == 'walking'
@@ -304,7 +305,7 @@ if (diff < 1  ) {
                     : _status == 'stopped'
                         ? Icons.accessibility_new
                         : Icons.error,
-                size: 30,
+                size: 20,
                 color: Colors.blue,
               ),
               Center(
@@ -377,7 +378,7 @@ class RadialPainter extends CustomPainter {
 
     Paint progressPaint = Paint()
       ..shader = LinearGradient(
-              colors: [Color.fromRGBO(65, 106, 190, 1), Colors.blue[900], Colors.indigo.shade900])
+              colors: [Color.fromRGBO(65, 106, 190, 1), Colors.indigo.shade900])
           .createShader(Rect.fromCircle(center: center, radius: size.width / 2))
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke

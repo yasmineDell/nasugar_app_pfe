@@ -1,21 +1,21 @@
 class PatientModel {
-  String name;
-  String email;
-  int photoUrl;
-  String numTel;
-  String uid;
- String dateNais;
+ late String name;
+ late String email;
+  late int photoUrl;
+  late String numTel;
+ late String uid;
+ late  String dateNais;
   
 
 
   PatientModel(
     {
-      this.uid,
-      this.name,
-      this.dateNais,
-      this.numTel,
-      this.email,
-      this.photoUrl,
+      required this.uid,
+      required this.name,
+      required this.dateNais,
+      required this.numTel,
+      required this.email,
+      required this.photoUrl,
      
       
       

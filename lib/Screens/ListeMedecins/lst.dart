@@ -28,7 +28,7 @@ class VideoScreenState extends State<VideoScreen> {
             }
 
             return ListView(
-              children: snapshot.data.docs.map((document) {
+              children: snapshot.data!.docs.map((document) {
                 
 
               

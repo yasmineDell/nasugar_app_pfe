@@ -1,6 +1,7 @@
 class Diabeto{
 
-String mId ,fullname, adress , phoneNumber , emailadrs, passWord ;
+late String mId, 
+fullname, adress , phoneNumber , emailadrs, passWord ;
 
 Diabeto (String fullname ,String mId ,String adress , String phoneNumber, String emailadrs, String passWord)
 {
@@ -12,9 +13,6 @@ Diabeto (String fullname ,String mId ,String adress , String phoneNumber, String
   this.emailadrs =emailadrs;
   this.passWord = passWord;
   
-
-
-
 
 }
 

@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 Future<void> userSetup(String name, String dateNais, String numTel  ,String email ) async {
   CollectionReference users = FirebaseFirestore.instance.collection('Patient');
   FirebaseAuth auth = FirebaseAuth.instance;  // c'est pour réuccupérer le user ID de la collection Patient 
-  String uid = auth.currentUser.uid.toString();
+  String uid = auth.currentUser!.uid.toString();
   users.add(
     {
   'Name': name, 

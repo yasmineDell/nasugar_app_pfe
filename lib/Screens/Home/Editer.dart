@@ -4,6 +4,7 @@
 
 import 'package:appf/Screens/Authenticate/Login/LoginPage.dart';
 import 'package:appf/Screens/Home/ProfileScreen.dart';
+import 'package:appf/Screens/Home/homeScreen.dart';
 import 'package:appf/Screens/ListeMedecins/list.dart';
 import 'package:appf/models/PatientModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -61,7 +62,7 @@ class _EditerState extends State<Editer> {
    final ImagePicker _picker = ImagePicker();
   
   bool showPassword = false;
-  PickedFile _imageFile;
+  late PickedFile _imageFile;
   
 
  String error ='';
@@ -83,7 +84,7 @@ class _EditerState extends State<Editer> {
             Icons.arrow_back,
             color:Colors.white.withOpacity(0.5),
           ),
-          onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ProfileScreen(),));},
+          onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context)=> HomeScreen(),));},
         ),
         actions: [
           IconButton(
@@ -150,7 +151,7 @@ class _EditerState extends State<Editer> {
               
 
                TextFormField(
-                 validator: (val) => val.isEmpty ? 'Entrez votre Nom et prénom ' : null,
+                 validator: (val) => val!.isEmpty ? 'Entrez votre Nom et prénom ' : null,
                  controller: _nameController,
                  
                  decoration: InputDecoration(
@@ -176,7 +177,7 @@ class _EditerState extends State<Editer> {
              
 
                TextFormField(
-                 validator: (val) => val.isEmpty ? 'Entrez votre date de naissance ' : null,
+                 validator: (val) => val!.isEmpty ? 'Entrez votre date de naissance ' : null,
                  controller: _dateNaisController,
                  decoration: InputDecoration(
                 hintText: "Date de naissance",
@@ -201,7 +202,7 @@ class _EditerState extends State<Editer> {
 
 
                   TextFormField(
-                 validator: (val) => val.isEmpty ? 'Entrer votre Numero de Telephone ' : null,
+                 validator: (val) => val!.isEmpty ? 'Entrer votre Numero de Telephone ' : null,
                  controller: _numTelController,
                  decoration: InputDecoration(
                 hintText: "Numero de Tel",
@@ -223,7 +224,7 @@ class _EditerState extends State<Editer> {
               ),
               SizedBox(height: 15,),
                  TextFormField(
-                   validator: (val) => val.isEmpty ? 'Entrez votre e-mail ' : null,
+                   validator: (val) => val!.isEmpty ? 'Entrez votre e-mail ' : null,
                      controller: _emailController,
                  decoration: InputDecoration(
               hintText: "Enterez votre e-mail",
@@ -252,7 +253,7 @@ class _EditerState extends State<Editer> {
 
                TextFormField(
                    controller: _passwordController,
-                 validator: (val) => val.length<8 ? 'Entrez un autre mot de passe plus long' : null,
+                 validator: (val) => val!.length<8 ? 'Entrez un autre mot de passe plus long' : null,
                  decoration: InputDecoration(
                 hintText: "Enterez votre mot de passe",
                 hintStyle: TextStyle(color: Colors.grey),
@@ -313,10 +314,10 @@ class _EditerState extends State<Editer> {
                 ),
                 onPressed: ()async{
                  
-                 if (_formKey.currentState.validate()) {
+                 if (_formKey.currentState!.validate()) {
                     await _firebaseAuth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
                    
-                     User updateUser = FirebaseAuth.instance.currentUser;
+                     User? updateUser = FirebaseAuth.instance.currentUser;
                     //userSetup(_nameController.text,);
                      //updateUser.updateProfile(dateNais: _nameController.text);
                     // updateUser.updateProfile(displayName: _nameController.text);
@@ -372,9 +373,9 @@ class _EditerState extends State<Editer> {
                   children :<Widget> [
                     CircleAvatar(
                       radius :60.0,
-                      backgroundImage: _imageFile == null
-              ? AssetImage("assets/images/profile.jpeg")
-              : FileImage(File(_imageFile.path)),
+              //         backgroundImage: _imageFile == null
+              // ? AssetImage("assets/images/profile.jpeg")
+              // : FileImage(File(_imageFile.path)),
         ),
          Positioned(
           bottom: 10.0,
@@ -456,7 +457,7 @@ class _EditerState extends State<Editer> {
       source: source,
     );
     setState(() {
-      _imageFile = pickedFile;
+      _imageFile = pickedFile!;
     });
   }
 }

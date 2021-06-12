@@ -32,7 +32,7 @@ class _SignUpState extends State<SignUp> {
    final ImagePicker _picker = ImagePicker();
   
   bool showPassword = false;
-  PickedFile _imageFile;
+  late PickedFile _imageFile;
   
 
  String error ='';
@@ -112,7 +112,7 @@ class _SignUpState extends State<SignUp> {
              
 
                TextFormField(
-                 validator: (val) => val.isEmpty ? 'Entrez votre Nom et prénom ' : null,
+                 validator: (val) => val!.isEmpty ? 'Entrez votre Nom et prénom ' : null,
                  controller: _nameController,
                  
                  decoration: InputDecoration(
@@ -137,7 +137,7 @@ class _SignUpState extends State<SignUp> {
              
 
                TextFormField(
-                 validator: (val) => val.isEmpty ? 'Entrez votre date de naissance ' : null,
+                 validator: (val) => val!.isEmpty ? 'Entrez votre date de naissance ' : null,
                  controller: _dateNaisController,
                  decoration: InputDecoration(
                 hintText: "Date de naissance",
@@ -162,7 +162,7 @@ class _SignUpState extends State<SignUp> {
 
 
                   TextFormField(
-                 validator: (val) => val.isEmpty ? 'Entrer votre Numero de Telephone ' : null,
+                 validator: (val) => val!.isEmpty ? 'Entrer votre Numero de Telephone ' : null,
                  controller: _numTelController,
                  decoration: InputDecoration(
                 hintText: "Numero de Tel",
@@ -184,7 +184,7 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 15,),
                  TextFormField(
-                   validator: (val) => val.isEmpty ? 'Entrez votre e-mail ' : null,
+                   validator: (val) => val!.isEmpty ? 'Entrez votre e-mail ' : null,
                      controller: _emailController,
                  decoration: InputDecoration(
               hintText: "Enterez votre e-mail",
@@ -213,7 +213,7 @@ class _SignUpState extends State<SignUp> {
 
                TextFormField(
                    controller: _passwordController,
-                 validator: (val) => val.length<8 ? 'Entrez un autre mot de passe plus long' : null,
+                 validator: (val) => val!.length<8 ? 'Entrez un autre mot de passe plus long' : null,
                  decoration: InputDecoration(
                 hintText: "Enterez votre mot de passe",
                 hintStyle: TextStyle(color: Colors.grey),
@@ -236,7 +236,7 @@ class _SignUpState extends State<SignUp> {
              
 
                TextFormField(
-                 validator: (val) => val.length<8 ? 'Reconfirmez le mot de passe ' : null,
+                 validator: (val) => val!.length<8 ? 'Reconfirmez le mot de passe ' : null,
                  controller: _repasswordController,
                  decoration: InputDecoration(
                 hintText: "Comfirmez votre mot de passe",
@@ -291,10 +291,10 @@ class _SignUpState extends State<SignUp> {
                 ),
                 onPressed: ()async{
                  
-                 if (_formKey.currentState.validate()) {
+                 if (_formKey.currentState!.validate()) {
                     await _firebaseAuth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
                    
-                     User updateUser = FirebaseAuth.instance.currentUser;
+                     User? updateUser = FirebaseAuth.instance.currentUser;
                     //userSetup(_nameController.text,);
                      //updateUser.updateProfile(dateNais: _nameController.text);
                     // updateUser.updateProfile(displayName: _nameController.text);
@@ -350,9 +350,9 @@ class _SignUpState extends State<SignUp> {
                   children :<Widget> [
                     CircleAvatar(
                       radius :60.0,
-                      backgroundImage: _imageFile == null
-              ? AssetImage("assets/images/profile.jpeg")
-              : FileImage(File(_imageFile.path)),
+              //         backgroundImage: _imageFile == null
+              // ? AssetImage("assets/images/profile.jpeg")
+              // : FileImage(File(_imageFile.path)),
         ),
          Positioned(
           bottom: 10.0,
@@ -434,7 +434,7 @@ class _SignUpState extends State<SignUp> {
       source: source,
     );
     setState(() {
-      _imageFile = pickedFile;
+      _imageFile = pickedFile!;
     });
   }
 }

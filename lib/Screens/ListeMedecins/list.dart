@@ -1,5 +1,7 @@
 
 
+import 'package:appf/Screens/Home/homeScreen.dart';
+import 'package:appf/Screens/Home/homeWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -21,8 +23,6 @@ class _DoctorsListState extends State<DoctorsList> {
           height: kToolbarHeight,
           child: Center(
 
-            
-            
             
             child:Padding(
 
@@ -54,7 +54,14 @@ class _DoctorsListState extends State<DoctorsList> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,color: Colors.white.withOpacity(0.5),), onPressed: () {  },
+          icon: Icon(Icons.arrow_back,color: Colors.white.withOpacity(0.7),),
+          
+           onPressed: () {
+  Navigator.of(context).push(MaterialPageRoute(  
+                  builder: (context)=> HomeScreen(),)); 
+
+
+             },
           
 
 
@@ -81,7 +88,7 @@ class _DoctorsListState extends State<DoctorsList> {
              
              
 
-               children: snapshot.data.docs.map((document) {
+               children: snapshot.data!.docs.map((document) {
                 
               
              return  Padding(

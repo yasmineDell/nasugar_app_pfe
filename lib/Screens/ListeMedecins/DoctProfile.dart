@@ -29,7 +29,10 @@ class VideoScreenState extends State<VideoScreen> {
             
          
        leading :IconButton(
-          icon: Icon(Icons.arrow_back,color: Colors.white.withOpacity(0.5),), onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => DoctorsList())); },
+          icon: Icon(Icons.arrow_back,
+          color: Colors.white.withOpacity(0.5),),
+           onPressed: () { Navigator.push(context,
+            MaterialPageRoute(builder: (context) => DoctorsList())); },
           
 
 
@@ -54,7 +57,7 @@ class VideoScreenState extends State<VideoScreen> {
             }
 
             return ListView(
-              children: snapshot.data.docs.map((document) {
+              children: snapshot.data!.docs.map((document) {
                 
 
               

@@ -1,42 +1,52 @@
-
-
-
-
-
+import 'package:appf/Screens/Home/homeWidget.dart';
 import 'package:appf/Screens/Home/navigation_drawer_widget.dart';
+import 'package:appf/Screens/Home/tabbar_material_widget.dart';
 //import 'package:appf/Screens/Home/radial_progress.dart';
 import 'package:appf/Screens/edite_profile.dart';
 import 'package:appf/Screens/Home/Editer.dart';
+import 'package:appf/page/newPage.dart';
 import 'package:appf/step.dart';
 import 'package:flutter/material.dart';
 
 
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({ Key? key }) : super(key: key);
 
-class ProfileScreen extends StatelessWidget {
-  Widget build (BuildContext context){
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {  
+        GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  
+   int index = 0;
+       final pages = <Widget>[
+         home(),
+  ];
+      
+  @override
+  Widget build(BuildContext context) {
+     final height = MediaQuery.of(context).size.height;
+   
+    return   Scaffold(
+                key: _scaffoldKey,
+
+        drawer: NavigationDrawerWidget(),
 
     
- final height = MediaQuery.of(context).size.height;
-
-      GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
-
-
-
-  return SafeArea(
- child :  Scaffold(
-             key: _scaffoldKey,
-
       backgroundColor:   Color.fromRGBO(11,44,135,1),
           
-      bottomNavigationBar: ClipRRect(
+     /* bottomNavigationBar: ClipRRect(
         
         //borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
         
         child: BottomNavigationBar(
           iconSize: 30,
         
-          backgroundColor:  Color.fromRGBO(65, 106, 190, 1),
+          backgroundColor:// Colors.grey[100],
+          
+          Color.fromRGBO(65, 106, 190, 1),
           selectedIconTheme: IconThemeData(
             color: const  Color.fromRGBO(11,44,135,1),
           
@@ -49,10 +59,7 @@ class ProfileScreen extends StatelessWidget {
 
                 
             BottomNavigationBarItem(
-              /*icon: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Icon(Icons.home),
-              ),*/
+           
               icon: IconButton(icon: Icon(Icons.home), onPressed: () {  },),
               title: Text(
                 "Home",
@@ -64,26 +71,16 @@ class ProfileScreen extends StatelessWidget {
           
             
             BottomNavigationBarItem(
-              /*icon: Padding(
-                child: Icon(Icons.person),
-                padding: const EdgeInsets.only(top: 8.0),
-              ),*/
-              icon: IconButton(icon: Icon(Icons.person), onPressed: () {  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Editer(),)); },),
+            
+              icon: IconButton(icon: Icon(Icons.person), onPressed: () { 
+                 Navigator.of(context).push(MaterialPageRoute(
+                   builder: (context)=> Editer(),)); },),
               title: Text(
                 "Profile",
                 style: const TextStyle(color: Colors.white),
               ),
             ),
-              BottomNavigationBarItem(
-              icon: Padding(
-                child: Icon(Icons.search),
-                padding: const EdgeInsets.only(top: 8.0),
-              ),
-              title: Text(
-                "Mesure",
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
+          
               BottomNavigationBarItem(
               icon: Padding(
                 child: Icon(Icons.note_add),
@@ -94,28 +91,40 @@ class ProfileScreen extends StatelessWidget {
                 style: const TextStyle(color: Colors.white),
               ),
             ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                child: Icon(Icons.notifications),
-                padding: const EdgeInsets.only(top: 8.0),
-              ),
-              title: Text(
-                "Notifications",
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-            
+           
             
           ],
         ),
       ),
-body: Stack(
+ */
+extendBody: true,
+
+
+     bottomNavigationBar: TabBarMaterialWidget( pages[index],
+
+          index: index,
+          onChangedTab: onChangedTab, key: null, 
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: Color.fromRGBO(245,140, 120,1),
+          onPressed: () {
+             Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => NewPage(),
+        ));
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+  
+body:  
+
+Stack(
 
 children : <Widget> [
 
 Positioned(
 top:0, 
-height: height * 19,
+height: height * 18,
 left: 0,
 right: 0,
 
@@ -126,72 +135,74 @@ child: ClipRRect(
 
   ),*/
 
-    child: Container(
+    child: 
+    Container(
 color : Color.fromRGBO(11,44,135,1),
- padding: const EdgeInsets.only(top: 20, left: 32, right: 16, bottom: 10), // hada li djay mel fo9
+ padding: const EdgeInsets.only(top: 50, left: 15, right: 16, bottom: 10), // hada li djay mel fo9
 
  
                 child:   Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                  
                 
                 children: [
                   
                 Row(
                   
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  
+                 // mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                       
-            IconButton( icon:
-               Icon(Icons.dehaze_rounded),color:
-                Colors.white.withOpacity(0.5), 
-                onPressed: () { 
-                  
-                  Navigator.of(context).push(MaterialPageRoute(  
-                  builder: (context)=> NavigationDrawerWidget(),)); 
-                  
-                  
-                  },),
+             IconButton(
+               iconSize: 25,
+                icon:
+              Icon(Icons.dehaze_rounded),color:
+               Colors.white.withOpacity(0.7), 
+               onPressed: () { _scaffoldKey.currentState!.openDrawer(); },),
                    
-                      /*SizedBox(
-                        height:7,
-                      ),*/
+                      SizedBox(
+                        width:30,
+                      ),
                        
                          
                          
                     
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage("assets/images/Moh.jpeg"))),
-                    ),
-                  ],
+                    // Container(
+                    //   width: 40,
+                    //   height: 40,
+                    //   decoration: BoxDecoration(
+                    //       border: Border.all(
+                    //           width: 4,
+                    //           color: Theme.of(context).scaffoldBackgroundColor),
+                    //       boxShadow: [
+                    //         BoxShadow(
+                    //             spreadRadius: 2,
+                    //             blurRadius: 10,
+                    //             color: Colors.black.withOpacity(0.1),
+                    //             offset: Offset(0, 10))
+                    //       ],
+                    //       shape: BoxShape.circle,
+                    //       image: DecorationImage(
+                    //           fit: BoxFit.cover,
+                    //           image: AssetImage("assets/images/Moh.jpeg"))),
+                    // ),
+                 
 
-
-                ),
+ ],
+ ),
+              SizedBox(
+                        width:50,
+                        height: 10,
+                      ),
+                         
                 Text( 
                          "Bonjour, Mohammed", // je dois réccupérer le prénom du malade de la data base
                         style: TextStyle(
                           
-                          fontSize: 20,
+                          fontSize: 22,
                           color: Colors.white,
                         ),
                       ),
-
 
 
 
@@ -208,14 +219,14 @@ color : Color.fromRGBO(11,44,135,1),
 //****************** */ hada li djay felwast ************************
 Positioned(   
 
-top : height * 0.21,
+top : height * 0.235,
 left : 0,
 right: 0,
 
  
  child: Container(
    decoration: BoxDecoration(color: Colors.white, 
-   borderRadius: BorderRadius.only(topLeft: Radius.circular(75.0))
+   borderRadius: BorderRadius.only(topLeft: Radius.circular(60.0))
    ),
    
    
@@ -246,7 +257,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       children: <Widget> [
         Container(
 
-          width : 150,
+          width : 140,
            //margin : EdgeInsets.only(right:20),
            height: 150,
            decoration: BoxDecoration(
@@ -260,7 +271,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
            child: Column( 
            children: <Widget> [
               Container(
-                width : 150,
+                width : 140,
            
            height: 75,
            decoration: BoxDecoration(color: Colors.grey[100],
@@ -289,7 +300,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 
               ),
               Container(
-                width : 150,
+                width : 140,
            
            height: 75,
            decoration: BoxDecoration(color :  Color.fromRGBO(11,44,135,1),
@@ -310,7 +321,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 style: TextStyle(fontSize: 15 , color: Colors.white),
 
              ) ,
-             SizedBox(
+             SizedBox( 
                width: 5,
              ),
             
@@ -343,7 +354,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
            ),
         Container(
 
-          width : 150,
+          width : 140,
            //margin : EdgeInsets.only(right:20),
            height: 150,
            decoration: BoxDecoration(
@@ -470,87 +481,20 @@ Center(
 
 
 
-)
-);
 
-
+    );
+ }
+  void onChangedTab(int index) {
+    setState(() {
+      
+      this.index = index;
+    });
   }
-  
-}
 
 
-/*class _GlyInfoCard extends StatelessWidget
-{
-
-final Glucoseinfo gly;
-
-  const _GlyInfoCard({Key key, @required this.gly}) : super(key: key);
-
-Widget build ( BuildContext context )
-{
-
-return Container(
-
-  margin: const EdgeInsets.only(
-
-    right : 20 , 
-
-    bottom : 10 ,
-    
-    ),
-child : Material ( 
-
-borderRadius: BorderRadius.all(  Radius.circular(20)),
-
-elevation: 4,
- child: Column(
 
  
-    children: <Widget>[
-
-     Flexible(
-       fit: FlexFit.loose,
-       
-       child:  Image. asset(gly.iconPath),
-     ),
-       Flexible(
-         fit: FlexFit.loose, 
-         
-         child: Column(
-            
-           children: <Widget>[
-
-
-             
-
   
-
-           
-
-
-
-
-           ],
-
-
-
-       ),
-     ),
-    ],
-
- ),
-
-),
-
-);
-
-
 }
-
-
-
-
-}*/
-
 
 

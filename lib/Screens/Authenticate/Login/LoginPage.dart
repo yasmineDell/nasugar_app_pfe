@@ -23,7 +23,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 
  bool _isLoggedIn = false;
-  GoogleSignInAccount _userObj;
+  late GoogleSignInAccount _userObj;
   GoogleSignIn _googleSignIn = GoogleSignIn();
   
 
@@ -131,7 +131,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                  SizedBox(height: 40,),
 
                  TextFormField(
-                      validator: (val) => val.isEmpty ? 'Entrez votre e-mail ' : null,
+                      validator: (val) => val!.isEmpty ? 'Entrez votre e-mail ' : null,
                      controller: _emailController,
                  decoration: InputDecoration(
               hintText: "Enterez votre e-mail",
@@ -158,7 +158,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
              
 
                TextFormField(
-                    validator: (val) => val.length<8 ? 'Reentrez votre mot de passe ' : null,
+                    validator: (val) => val!.length<8 ? 'Reentrez votre mot de passe ' : null,
                      controller: _passwordController,
                  decoration: InputDecoration(
                 hintText: "Enterez votre mot de passe",

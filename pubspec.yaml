@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -42,7 +42,19 @@ dependencies:
   hive: ^2.0.4
   crypto: ^3.0.0
   #state Management
-  
+  date_format: ^2.0.2
+  intl: ^0.17.0
+  flutter_spinbox: ^0.5.2
+  awesome_dialog: ^2.1.0
+  dropdown_below: ^0.0.7
+  flutter_rounded_date_picker: ^2.0.2
+  shared_preferences: ^2.0.6
+  flutter_custom_dialog: ^1.0.20
+  custom_dialog_box: ^0.0.1
+  file_picker: ^3.0.2+2
+  mailer: ^5.0.0
+  toast: ^0.1.5
+  fluttertoast: ^8.0.7
   #font
   font_awesome_flutter : ^9.0.0 
   image_picker: ^0.8.0+3
@@ -74,7 +86,10 @@ flutter:
     - assets/images/Dr3.jpeg
     - assets/images/Dr4.jpg
     
-    
+  fonts:
+    - family: Circular
+      fonts:
+        - asset:  assets/images/shellypalmer-circular-std-medium.ttf
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
