@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'models/PatientModel.dart';
 // la Creation de la table patient et ses attributs
 
 Future<void> userSetup(String name, String dateNais, String numTel  ,String email ) async {
   CollectionReference users = FirebaseFirestore.instance.collection('Patient');
   FirebaseAuth auth = FirebaseAuth.instance;  // c'est pour réuccupérer le user ID de la collection Patient 
   String uid = auth.currentUser!.uid.toString();
-  users.add(
+  users.doc(uid).update(
     {
   'Name': name, 
   'UID': uid, 
@@ -18,6 +20,11 @@ Future<void> userSetup(String name, String dateNais, String numTel  ,String emai
    );
   return;
 }
+
+  
+
+
+
  /*_fetchEmail() async {
 
    String email;

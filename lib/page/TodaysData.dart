@@ -6,6 +6,7 @@ import 'package:appf/urils/constant.dart';
 import 'package:appf/urils/loading.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:date_format/date_format.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,14 +17,18 @@ import '../database.dart';
 import 'newPage.dart';
 
 class TodaysData extends StatefulWidget {
-  const TodaysData({ Key? key }) : super(key: key);
-
+  //const TodaysData({ Key? key }) : super(key: key);
+  
   @override
   _TodaysDataState createState() => _TodaysDataState();
 }
 
 class _TodaysDataState extends State<TodaysData> {
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   void _showSettingsPanel(Glycemie gly) {
 
       showModalBottomSheet(context: context, builder: (context) {
@@ -31,7 +36,7 @@ class _TodaysDataState extends State<TodaysData> {
      borderRadius: BorderRadius.circular(10.0),
                                   );
         return Container(
-          
+
           //margin: new EdgeInsets.symmetric(horizontal: 10.0),
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
           child: GlyInformation(gly),
@@ -93,6 +98,10 @@ class _TodaysDataState extends State<TodaysData> {
                   
                   ),
                     onPressed: () {
+                          final user = FirebaseAuth.instance.currentUser;
+
+                        final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+                       String uid = _firebaseAuth.currentUser!.uid.toString();  
                             mydialog(context,
                                 title: "Suppression",
                                 content: "Voulez-vous supprimer ",
@@ -100,7 +109,10 @@ class _TodaysDataState extends State<TodaysData> {
                               Navigator.of(context).pop();
                               loading(context);
                               bool delete =
-                                  await DatabaseService().deleteGly();
+                                    
+                                  await DatabaseService().deleteGly(gly.id);
+                                  print(FirebaseAuth.instance.currentUser!.uid);
+                                  print(gly.id);
                                  Navigator.of(context).pop();
 
                               if (delete != null) {
@@ -135,12 +147,14 @@ class _TodaysDataState extends State<TodaysData> {
         );
   }
   
-    Glycemie n = new Glycemie(etat: '', heure: ' ', note: '', taux: 1,);
+    Glycemie n = new Glycemie(etat: '', heure: ' ', note: '', taux: 1,uid: '',id: '',email:'');
      // var nn = new Glycemie(etat: '', heure: ' ', note: '', taux: 1,);
       var nn = List<Glycemie>.empty();
   int nb =1;
   late Glycemie gly ;
-  
+            final user = FirebaseAuth.instance.currentUser;
+            
+
    final titles = ["8:15 -   1,2g/l   - à jeun", "12:15   - 1,2g/l   - avant le déjeuner", "4:30   - 1,2g/l   - aprés-midi"];
   final subtitles = [
     "Here is list 1 subtitle",
@@ -163,7 +177,7 @@ class _TodaysDataState extends State<TodaysData> {
   catchError: (_, __) => nn,
       
       value: DatabaseService().gly, 
-     //  initialData: null,
+     // initialData: null,
        initialData:  nn,
        child:  
     
@@ -206,10 +220,13 @@ class _TodaysDataState extends State<TodaysData> {
   }).toList(),
   itemExtent: 60.0,
 ),*/
-   StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Glycemie').snapshots(),
+   StreamBuilder(    
+     
+
+        stream: FirebaseFirestore.instance.collection('Glycemie').where('email',isEqualTo: user!.email).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          
+         // citiesRef.where('country', 'in', ['USA', 'Japan']);
+
           if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(),
@@ -223,8 +240,30 @@ class _TodaysDataState extends State<TodaysData> {
              child: GestureDetector(
 
             onTap: () { 
-              
-              _showSettingsPanel(getD(document['etat'],document['heure'], document['note'], document['taux'], document['date']));
+         //     print(user['uid']);
+              if (user != null) {
+  String? name = user!.displayName;
+  String? email = user!.email;
+  print(name);
+  print(''+email!);
+ // System.Uri photo_url = user.PhotoUrl;
+  // The user's Id, unique to the Firebase project.
+  // Do NOT use this value to authenticate with your backend server, if you
+  // have one; use User.TokenAsync() instead.
+ // String? uid = user!.UserId;
+}
+              _showSettingsPanel(
+
+                getD(document['etat'],
+                document['heure'],
+                 document['note']
+                 , document['taux'],
+                  document['date'],
+                  document['id']
+                  ,document['uid'],
+                   document['email'])
+
+                  );
 
        /*  AwesomeDialog(
             context: context,
@@ -277,7 +316,9 @@ class _TodaysDataState extends State<TodaysData> {
                           ),
                           title: //Text(document['taux'].toString() +'    -    '+document['heure'] + "   -    "+ document['etat']),
                           
-                         Text( getDate(document['etat'],document['heure'], document['note'], document['taux'], document['date'])
+                         Text( getDate(document['etat'],document['heure'], document['note'], document['taux'], document['date'] )
+                         ,
+                         style:TextStyle(fontSize: 14.5) ,
                          ),
 
                           
@@ -286,7 +327,7 @@ class _TodaysDataState extends State<TodaysData> {
                   
                   )
 
-                  : Text(''),
+                  : SizedBox(height:0.1),
                   
               ),
              );
@@ -389,14 +430,20 @@ class _TodaysDataState extends State<TodaysData> {
     
   }
   
-  Glycemie getD( String etat, String heure, String note,double taux,Timestamp t){
+  Glycemie getD( String etat, String heure, String note,double taux,Timestamp t,String id,String idd, String email){
       DateTime date = t.toDate(); // TimeStamp to DateTime
       DateTime now = new DateTime.now();
-      Glycemie gly,
-      gg= new Glycemie(etat: "", heure: "", note: "", taux: 0);
-      if(date.day == now.day){
+      Glycemie gly,                       
+
+      gg= new Glycemie(etat: "", heure: "", note: "", taux: 0,uid: '',id: '',email: '');     
+           final user = FirebaseAuth.instance.currentUser;
+
+      if(date.day == now.day ){
+         //final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+                       //String id = _firebaseAuth.currentUser!.uid.toString();  
+
             //return (heure+'    -    '+taux.toString() +"m/g"+ "   -    "+ etat
-            gly= new Glycemie(etat: etat, heure: heure, note: note, taux: taux);
+            gly= new Glycemie(etat: etat, heure: heure, note: note, taux: taux,uid:user.toString(),id: id,email:email);
             return gly;
             
 

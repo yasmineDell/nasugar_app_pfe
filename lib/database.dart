@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as Path;
 
+import 'models/PatientModel.dart';
 import 'modules/Glycemie.dart';
 
 class DatabaseService{
@@ -8,6 +12,8 @@ class DatabaseService{
  // late final String uid;
  // DatabaseService({required this.uid});
   final CollectionReference GlycemieCollection = FirebaseFirestore.instance.collection('Glycemie');
+  final CollectionReference usercol =
+      FirebaseFirestore.instance.collection("Patient");
   /*Future getGly (String etat, String heure, String note, double taux, Timestamp date ) async {
 
     return await GlycemieCollection.doc(uid).set({
@@ -19,18 +25,48 @@ class DatabaseService{
     });
   }*/
 
-  Future<Null> updateGly(String etat, String heure, String note, double taux,Timestamp t  ) async{
+  Future<String> updateGly(Timestamp t, Glycemie gly ) async{
+      var collection = FirebaseFirestore.instance.collection('collection');
 
-    await GlycemieCollection.add({
+    var docRef = await GlycemieCollection.add({
         //'date' : date,
-        'etat' : etat,
-        'heure' : heure,
-        'note': note,
-        'taux' : taux,
-        'date' : t
-
+        'etat' : gly.etat,
+        'heure' : gly.heure,
+        'note': gly.note,
+        'taux' : gly.taux,
+        'date' : t,
+        'uid': gly.uid,
+        'email' : gly.email,
+        
     });
+    var docId = docRef.id;
+    print(docId);
+    GlycemieCollection.doc(docId).update({
+       'etat' : gly.etat,
+        'heure' : gly.heure,
+        'note': gly.note,
+        'taux' : gly.taux,
+        'date' : t,
+        'uid': gly.uid,
+        'id': docId,
+        'email' : gly.email,
+    });
+    return docId;
   }
+ Future<Null> updateGlycemie(Timestamp t, Glycemie gly, var docId) async{
+   
+  GlycemieCollection.doc(docId).update({
+       'etat' : gly.etat,
+        'heure' : gly.heure,
+        'note': gly.note,
+        'taux' : gly.taux,
+        'date' : t,
+        'uid': gly.uid,
+        'id': docId,
+        'email' :gly.email,
+    });
+ }
+
   Future sauvGly(Glycemie g,Timestamp t) async{
     try{
       await GlycemieCollection.doc().set(g.toMap(t));
@@ -49,7 +85,9 @@ class DatabaseService{
         heure: doc.get('heure') ?? '',
         note: doc.get('note') ?? '',
         taux: doc.get('taux') ?? 0,
-         
+        uid: doc.get('uid') ?? '',
+         id: doc.get('id') ?? '',
+         email: doc.get('email') ?? '',
          );
     }).toList();
   }
@@ -57,13 +95,60 @@ class DatabaseService{
         return GlycemieCollection.snapshots().map(_glycemieListFromSnapshot);
   }
 
-Future deleteGly() async {
+  List <PatientModel> _patientListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((
+      doc
+    ){
+      return PatientModel(dateNais: doc.get('dateNais') ?? '',
+      
+      email: doc.get('email') ?? '',
+      name: doc.get('name') ?? '',
+      numTel: doc.get('numTel') ?? '',
+      photoUrl: doc.get('photoUrl') ?? 0,
+      uid: doc.get('uid') ?? '',
+      
+      
+      );
+    }).toList();
+  }
+
+  Stream <List<PatientModel>> get pat{
+    return usercol.snapshots().map(_patientListFromSnapshot);
+  }
+
+  
+Future deleteGly(String id) async {
     try {
-      await GlycemieCollection.doc('gqZKzRPwPdks08mkFuYa').delete();
+       await GlycemieCollection.doc(id).delete();
       return true;
     } catch (e) {
       return false;
     }
   }
+
+   Future<User?> get user async {
+    final user = FirebaseAuth.instance.currentUser;
+    return user;
+  }
+  //  Future getUser(String id) async {
+  //   try {
+  //     final data = await usercol.doc(id).get();
+  //     final user = PatientModel.fromJson(data.data());
+  //     return user;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
+ 
+  // Stream<PatientModel>? get getCurrentUser {
+  //   final user = FirebaseAuth.instance.currentUser;
+  //   return user != null
+  //       ? usercol.doc(user.uid).snapshots().map((user) {
+  //           PatientModel.currentUser = PatientModel.fromJson(user.data());
+  //           return PatientModel.fromJson(user.data());
+  //         })
+  //       : null;
+  // }
+
 
 }

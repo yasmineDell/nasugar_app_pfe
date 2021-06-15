@@ -14,44 +14,50 @@ class DoctorsList extends StatefulWidget {
 }
 
 class _DoctorsListState extends State<DoctorsList> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-        backgroundColor: Color.fromRGBO(65, 106, 190, 1),
+        backgroundColor: Color.fromRGBO(11,44,135,1),
+        centerTitle: true,
         title:SizedBox(
-          height: kToolbarHeight,
-          child: Center(
+         // height: kToolbarHeight,
+          child: //Center(
 
-            
-            child:Padding(
+            Text("Listes des Médecins", textAlign:TextAlign.center,style: TextStyle(fontSize: 19),),
 
-            padding: const EdgeInsets.all(16.0),
-         child: Column(children: [Container(
-                          width : 200,
-                          height: 22,
-                          decoration: BoxDecoration(
+        //     child:Padding(
 
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
+        //     padding: const EdgeInsets.all(16.0),
+        //  child: Column(children: [Container(
+        //                   width : 200,
+        //                   height: 22,
+        //                   decoration: BoxDecoration(
 
-                          ),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              //hintText: "Recherche",
-                              prefixIcon: Icon(Icons.search, size: 15,),
+        //                     color: Colors.white,
+        //                     borderRadius: BorderRadius.circular(15),
 
-
-
-                            ),
+        //                   ),
+        //                   child: TextField(
+        //                     decoration: InputDecoration(
+        //                       enabledBorder: InputBorder.none,
+        //                       focusedBorder: InputBorder.none,
+        //                       //hintText: "Recherche",
+        //                       prefixIcon: Icon(Icons.search, size: 15,),
 
 
-                          ),
 
-                        ),],),),
-          ),
+        //                     ),
+
+
+        //                   ),
+
+        //                 ),
+        //   ),  ],
+             //           ),
+                    //    ),
+      //    ),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back,color: Colors.white.withOpacity(0.7),),
@@ -93,19 +99,19 @@ class _DoctorsListState extends State<DoctorsList> {
               
              return  Padding(
                
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(10.0),
                   
                   child: Container(
                      child: new FittedBox(
                 child: Material(
                     color: Colors.white,
-                    elevation: 14.0,
+                    elevation: 4.0,
                     borderRadius: BorderRadius.circular(24.0),
                     shadowColor: Color(0x802196F3),
                     child: Row(
 
                       
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         //SizedBox(height: 100),
                        
@@ -117,7 +123,7 @@ class _DoctorsListState extends State<DoctorsList> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
-          child: Container(child: Text("Dr."+document['Nom'],
+          child: Container(child: Text("Dr. "+document['Nom'],
             style: TextStyle(color: Color.fromRGBO(65, 106, 190, 1), fontSize: 24.0,fontWeight: FontWeight.bold),)),
         ),
         Padding(
@@ -153,29 +159,43 @@ class _DoctorsListState extends State<DoctorsList> {
                           width: 150,
                           height: 150,
                           child: ClipRRect(
-                            borderRadius: new BorderRadius.circular(24.0),
-                            child:Row(children: [Image(
-                              fit: BoxFit.contain,
-                              alignment: Alignment.topRight,
-                              image: AssetImage("assets/Dr1.jpg"),
-                            ),
-                           
-                          Container ( padding: const EdgeInsets.only(left: 16.0),
-                          alignment: Alignment.center,
-                            child: IconButton(
-          icon: Icon(Icons.arrow_forward_ios_outlined,color: Color.fromRGBO(65, 106, 190, 1).withOpacity(0.5),size: 50,), onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileMed())); },
-          ) 
+                            borderRadius: new BorderRadius.circular(20.0),
+                             child:Row(children: [
+
+                               
+                               //Image(
+                          //   fit: BoxFit.contain,
+                          //    alignment: Alignment.topRight,
+                          //  image: AssetImage("assets/Dr1.jpg"),
+                          // ),
+                                                   SizedBox(width:60),
+                          GestureDetector( 
+                            onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileMed()));
+                             },
+                      child:
+                     
+                          Container ( padding: const EdgeInsets.only(left: 10.0),
+                          child:
+                                Icon(Icons.arrow_forward_ios_outlined, color: Colors.black54,),
+
+                          ),
+
+          //                   child: IconButton(
+          // icon: Icon(Icons.arrow_forward_ios_outlined,color: Colors.black.withOpacity(0.5),size: 2,), onPressed: () { 
+          //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileMed())); },
+          // ) 
                           ),
                     
-                            
-                         ],) 
+                             
+                          
                                        
             
-
+                             ],
 
         ),
-                          )
-                      ],
+                        ),               
+                        )],
                       )
                 
                 ,)

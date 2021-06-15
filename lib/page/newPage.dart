@@ -2,6 +2,7 @@ import 'package:appf/Screens/Home/homeScreen.dart';
 import 'package:appf/Screens/Home/navigation_drawer_widget.dart';
 import 'package:appf/modules/Glycemie.dart';
 import 'package:date_format/date_format.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -224,11 +225,18 @@ class _NewPageState extends State<NewPage> {
       
              itemTextstyle: TextStyle(fontSize: 16, color: Colors.black),
            boxTextstyle: TextStyle(fontSize: 16, color:Colors.grey[800],fontWeight: FontWeight.w400, fontFamily: 'Circular'),
+           boxDecoration: new BoxDecoration(
+           //  color: Colors.grey[200],
+           
+             borderRadius: BorderRadius.circular(10) ,
+             border: Border.all(color: Colors.black12),
+           ),
            boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
            boxHeight: 55,
            boxWidth: 250,
           // iconSize: 23,
-             hint: Text('choisir l\'état', textAlign: TextAlign.center,),
+             hint: Text('Choisir l\'état', textAlign: TextAlign.center,),
+             icon: Icon(Icons.arrow_drop_down),
             value: _selectedTest,
             items: _dropdownTestItems,
             onChanged: onChangeDropdownTests,
@@ -267,7 +275,7 @@ class _NewPageState extends State<NewPage> {
                   
                   child: Container(                                                                                                                    
                     margin: EdgeInsets.only(top: 8, bottom: 8),
-                    width: _width / 4.2,
+                    width: _width / 4.0,
                     height: _height / 15.0,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(color: Colors.grey[200],
@@ -593,7 +601,7 @@ class _NewPageState extends State<NewPage> {
             btnCancelOnPress: () {
 
             },
-            btnOkOnPress: () {
+            btnOkOnPress: () async {
               if(!vf){
                  AwesomeDialog(
             context: context,
@@ -624,9 +632,18 @@ class _NewPageState extends State<NewPage> {
                  // TimeOfDay dt = TimeOfDay.now();
                  now = new DateTime.now();
                  Timestamp myTimeStamp = Timestamp.fromDate(now); //To TimeStamp
-                  String id;
-                  Glycemie glyy= Glycemie(etat:_selectedTest['keyword'] , heure: t, note: vnote, taux: gly);
-                  DatabaseService().sauvGly(glyy, myTimeStamp);
+                  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+                       String id = _firebaseAuth.currentUser!.uid.toString();  
+
+            var collection = FirebaseFirestore.instance.collection('Glycemie');
+              var querySnapshots = await collection.get();
+                            for (var snapshot in querySnapshots.docs) {
+                                        var documentID = snapshot.id;
+                                        print(documentID); // <-- Document ID
+                                                          }
+                   
+                     Glycemie glyy= Glycemie(etat:_selectedTest['keyword'] , heure: t, note: vnote, taux: gly, uid: FirebaseAuth.instance.currentUser!.uid,id: id, email:FirebaseAuth.instance.currentUser!.email.toString());
+                  DatabaseService().updateGly( myTimeStamp, glyy);
               //  DatabaseService().updateGly(_selectedTest['keyword'], t,vnote , gly, myTimeStamp);
                 
                

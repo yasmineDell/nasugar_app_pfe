@@ -2,6 +2,7 @@
 import 'package:appf/Provider/google_sign_in.dart';
 import 'package:appf/Screens/Authenticate/Signin/SignUp.dart';
 import 'package:appf/Screens/Home/ProfileScreen.dart';
+import 'package:appf/Screens/Home/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -254,7 +255,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                                     email: _emailController.text,
                                     password: _passwordController.text)
                                 .then((value) => print('Login Successful'));
-                                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),)); 
+                                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen(),/*ProfileScreen ()*/)); 
 
 
                 },

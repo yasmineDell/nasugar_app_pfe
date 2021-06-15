@@ -1,3 +1,8 @@
+import 'package:appf/Screens/Home/Editer.dart';
+import 'package:appf/Screens/ListeMedecins/list.dart';
+import 'package:appf/Screens/graphics/graphics.dart';
+import 'package:appf/Screens/medicament/medicamenList.dart';
+import 'package:appf/Screens/monMedecin/monMedecin.dart';
 import 'package:appf/page/TodaysData.dart';
 import 'package:appf/page/analyse.dart';
 import 'package:appf/page/newPage.dart';
@@ -5,6 +10,10 @@ import 'package:appf/page/rapport.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dropdown_below/dropdown_below.dart';
+
+import '../settings.dart';
+import '../viewProfile.dart';
+import 'ProfileScreen.dart';
 
 
 class NavigationDrawerWidget extends StatelessWidget {
@@ -30,13 +39,25 @@ class NavigationDrawerWidget extends StatelessWidget {
         //color: Colors.green,
         child: ListView(
           children: <Widget>[
+                     GestureDetector(
+                       onTap:(){ Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => viewProfil(),/*Test()*/
+        )); },
+                  child:
+
                   DrawerHeader(
-                     child: buildHeader(
+                    
+                     child:
+          //chooseImage(ImageSource.gallery);
+     
+                      buildHeader(
+                       
             //  urlImage: ulImage,
               name: name,
               email: email,
               
                ),
+                
                     decoration: 
                     BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -69,7 +90,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                    // ),
                  // const SizedBox(height: 24),
  //SizedBox(height: 20),
-
+                     ),
                   ListTile(
                     
                   //   trailing: Icon(Icons.assessment_outlined) ,
@@ -113,7 +134,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                      mainAxisAlignment: MainAxisAlignment.start,
                       
                        children: [
-                       Icon(Icons.favorite_border) ,
+                       Icon(Icons.circle_outlined),
                         Padding( 
                       padding: EdgeInsets.fromLTRB(10,0,0, 0),
                       child: Text('  Médicaments',
@@ -140,7 +161,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                      mainAxisAlignment: MainAxisAlignment.start,
                       
                        children: [
-                       Icon(Icons.assessment_outlined) ,
+                       Icon(Icons.show_chart_rounded) ,
                         Padding( 
                       padding: EdgeInsets.fromLTRB(10,0,0, 0),
                       child: Text('  Rapport & Analyses',
@@ -222,10 +243,10 @@ class NavigationDrawerWidget extends StatelessWidget {
                      mainAxisAlignment: MainAxisAlignment.start,
                       
                        children: [
-                       Icon(Icons.notification_add_outlined) ,
+                       Icon(Icons.list_alt_outlined) ,
                         Padding( 
                       padding: EdgeInsets.fromLTRB(10,3,0, 0),
-                      child: Text('  Notifications',
+                      child: Text('  Liste des médecins',
                        style: TextStyle(fontSize: 14))),
 
                      ],)
@@ -302,6 +323,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                 CircleAvatar(radius: 30,  child: Icon(Icons.person, color: Colors.white),
             backgroundColor:// Color.fromRGBO(37,136,166,1),
                      Color.fromRGBO(11,44,135,1),
+                     
 
 
 ),
@@ -337,23 +359,34 @@ class NavigationDrawerWidget extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Rapport_Analyse(),/*Test()*/
+          builder: (context) => graphics(),/*Test()*/
         ));
         
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => TodaysData(),
+          builder: (context) => medicamen(),
         ));
         break;
         case 2:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => NewPage(),
+          builder: (context) => Rapport_Analyse(),
         ));
         break;
         case 3:
          Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Analyses(),
+          builder: (context) =>monMedecin(), // Analyses(),
+        ));
+        break;
+        case 4:
+         Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>DoctorsList(), // Analyses(),
+        ));
+
+        break;
+        case 5:
+          Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>SettingsPage(), // Analyses(),
         ));
         break;
        
