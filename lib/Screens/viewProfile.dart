@@ -49,7 +49,7 @@ FixedExtentScrollController fixedExtentScrollController =
     
      Scaffold(
            appBar: AppBar(centerTitle: true,
-         title: Text("Niveau de glycémie d'aujourd'hui", textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
+         title: Text("Profile", textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
          actions: <Widget>[
             IconButton(
             icon: const Icon(Icons.cancel_outlined),
@@ -62,7 +62,7 @@ FixedExtentScrollController fixedExtentScrollController =
         StreamBuilder(    
      
 
-        stream: FirebaseFirestore.instance.collection('Patient').where('email',isEqualTo: user!.email).snapshots(),
+        stream: FirebaseFirestore.instance.collection('Patient').where('Email',isEqualTo: user!.email).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
           if (!snapshot.hasData) {
@@ -81,16 +81,15 @@ FixedExtentScrollController fixedExtentScrollController =
              child: GestureDetector(
 
             onTap: () { 
-         //     print(user['uid']);
               if (user != null) {
-  String? name = user!.displayName;
-  String? email = user!.email;
-  print(name);
-  print(''+email!);
+              //  String? name = user!.displayName;
+              //  String? email = user!.email;
+              //  print(name);
+              //  print(''+email!);
 
-}
-},
-  child: (document['date'])
+                   }
+                  },
+  child: (document['Email'] == 'test@gmail.com')
                 ?
                 
                 Card(
@@ -103,13 +102,12 @@ FixedExtentScrollController fixedExtentScrollController =
                 //  )
                   ListTile( leading: CircleAvatar(
                           radius: 10.0,
-                          
-                          
+
                          // (document['taux'] > 1 ) ? Colors.redAccent : Colors.green,
                           ),
                           title: //Text(document['taux'].toString() +'    -    '+document['heure'] + "   -    "+ document['etat']),
                           
-                         Text('profile test' 
+                         Text(document['Email']+document['Name']
                          ,
                          style:TextStyle(fontSize: 14.5) ,
                          ),
