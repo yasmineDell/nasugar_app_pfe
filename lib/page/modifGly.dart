@@ -38,13 +38,13 @@ class _modifGlyState extends State<modifGly> {
  late String dateTime;
 
   DateTime selectedDate = DateTime.now();
-
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
   final formKey =GlobalKey<FormState>();
   TextEditingController img = TextEditingController();
   
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
+  
   late File imageFile;
   late String imgUrl;
   late File image;
@@ -244,7 +244,7 @@ class _modifGlyState extends State<modifGly> {
                        child: 
                      TextFormField(
 
-                      style: TextStyle(fontSize: 15,color: Colors.grey[700]),
+                      style: TextStyle(fontSize: 17,color: Colors.grey[700]),
                       textAlign: TextAlign.center,
                       onSaved: (val) {
                         _setTime = val!;
@@ -252,15 +252,15 @@ class _modifGlyState extends State<modifGly> {
                        //   FormState form = _formKey.currentState;
                        // formKey.currentState.save()
                       },
-                      validator: (val){
-                        print("vheck check");
-                         // FirebaseFirestore.instance.collection('date').add({'data': '${selectedTime.format(context)}'});
-
+                    
+                     
+                     //initialValue: widget.glycemie.heure,
+                      enabled: false, 
+                      onChanged: (value){
+                        widget.glycemie.heure=value;
                       },
-                      initialValue: widget.glycemie.heure,
-                      enabled: false,
                       keyboardType: TextInputType.text,
-                     // controller: _timeController,
+                      controller: _timeController,
                       decoration: InputDecoration(
                           disabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
