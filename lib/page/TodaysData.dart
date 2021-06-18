@@ -2,16 +2,14 @@
 
 import 'package:appf/Screens/Home/navigation_drawer_widget.dart';
 import 'package:appf/modules/Glycemie.dart';
+import 'package:appf/page/modifGly.dart';
 import 'package:appf/urils/constant.dart';
 import 'package:appf/urils/loading.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../database.dart';
 import 'newPage.dart';
@@ -24,8 +22,25 @@ class TodaysData extends StatefulWidget {
 }
 
 class _TodaysDataState extends State<TodaysData> {
+  late double _height;
+ late double _width;
+
+ late String _setTime, _setDate;
+
+ late String _hour, _minute, _time;
+
+ late String dateTime;
+
+  DateTime selectedDate = DateTime.now();
+
+  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+
+  TextEditingController _dateController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
   @override
   void initState() {
+        _dateController.text = DateFormat.yMd().format(DateTime.now());
+
     // TODO: implement initState
     super.initState();
   }
@@ -44,13 +59,43 @@ class _TodaysDataState extends State<TodaysData> {
       });
     }
 
-      void sendroute()  {
+      void sendroute(Glycemie gly)  {
           Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => NewPage(),
+          builder: (context) => modifGly(glycemie: gly,),
         ));
 
       }
-       
+//-------------------------------------------------------------------------------------------------------------------
+//DATE PICKER--------------------------------------------------------------------------------------------------------
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        initialDatePickerMode: DatePickerMode.day,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2101));
+    if (picked != null)
+      setState(() {
+        selectedDate = picked;
+        _dateController.text = DateFormat.yMd().format(selectedDate);
+        print(_dateController.text);
+        DatePicker();
+      });
+  }
+
+  Widget DatePicker(){
+     _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+    dateTime = DateFormat.yMd().format(DateTime.now());
+    return Container(
+
+        child: Text('test'),
+
+
+    );
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
   Widget GlyInformation(Glycemie gly){
         return Padding(padding: const EdgeInsets.all(2),
           child: Column(
@@ -58,13 +103,14 @@ class _TodaysDataState extends State<TodaysData> {
                                            SizedBox(height: 15),
 
               Text(
-                'DÉTAILS', style: TextStyle( fontSize: 20, color: Color.fromRGBO(70, 113, 198,1)),
+                'DÉTAILS', style: TextStyle( fontSize: 20, color:  Color.fromRGBO(70, 113, 198,1)),
                 textAlign: TextAlign.start,          
               ),
                 Divider(color: Colors.black12, thickness: 1,),
 
               SizedBox(height: 30),
-                Text('Taux:    '+ gly.taux.toString()+' m/g'+'                                                                        ',style: TextStyle( fontSize: 17.5)),
+                Text('Taux:    '+ gly.taux.toString()+' g/l'+'                                                                        ',style: TextStyle( fontSize: 17.5)),
+                           
                              SizedBox(height: 15),
 
                 Text('État:     '+ gly.etat+'                                                                        ',style: TextStyle( fontSize: 17.5)),
@@ -131,11 +177,14 @@ class _TodaysDataState extends State<TodaysData> {
                 
               style: ElevatedButton.styleFrom(
                 primary:// Colors.red,
-                Color.fromRGBO(29, 194, 95, 1),
+               // Color.fromRGBO(29, 194, 95, 1),
+               Colors.grey[500],
                   minimumSize: Size.fromHeight(40), 
                   
                   ),
-                  onPressed: sendroute,
+                  onPressed:(){
+                    sendroute(gly);
+                  } ,
                  child: Text("Modifier", style:TextStyle(fontSize: 16) ,),
       ),
                   ),
@@ -150,8 +199,8 @@ class _TodaysDataState extends State<TodaysData> {
     Glycemie n = new Glycemie(etat: '', heure: ' ', note: '', taux: 1,uid: '',id: '',email:'');
      // var nn = new Glycemie(etat: '', heure: ' ', note: '', taux: 1,);
       var nn = List<Glycemie>.empty();
-  int nb =1;
-  late Glycemie gly ;
+      int nb =1;
+       late Glycemie gly ;
             final user = FirebaseAuth.instance.currentUser;
             
 
@@ -190,10 +239,11 @@ class _TodaysDataState extends State<TodaysData> {
          title: Text("Niveau de glycémie d'aujourd'hui", textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
          actions: <Widget>[
             IconButton(
-            icon: const Icon(Icons.cancel_outlined),
-            tooltip: 'annuler',
+            icon: const Icon(Icons.calendar_today),
+            tooltip: 'choisir date',
             onPressed: () {
-            Navigator.pop(context);
+              _selectDate(context);
+           // Navigator.pop(context);
           },)]
       ),
       body: //listGlycemie(),
@@ -421,7 +471,7 @@ class _TodaysDataState extends State<TodaysData> {
       DateTime now = new DateTime.now();
 
       if(date.day == now.day){
-            return (heure+'    -    '+taux.toString() +"m/g"+ "   -    "+ etat
+            return (heure+'    -    '+taux.toString() +" g/L"+ "   -    "+ etat
             );
 
       }

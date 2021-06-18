@@ -1,6 +1,6 @@
 import 'package:appf/Screens/Home/homeScreen.dart';
-import 'package:appf/Screens/Home/navigation_drawer_widget.dart';
 import 'package:appf/modules/Glycemie.dart';
+import 'package:appf/page/TodaysData.dart';
 import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,18 +15,20 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../database.dart';
-import '../main.dart';
 import 'package:flutter/foundation.dart';
 
-class NewPage extends StatefulWidget {
+import 'newPage.dart';
+class modifGly extends StatefulWidget {
+  const modifGly({ Key? key, required this.glycemie }) : super(key: key);
+  final Glycemie glycemie;
   @override
-  _NewPageState createState() => _NewPageState();
+  _modifGlyState createState() => _modifGlyState();
 }
- 
-class _NewPageState extends State<NewPage> {
+
+class _modifGlyState extends State<modifGly> {
   late double _height;
   late double _width;
-  late bool vf = false;
+  late bool vf = true;
   final key = GlobalKey<FormState>();
 
  late String _setTime, _setDate;
@@ -36,13 +38,13 @@ class _NewPageState extends State<NewPage> {
  late String dateTime;
 
   DateTime selectedDate = DateTime.now();
-
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
   final formKey =GlobalKey<FormState>();
   TextEditingController img = TextEditingController();
   
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
+  
   late File imageFile;
   late String imgUrl;
   late File image;
@@ -103,39 +105,31 @@ class _NewPageState extends State<NewPage> {
         _timeController.text = formatDate(
             DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
             [hh, ':', nn, " ", am]).toString();
-      });
-     // print(s);
-     // FirebaseFirestore.instance.collection('date').add({"data": "${selectedTime.format(context)}","test": "ds"});
-                      //print('${selectedTime.format(context)}');
-      //  TimeOfDay? selectedDT=picked;
-        
-      //  int timestamp = DateTime.now().millisecondsSinceEpoch;
-
-     // final prefs = await SharedPreferences.getInstance();
-     // prefs.setInt('myTimestampKey', timestamp);
-    //  print("supposed to be int $prefs");
+      });else _timeController.text = widget.glycemie.heure;
+   
   }
- 
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     dateTime = DateFormat.yMd().format(DateTime.now());
-    return Scaffold(
-          drawer: NavigationDrawerWidget(),
+    print(widget.glycemie.email);
+    return   Scaffold(
+          //drawer: NavigationDrawerWidget(),
 
         appBar: AppBar(centerTitle: true,
-         title: Text("Nouvelle donnée"),
+         title: Text(widget.glycemie.email, textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
          actions: <Widget>[
-           
-          IconButton(
+            IconButton(
             icon: const Icon(Icons.cancel_outlined),
             tooltip: 'annuler',
             onPressed: () {
             Navigator.pop(context);
           },)]
       ),
-      body: Center(child: 
+
+      body: 
+         Center(child: 
       ListView(
 
         padding: EdgeInsets.all(5),
@@ -151,14 +145,11 @@ class _NewPageState extends State<NewPage> {
    Padding(
         child: SpinBox(
               max: 10.0,
-              value: 1.0,
+              value: widget.glycemie.taux,
               decimals: 1,
               step: 0.1,
               onChanged: (value){
-               // print(value);
-                 gly=value;
-                print(gly);
-                //FirebaseFirestore.instance.collection('Glycemie').add({"etat": "avant dinner","taux": "1"});
+                 widget.glycemie.taux=value;
               },
                textStyle: TextStyle(fontSize: 18),
               decoration: InputDecoration(
@@ -190,21 +181,7 @@ class _NewPageState extends State<NewPage> {
 
 
   //  //---------------------------------------------------------
-  // image boxes
-  //  SizedBox(height: 15),
-  // Row(
-  //   children:[
-  //       Text(
-  //   '   '
-  //   , style: TextStyle(
-  //     color: Colors.grey[800],
-  //    fontWeight: FontWeight.bold,
-  //     fontSize: 16,
-  //     fontFamily: 'Circular')
-  // ),
-  //   ]
-  
-  // ),
+ 
   
   SizedBox(height: 10),
   Divider(color: Colors.black12, thickness: 1),
@@ -215,7 +192,7 @@ class _NewPageState extends State<NewPage> {
     mainAxisAlignment: MainAxisAlignment.start,
 
   children: [
-
+      
      // _dropdownTestItems = buildDropdownTestItems(_testList);
        Padding(       padding: const EdgeInsets.all(2),
 
@@ -235,7 +212,7 @@ class _NewPageState extends State<NewPage> {
            boxHeight: 55,
            boxWidth: 250,
           // iconSize: 23,
-             hint: Text('Choisir l\'état', textAlign: TextAlign.center,),
+             hint: Text(widget.glycemie.etat, textAlign: TextAlign.center,),
              icon: Icon(Icons.arrow_drop_down),
             value: _selectedTest,
             items: _dropdownTestItems,
@@ -243,27 +220,7 @@ class _NewPageState extends State<NewPage> {
     ),
 
          
-     
-     /*  ElevatedButton(
-            style: 
-            ElevatedButton.styleFrom(
-              primary: //Color(0xFF3ABD6F),
-               Color.fromRGBO(182,215,225,0.9), // set the background color 
-              padding: EdgeInsets.symmetric(horizontal: 33, vertical: 17),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-              child: Text(
-              'Heure',
-            style: TextStyle(fontSize: 18, color: Color.fromRGBO(37,136,166,1))),
 
-            onPressed: () {
-
-                  //print('object');
-                  
-            }
-       ),*/
           ),
           InkWell(
                   onTap: () {
@@ -287,7 +244,7 @@ class _NewPageState extends State<NewPage> {
                        child: 
                      TextFormField(
 
-                      style: TextStyle(fontSize: 15,color: Colors.grey[700]),
+                      style: TextStyle(fontSize: 17,color: Colors.grey[700]),
                       textAlign: TextAlign.center,
                       onSaved: (val) {
                         _setTime = val!;
@@ -295,12 +252,13 @@ class _NewPageState extends State<NewPage> {
                        //   FormState form = _formKey.currentState;
                        // formKey.currentState.save()
                       },
-                      validator: (val){
-                        print("vheck check");
-                         // FirebaseFirestore.instance.collection('date').add({'data': '${selectedTime.format(context)}'});
-
+                    
+                     
+                     //initialValue: widget.glycemie.heure,
+                      enabled: false, 
+                      onChanged: (value){
+                        widget.glycemie.heure=value;
                       },
-                      enabled: false,
                       keyboardType: TextInputType.text,
                       controller: _timeController,
                       decoration: InputDecoration(
@@ -313,99 +271,7 @@ class _NewPageState extends State<NewPage> {
                   ),
                 ),
           ),
-    /*  GestureDetector(
-        onTap: (){
-          setState(() {
-            one =!one;
-          });
-        },
-              child: Time(
-          icon: Icons.no_food_outlined,
-        time: 'ajeune',
-         isSelected: one,
-        ),
-      ),
-       GestureDetector(
-          onTap: (){
-          setState(() {
-            two =!two;
-          });
-        },
-          child: Time(
-          icon: Icons.breakfast_dining_outlined,
-      time: 'aprés',
-         isSelected: two,
-
-      ),
-       ),
-
-       GestureDetector(
-          onTap: (){
-          setState(() {
-            three =!three;
-          });
-        },
-                child: Time(
-          icon: Icons.dinner_dining_outlined,
-      time: 'déjeuner',
-         isSelected: three,
-
-      ),
-       ),
-
-        GestureDetector(
-           onTap: (){
-          setState(() {
-            four =!four;
-          });
-        },
-                  child: Time(
-          icon: Icons.dinner_dining_outlined,
-      time: 'déjeuner',
-       isSelected: four,
-
-      ),
-        ),
-
-
-        GestureDetector(
-           onTap: (){
-          setState(() {
-            five =!five;
-          });
-        },
-       child: Time(
-        
-          icon: Icons.dinner_dining_outlined,
-      time: 'déjeuner',
-       isSelected: five,
-
-      ),
-        ),
-        SizedBox(height: 15),
-*/
-    
-        ]
-        
-         ,
-         
-         ),
-  //SizedBox(height: 30),
-
-// Row(
-//     children:[
-//         Text(
-//     '   Notes'
-//     , style: TextStyle(
-//       color: Colors.grey[800],
-//      // fontWeight: FontWeight.bold,
-//       fontSize: 18,
-//       fontFamily: 'Circular')
-//   ),
-//     ]
-  
-//   ),
-  
+  ]),
 // //---------------------------------------------------------
  SizedBox(height: 10),
   Divider(color: Colors.black12, thickness: 1,),
@@ -433,11 +299,20 @@ class _NewPageState extends State<NewPage> {
                   ),
                 ],
               ),
-     child: TextField(
+     child: TextFormField(
                 textInputAction: TextInputAction.go,
-                onSubmitted: (value) {
-                  print(value);
-                   vnote =value;
+             //   controller: TextEditingController()..text = widget.glycemie.note,
+                // onChanged: (text) => {
+                //                      widget.glycemie.note =text
+
+                // },
+                // onSubmitted: (value) {
+                //   print(value);
+                //    widget.glycemie.note =value;
+                // },
+                initialValue: widget.glycemie.note,
+                onChanged: (value) {
+                  widget.glycemie.note = value;
                 },
                 style: TextStyle(
                   color:  Colors.black87,
@@ -445,10 +320,11 @@ class _NewPageState extends State<NewPage> {
                 maxLines: 2,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'Notes additionnels...',
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
+                  
+                  // hintText: 'Notes additionnels...',
+                  // hintStyle: TextStyle(
+                  //   color: Colors.grey,
+                  // ),
                 ),
               ),
             ),
@@ -478,13 +354,7 @@ class _NewPageState extends State<NewPage> {
                  // Color.fromRGBO(182,215,225,1), 
           Color(0xfffcfcff),
           borderRadius: BorderRadius.circular(9),
-        //   boxShadow: [
-        //  //   BoxShadow(
-        //     //  color:isSelected?Colors.black:Colors.black,
-        //     //  blurRadius: 10,
-        //     //  offset: Offset(2, 3),
-        //  //   )
-        //   ],
+ 
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -517,56 +387,12 @@ class _NewPageState extends State<NewPage> {
    
 
 
-    //  Container(
-    //   height: 70,
-    //     width: 100,
-    //     margin: EdgeInsets.symmetric(horizontal: 10),
-    //     decoration: BoxDecoration(
-    //       color: Colors.grey[300],
-    //       borderRadius: BorderRadius.circular(9),
-    //     //   boxShadow: [
-    //     //  //   BoxShadow(
-    //     //     //  color:isSelected?Colors.black:Colors.black,
-    //     //     //  blurRadius: 10,
-    //     //     //  offset: Offset(2, 3),
-    //     //  //   )
-    //     //   ],
-    //     ),
-        // child: Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-
-        //     Icon(
-        //      Icons.add,
-        //      color: Colors.black38 ,
-        //      size: 30,
-        //      ),
-        //     SizedBox(height:5),
-        //      Text(
-        //      'plus ',
-        //       style: TextStyle(color: Colors.black38, 
-        //       fontSize: 14
-              
-        //      ),
-        //      ),
-        //   ],
-
-        // ),
-   // ),
     
   ],),
   
-// CupertinoSpinBox(
-  
-//   min: 1,
-//   max: 100,
-//   value: 50,
-//   onChanged: (value) => print(value),
-// ),
 
 //---------------------------------------------------------
 
-         // glycemie(),   // appel a la fct li idk wesh dir 
           
           
           const SizedBox(height: 60),
@@ -615,16 +441,19 @@ class _NewPageState extends State<NewPage> {
             btnOkOnPress: () { 
                   //  Navigator.of(context).push(MaterialPageRoute(
                   //      builder: (context) => MainPage(),
-                  //       )
-                  //       );
+                  //        )
+                  //        );
+
                
             },
             )..show();
               }else{ 
-                   Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
+                    Navigator.of(context).push(MaterialPageRoute(
+                       builder: (context) => TodaysData(),
                          )
-                        );
+                      );
+                              //Navigator.pop(context);
+
                        // FirebaseFirestore.instance.collection('Glycemie').add({"data": "hh","test": "ds"});
                            String t = selectedTime.format(context);
                  // TimeOfDay dt = TimeOfDay.now();
@@ -639,9 +468,9 @@ class _NewPageState extends State<NewPage> {
                                         var documentID = snapshot.id;
                                         print(documentID); // <-- Document ID
                                                           }
-                   
-                     Glycemie glyy= Glycemie(etat:_selectedTest['keyword'] , heure: t, note: vnote, taux: gly, uid: FirebaseAuth.instance.currentUser!.uid,id: id, email:FirebaseAuth.instance.currentUser!.email.toString());
-                  DatabaseService().updateGly( myTimeStamp, glyy);
+                 //  widget.glycemie.etat=_selectedTest['kyeword'];
+                    // Glycemie glyy= Glycemie(etat:_selectedTest['keyword'] , heure: t, note: vnote, taux: gly, uid: FirebaseAuth.instance.currentUser!.uid,id: id, email:FirebaseAuth.instance.currentUser!.email.toString());
+                  DatabaseService().updateGlycemie( myTimeStamp, widget.glycemie, widget.glycemie.id );
               //  DatabaseService().updateGly(_selectedTest['keyword'], t,vnote , gly, myTimeStamp);
                 
                
@@ -666,50 +495,23 @@ class _NewPageState extends State<NewPage> {
             
               
 
-            /* async{
-
-               await showDialog<void>(
-                context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Merci!'),
-                  content: Text(
-                      'Données bien saisit.'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text('OK'),
-
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                       builder: (context) => MainPage(),
-                        ));
-
-                      },
-                    ),
-                  ],
-                  );
-
-
-              }
-
-               );
-            }*/
+         
             
              
             ),
         ],
-      ),
-        ],
+      
+            ), ],
       ),
       
   
 
-
-      ),
+           ),
+           );  
 
 
    
-    );
+    
 
 
   }
@@ -741,7 +543,7 @@ class _NewPageState extends State<NewPage> {
     print(selectedTest['keyword']);
     setState(() {
       _selectedTest = selectedTest;
-      vf=true;
+      widget.glycemie.etat=selectedTest['keyword'];
     });
   }
 
@@ -772,56 +574,4 @@ class _NewPageState extends State<NewPage> {
  
 
 }
-
-
-class Time extends StatelessWidget {
-
-  
-  const Time({
-    Key? key, required this.icon, required this.time, required this.isSelected,
-  }) : super(key: key);
-  
-  final IconData icon;
-  final String time;
-  final bool isSelected;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 70,
-        width: 70,
-        margin: EdgeInsets.symmetric(horizontal: 3),
-        decoration: BoxDecoration(
-          color: isSelected?Color(0xFFEBC566):Colors.grey[350],
-          borderRadius: BorderRadius.circular(9),
-        //   boxShadow: [
-        //  //   BoxShadow(
-        //     //  color:isSelected?Colors.black:Colors.black,
-        //     //  blurRadius: 10,
-        //     //  offset: Offset(2, 3),
-        //  //   )
-        //   ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-
-            Icon(
-             icon,
-             color: isSelected?Colors.white:Colors.black54 ,
-             size: 30,
-             ),
-            SizedBox(height:5),
-            Text(
-             time,
-              style: TextStyle(color: isSelected?Colors.white:Colors.black54, 
-              fontSize: 14
-              
-              ),
-            ),
-          ],
-
-        ),
-    );
-  }
-}
-  
+   
