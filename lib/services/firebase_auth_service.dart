@@ -1,3 +1,35 @@
+
+import 'package:firebase_auth/firebase_auth.dart';
+
+class AuthService{
+
+FirebaseAuth auth =FirebaseAuth.instance;
+
+  get user => null;
+
+
+Future signOut () async {
+
+
+
+try {
+
+ 
+ return auth.signOut();
+
+} catch(e)
+{
+return null;
+
+}
+
+}
+
+
+
+}
+
+
 /*import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sommelier_du_parfum/models/customer.dart';

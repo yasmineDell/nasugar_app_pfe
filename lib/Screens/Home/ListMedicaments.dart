@@ -1,4 +1,5 @@
 
+
 import 'package:appf/Screens/Home/homeScreen.dart';
 import 'package:appf/Screens/Home/homeWidget.dart';
 import 'package:appf/Screens/ListeMedecins/ProfileMed.dart';
@@ -23,12 +24,12 @@ import 'package:provider/provider.dart';
 
 
 
-class ListeMedicamentH extends StatefulWidget {
+class ListeMedicament extends StatefulWidget {
   @override
-  _ListeMedicmentHState createState() => _ListeMedicmentHState();
+  _ListeMedicmentState createState() => _ListeMedicmentState();
 }
 
-class _ListeMedicmentHState extends State<ListeMedicamentH> {
+class _ListeMedicmentState extends State<ListeMedicament> {
     final user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
@@ -58,9 +59,8 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
 
               
                //*******************liste des medecin *************/
-            return
-             ListView(
-              scrollDirection: Axis.horizontal,
+            return ListView(
+              scrollDirection: Axis.vertical,
              
              
              
@@ -70,8 +70,8 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
               
              return Padding(
                
-                  padding: const EdgeInsets.only( top:250, left: 20, bottom: 250), //nzid left w right
-                   //padding: const EdgeInsets.all(10.0),
+                 // padding: const EdgeInsets.only(left: 50.0,right: 50, top:20), nzid left w right
+                   padding: const EdgeInsets.all(10.0),
                   
                   child:   Container(
                      
@@ -81,7 +81,6 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
                     child:SizedBox(
                       height: 100,
                      //width: 200,
-                    
                                       
                 
                    child: Material(
@@ -101,8 +100,8 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
 
                                        
                     Container(
-                       width: 50,
-                       height: 50,
+                       width: 100,
+                       height: 100,
                       decoration: BoxDecoration(
                         
                           boxShadow: [
@@ -110,8 +109,7 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
                                 spreadRadius: 2,
                                 blurRadius: 10,
                                 color: Colors.white.withOpacity(0.1),
-                                //offset: Offset(0, 10)
-                                )
+                                offset: Offset(0, 10))
                           ],
                           shape: BoxShape.rectangle,
                           image: DecorationImage(
@@ -119,71 +117,88 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
                               image: AssetImage("assets/images/pill.png"))),
                     ),
 
-                SizedBox(width: 50,
-                ),
+                SizedBox(width: 50,),
                 
                         Container(
                           
                           // margin: EdgeInsets.symmetric(horizontal :20.0),
                           
                             // le container contenant les info du premier medecin
-                          child:  Column (
-                            children: [
-                               SizedBox(width: 30,
-                height: 30,),
-     
-                          Container(
-          
-          
-          
-               child: Text(document['NomMedicament'],
-            style: TextStyle(color: Color.fromRGBO(65, 106, 190, 1), fontSize: 20.0,),),),
+                          child: Padding(
+                            padding: const EdgeInsets.all( 10.0),
+                            child:
+                              
+                              Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+       
+   
+       
+                 
         
+       Column (children: [
+            Padding(
+          padding: const EdgeInsets.only(right: 2.0),
+          
+          child:
+        Container(
+          
+          
+          
+          child: Text(document['NomMedicament'],
+            style: TextStyle(color: Color.fromRGBO(65, 106, 190, 1), fontSize: 20.0,),),),
+          ),
     
        
-        
-          Container(
+         Padding(
+          padding: const EdgeInsets.only(left: 2.0),
+          child:  Container(
               
               child:Text("Dose : "+document['dose'],
                    style: TextStyle(color: Colors.black54, fontSize: 16.0,), ),
                 
-          ),
+                 
+                             ),),
                    
-                
+             Padding(
+          padding: const EdgeInsets.only(left: 2.0),
+          child:     
            Container(
              
              
              child:
        Text("Heure : "+document['Time'] +"  heures"
        ,
-          style: TextStyle(color: Colors.black54, fontSize: 15.0),),),       
+          style: TextStyle(color: Colors.black54, fontSize: 15.0),),),  ),       
                
-
-           Container(
+    Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child:  Container(
 
 
             child :Text("Periode : "+ document['Period'],
-          style: TextStyle(color: Colors.black54, fontSize: 12.0,),)),
+          style: TextStyle(color: Colors.black54, fontSize: 12.0,),)),)
 
         ],)
         
         
         
 
-      
+      ],
+    )
                             
                             
                         
-                         ),
-
-
-                          SizedBox(width: 50,
-                height: 50,),
+                         )  )
+                         
+                         
+                         
                          ] ),
+                      
                         )),
 
            
-              
+                
                 
               ),
 

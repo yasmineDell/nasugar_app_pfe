@@ -37,67 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
     
       backgroundColor:   Color.fromRGBO(11,44,135,1),
           
-     /* bottomNavigationBar: ClipRRect(
-        
-        //borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
-        
-        child: BottomNavigationBar(
-          iconSize: 30,
-        
-          backgroundColor:// Colors.grey[100],
-          
-          Color.fromRGBO(65, 106, 190, 1),
-          selectedIconTheme: IconThemeData(
-            color: const  Color.fromRGBO(11,44,135,1),
-          
-          ),
-          unselectedIconTheme: IconThemeData(
-            color: Colors.black12,  // les boutton no selectioné en gris
-          ),
-          items: [
-
-
-                
-            BottomNavigationBarItem(
-           
-              icon: IconButton(icon: Icon(Icons.home), onPressed: () {  },),
-              title: Text(
-                "Home",
-                style: const TextStyle(color: Colors.white),
-              ),
-              
-            ),
-            
-          
-            
-            BottomNavigationBarItem(
-            
-              icon: IconButton(icon: Icon(Icons.person), onPressed: () { 
-                 Navigator.of(context).push(MaterialPageRoute(
-                   builder: (context)=> Editer(),)); },),
-              title: Text(
-                "Profile",
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-          
-              BottomNavigationBarItem(
-              icon: Padding(
-                child: Icon(Icons.note_add),
-                padding: const EdgeInsets.only(top: 8.0),
-              ),
-              title: Text(
-                "Note",
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-           
-            
-          ],
-        ),
-      ),
- */
-extendBody: true,
+    
+     extendBody: true,
 
 
      bottomNavigationBar: TabBarMaterialWidget( pages[index],
@@ -286,13 +227,32 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
              crossAxisAlignment: CrossAxisAlignment.center,
              children: <Widget>[
 
+
+              Center(child:   
+              
+              
+              
+              
+                Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                         
+                      
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/images/glycemie.png"))),
+                    ),),
+             SizedBox(height: 3),
+             
+             
             Text( "Glycémie",
                 
                 style: TextStyle(fontSize: 15 , color :   Color.fromRGBO(11,44,135,1),
       ),
 
              ) ,
-             
              ],
              
              ),
@@ -383,11 +343,26 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
              crossAxisAlignment: CrossAxisAlignment.center,
              children: <Widget>[
 
-            Text( "Poids",
+             Center(child:     Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                         
+                           color: Colors.white,
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage("assets/images/pes.jpg"))),
+                    ),),
+             SizedBox(height: 3),
+               Text( "Poids",
                 
                 style: TextStyle(fontSize: 15 , color :  Color.fromRGBO(11,44,135,1),),
 
              ) ,
+
+                   
+               
              
              ],
              

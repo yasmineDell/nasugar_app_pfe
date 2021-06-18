@@ -85,7 +85,12 @@ flutter:
     - assets/images/Dr2.jpg
     - assets/images/Dr3.jpeg
     - assets/images/Dr4.jpg
-    
+    - assets/images/medic.jpg
+    - assets/images/glycemie.png
+    - assets/images/pill.png
+    - assets/images/pills.png
+    - assets/images/diabetes.jpg
+    - assets/images/pes.jpg
   fonts:
     - family: Circular
       fonts:

@@ -1,5 +1,9 @@
+import 'package:appf/Screens/Authenticate/Login/LoginPage.dart';
 import 'package:appf/Screens/Home/Editer.dart';
+import 'package:appf/Screens/Home/ListMedicaments.dart';
+import 'package:appf/Screens/Home/lstMedicament.dart';
 import 'package:appf/Screens/ListeMedecins/list.dart';
+import 'package:appf/Screens/ListeMedecins/lst.dart';
 import 'package:appf/Screens/graphics/graphics.dart';
 import 'package:appf/Screens/medicament/medicamenList.dart';
 import 'package:appf/Screens/monMedecin/monMedecin.dart';
@@ -7,6 +11,7 @@ import 'package:appf/page/TodaysData.dart';
 import 'package:appf/page/analyse.dart';
 import 'package:appf/page/newPage.dart';
 import 'package:appf/page/rapport.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dropdown_below/dropdown_below.dart';
@@ -18,11 +23,13 @@ import 'ProfileScreen.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
+  FirebaseAuth auth =FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     final name = 'Mohamed Hafed';
     final email = 'mohamed23@gmail.com';
+    
    
     return ClipRRect(
      borderRadius: BorderRadius.only(
@@ -280,6 +287,34 @@ class NavigationDrawerWidget extends StatelessWidget {
                        style: TextStyle(fontSize: 14,fontFamily: 'Circular'))),
                      ],)
                   ),
+
+                    ListTile(    
+
+                  //     trailing: Icon(Icons.room_preferences_outlined ) ,
+
+                  //      title:Padding(
+                  //   padding: EdgeInsets.fromLTRB(10,0,0, 0),
+                  //  child: Text('Paramètres Application',
+                  //  style: TextStyle(fontSize: 14))),
+                     onTap: () {
+                      // Update the state of the app.
+
+                        selectedItem(context, 6);
+
+                        },
+
+                          title: Row(
+                      
+                     mainAxisAlignment: MainAxisAlignment.start,
+                      
+                       children: [
+                       Icon(Icons.exit_to_app) ,
+                        Padding( 
+                      padding: EdgeInsets.fromLTRB(10,3,0, 0),
+                      child: Text('  Déconnexion' ,
+                       style: TextStyle(fontSize: 14,fontFamily: 'Circular'))),
+                     ],)
+                  ),
                   
                 ],
               ),
@@ -353,19 +388,19 @@ class NavigationDrawerWidget extends StatelessWidget {
     );
   }
 
-  void selectedItem(BuildContext context, int index) {
+  Future<void> selectedItem(BuildContext context, int index) async {
     Navigator.of(context).pop();
 
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => graphics(),/*Test()*/
+          builder: (context) => ListeMedicamentH(),/*Test()*/
         ));
         
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => medicamen(),
+          builder: (context) => ListeMedicament(),
         ));
         break;
         case 2:
@@ -386,8 +421,24 @@ class NavigationDrawerWidget extends StatelessWidget {
         break;
         case 5:
           Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>SettingsPage(), // Analyses(),
+          builder: (context) =>SettingsPage(), 
         ));
+        break;
+          case 6:
+          await auth.signOut();   
+          setState((){
+
+
+            
+          })
+
+
+
+
+
+         /* Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>LoginPage(), // Analyses(),
+        ));*/
         break;
        
        

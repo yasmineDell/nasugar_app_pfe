@@ -253,8 +253,25 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                  await _firebaseAuth
                                 .signInWithEmailAndPassword(
                                     email: _emailController.text,
-                                    password: _passwordController.text)
-                                .then((value) => print('Login Successful'));
+                                    password: _passwordController.text) .catchError((err) {
+          showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Erreur e-mail ou mot de passe incorrecte"),
+              content: Text(err.message),
+              actions: [
+                FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+    });
+                               // .then((value) => print('Login Successful'));
                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen(),/*ProfileScreen ()*/)); 
 
 

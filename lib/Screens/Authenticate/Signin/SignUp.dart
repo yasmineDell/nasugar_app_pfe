@@ -184,7 +184,7 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 15,),
                  TextFormField(
-                   validator: (val) => val!.isEmpty ? 'Entrez votre e-mail ' : null,
+                   validator: (val) => (val!.isEmpty || !val.contains('@')) ? 'Entrez votre e-mail ' : null,
                      controller: _emailController,
                  decoration: InputDecoration(
               hintText: "Enterez votre e-mail",
@@ -236,7 +236,7 @@ class _SignUpState extends State<SignUp> {
              
 
                TextFormField(
-                 validator: (val) => val!.length<8 ? 'Reconfirmez le mot de passe ' : null,
+                 validator: (val) => (val!.length<8 ||( _passwordController.toString().compareTo(_repasswordController.toString())) !=0)? 'Reconfirmez le mot de passe ' : null,
                  controller: _repasswordController,
                  decoration: InputDecoration(
                 hintText: "Comfirmez votre mot de passe",

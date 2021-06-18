@@ -4,8 +4,10 @@
 
 import 'package:appf/Provider/google_sign_in.dart';
 import 'package:appf/Screens/Authenticate/Login/LoginPage.dart';
+import 'package:appf/Screens/Home/ListMedicaments.dart';
 import 'package:appf/Screens/Home/ProfileScreen.dart';
 import 'package:appf/Screens/Home/homeScreen.dart';
+import 'package:appf/Screens/Home/lstMedicament.dart';
 import 'package:appf/step.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget{
 
       debugShowCheckedModeBanner: false,
       
-      home: LoginPage(), //HomeScreen(),
+      home:LoginPage(), //HomeScreen(),
     );
   }
 }

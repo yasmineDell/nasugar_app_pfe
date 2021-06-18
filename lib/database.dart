@@ -1,3 +1,4 @@
+import 'package:appf/modules/Medicaments.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -93,6 +94,26 @@ class DatabaseService{
   }
   Stream< List<Glycemie>> get gly{
         return GlycemieCollection.snapshots().map(_glycemieListFromSnapshot);
+  }
+   Stream< List<Medicines>> get medicine{
+        return GlycemieCollection.snapshots().map(_medicinesListFromSnapshot);
+  }
+
+
+   List<Medicines> _medicinesListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((doc){
+      return Medicines(
+        nomMedicament: doc.get('NomMedicament') ?? '',
+        time: doc.get('Time') ?? '',
+        dose: doc.get('dose') ?? '',
+        periode: doc.get('Period') ?? '',
+         email: doc.get('email') ?? '',
+       
+         );
+    }).toList();
+  }
+Stream< List<Medicines>> get medicines{
+        return GlycemieCollection.snapshots().map(_medicinesListFromSnapshot);
   }
 
   List <PatientModel> _patientListFromSnapshot(QuerySnapshot snapshot){
