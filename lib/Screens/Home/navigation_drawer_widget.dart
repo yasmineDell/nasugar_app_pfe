@@ -425,12 +425,12 @@ class NavigationDrawerWidget extends StatelessWidget {
         ));
         break;
           case 6:
-          await auth.signOut();   
-          setState((){
+          // await auth.signOut();   
+          // setState((){
 
 
             
-          })
+          // })
 
 
 

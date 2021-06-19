@@ -102,9 +102,11 @@ class _modifGlyState extends State<modifGly> {
         _minute = selectedTime.minute.toString();
         _time = _hour + ' : ' + _minute;
         _timeController.text = _time;
+       
         _timeController.text = formatDate(
             DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
             [hh, ':', nn, " ", am]).toString();
+           widget.glycemie.heure= selectedTime.format(context);
       });else _timeController.text = widget.glycemie.heure;
    
   }
@@ -458,7 +460,7 @@ class _modifGlyState extends State<modifGly> {
                            String t = selectedTime.format(context);
                  // TimeOfDay dt = TimeOfDay.now();
                  now = new DateTime.now();
-                 Timestamp myTimeStamp = Timestamp.fromDate(now); //To TimeStamp
+               //  Timestamp myTimeStamp = Timestamp.fromDate(now); //To TimeStamp
                   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                        String id = _firebaseAuth.currentUser!.uid.toString();  
 
@@ -470,7 +472,7 @@ class _modifGlyState extends State<modifGly> {
                                                           }
                  //  widget.glycemie.etat=_selectedTest['kyeword'];
                     // Glycemie glyy= Glycemie(etat:_selectedTest['keyword'] , heure: t, note: vnote, taux: gly, uid: FirebaseAuth.instance.currentUser!.uid,id: id, email:FirebaseAuth.instance.currentUser!.email.toString());
-                  DatabaseService().updateGlycemie( myTimeStamp, widget.glycemie, widget.glycemie.id );
+                  DatabaseService().updateGlycemie(  widget.glycemie, widget.glycemie.id );
               //  DatabaseService().updateGly(_selectedTest['keyword'], t,vnote , gly, myTimeStamp);
                 
                

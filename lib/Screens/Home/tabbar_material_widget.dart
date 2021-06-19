@@ -1,3 +1,4 @@
+import 'package:appf/Screens/graphics/graphics.dart';
 import 'package:appf/page/TodaysData.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,14 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
             index: 0,
             icon: Icon(Icons.home_outlined),
           ),
+           IconButton(
+            icon: Icon(Icons.bar_chart_outlined),
+             onPressed: () {  
+                  Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SplineTypes()));
+             },
+          
+          ),
           placeholder,
           IconButton(
             icon: Icon(Icons.today_outlined),
@@ -45,7 +54,14 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
              },
           
           ),
-        
+         IconButton(
+            icon: Icon(Icons.person_outline_outlined),
+             onPressed: () {  
+                  Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => TodaysData()));
+             },
+          
+          ),
         ],
       ),
     );

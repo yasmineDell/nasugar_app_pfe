@@ -30,6 +30,24 @@ class Glycemie {
        
     );
   }
+  Glycemie.fromMap(Map<String, dynamic> map)
+      : assert(map['etat'] != null),
+        assert(map['heure'] != null),
+        assert(map['taux'] != null),
+        assert(map['note'] != null),
+        assert(map['uid'] != null),
+        assert(map['email'] != null),
+        assert(map['email'] != null),
+
+        etat = map['etat'],
+        heure = map['heure'],
+        taux =map['taux'],
+        note = map['note'],
+        uid = map['uid'],
+        email =map['email'],
+         id = map['id']
+       
+        ;
 
   Map<String,dynamic>toMap(Timestamp t){
 
