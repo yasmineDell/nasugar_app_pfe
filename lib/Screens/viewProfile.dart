@@ -27,7 +27,7 @@ class _viewProfilState extends State<viewProfil> {
     // TODO: implement initState
     super.initState();
   }
-  PatientModel p =PatientModel(uid: '', name: '', dateNais: '', numTel: '', email: '', photoUrl: 0);
+  PatientModel p =PatientModel(uid: '', name: '', dateNais: '', numTel: '', email: '', photoUrl: 0,typeDiab: '',poids: '');
   late PatientModel pat;
   final user = FirebaseAuth.instance.currentUser;
       var nn = List<PatientModel>.empty();
@@ -92,28 +92,238 @@ FixedExtentScrollController fixedExtentScrollController =
   child: (document['Email'] == 'test@gmail.com')
                 ?
                 
-                Card(
+                Container(
                      margin: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 0.0),
-                     borderOnForeground: false,
+                    
                  // width: MediaQuery.of(context).size.width/1.2,
                  // height: MediaQuery.of(context).size.height/6,
-                  child:// 
+                  child: Column(children : <Widget> [
+                    Container(height:150,
+                    
+                   
+                    child: Center(   child:  CircleAvatar(radius: 50,  child: Icon(Icons.person, color: Colors.white, size:50),
+                    backgroundColor:// Color.fromRGBO(37,136,166,1),
+                     Color.fromRGBO(11,44,135,1),
+                     
+                     
 
-                //  )
-                  ListTile( leading: CircleAvatar(
-                          radius: 10.0,
 
-                         // (document['taux'] > 1 ) ? Colors.redAccent : Colors.green,
-                          ),
-                          title: //Text(document['taux'].toString() +'    -    '+document['heure'] + "   -    "+ document['etat']),
+),),
+                    
+                    ),
+                    Container(
+                      height: 50,
+                      width: 350,
+
+                    //  decoration: BoxDecoration( color: Colors.grey.withOpacity(0.1),  borderRadius: BorderRadius.circular(24.0)),
+                        
+                      
+                          child: Padding(padding: EdgeInsets.all(10.0),
+                          child: 
                           
-                         Text(document['Email']+document['Name']
+                           Row(
+                            children :<Widget>[
+                         // Icon(Icons.person),
+                          
+                           Text( " Nom  et prénom :   "
+                         ,
+                         style:TextStyle(fontSize: 14.5,color: Colors.grey.withOpacity(0.8)) ,
+                         ), 
+                         Text( document['Name']
+                         ,
+                         style:TextStyle(fontSize: 14.5) ,
+                         ), 
+                          
+                          
+                             ]) )
+                       
+
+                          
+                          ),
+
+                        SizedBox(height : 5),
+                            const Divider(
+                               height: 5,
+                               thickness: 1,
+                                 indent: 20,
+                                  endIndent: 20,
+                              ),
+                              SizedBox(height : 10),
+
+                            Container(
+                                height: 50,
+                                width: 350,
+                  // decoration: BoxDecoration( color: Colors.grey.withOpacity(0.1),  borderRadius: BorderRadius.circular(24.0)),
+                               child: Padding(padding: EdgeInsets.all(10.0),
+                         
+                            
+                          child: 
+                           Row(
+                            children :<Widget>[
+                         Text("Date de naissance:     "
+                         ,
+                         style:TextStyle(fontSize: 14.5, color: Colors.grey.withOpacity(0.8) ),
+                         ),
+                         Text(document['DateNais']
                          ,
                          style:TextStyle(fontSize: 14.5) ,
                          ),
 
                           
-                          ),
+                             ]) ),),
+
+  SizedBox(height : 5),
+                            const Divider(
+                               height: 5,
+                               thickness: 1,
+                                 indent: 20,
+                                  endIndent: 20,
+                              ),
+                              SizedBox(height : 10),
+
+                            Container(
+                              
+                      height: 50,
+                      width: 350,
+     //   decoration: BoxDecoration( color: Colors.grey.withOpacity(0.1),  borderRadius: BorderRadius.circular(24.0)),
+                       child: Padding(padding: EdgeInsets.all(10.0),
+                          
+                          child:  Row(
+                            children :<Widget>[
+                          
+                         Text("Numero de Tel  :     "
+                         ,
+                         style:TextStyle(fontSize: 14.5, color: Colors.grey.withOpacity(0.8) ) ,
+                         ),
+                          Text(document['NumTel']
+                         ,
+                         style:TextStyle(fontSize: 14.5 ) ,
+                         ),
+                            ])
+                          
+                          ),),
+
+
+  SizedBox(height : 5),
+                            const Divider(
+                               height: 5,
+                               thickness: 1,
+                                 indent: 20,
+                                  endIndent: 20,
+                              ),
+                              SizedBox(height : 10),
+
+                            Container(
+                              height: 50,
+                      width: 350,
+                   // decoration: BoxDecoration( color: Colors.grey.withOpacity(0.1),  borderRadius: BorderRadius.circular(24.0)),
+                       child: Padding(padding: EdgeInsets.all(10.0),
+                          child: 
+                          Row(
+                            children :<Widget>[
+                          
+                         Text("Email :    "
+                         ,
+                         style:TextStyle(fontSize: 14.5, color: Colors.grey.withOpacity(0.8) ) ,
+                         ),
+  
+                         Text(document['Email']
+                         ,
+                         style:TextStyle(fontSize: 14.5) ,
+                         ),
+
+                            ])
+                          
+                          ),),
+
+                         SizedBox(height : 5),
+                            const Divider(
+                               height: 5,
+                               thickness: 1,
+                                 indent: 20,
+                                  endIndent: 20,
+                              ),
+                              SizedBox(height : 10),
+
+                            Container(
+                              height: 50,
+                      width: 350,
+                  //  decoration: BoxDecoration( color: Colors.grey.withOpacity(0.1),  borderRadius: BorderRadius.circular(24.0)),
+                       child: Padding(padding: EdgeInsets.all(10.0),
+                          child: 
+                          Row(
+                            children :<Widget>[
+                            Text("Type de diabète : "
+                         ,
+                         style:TextStyle(fontSize: 14.5 , color: Colors.grey.withOpacity(0.8) ) ,
+                         ),
+                           
+                    SizedBox(width:20),
+
+                          Text( "E-mail"
+                         ,
+                         style:TextStyle(fontSize: 14.5) ,
+                         ),
+
+                        
+
+
+                            ]
+                          )
+                         
+                          
+                         
+
+                          
+                          ),),
+
+                    SizedBox(height : 5),
+                            const Divider(
+                               height: 5,
+                               thickness: 1,
+                                 indent: 20,
+                                  endIndent: 20,
+                              ),
+                              SizedBox(height : 10),
+
+                            Container(
+                              height: 50,
+                      width: 350,
+                    //decoration: BoxDecoration( color: Colors.grey.withOpacity(0.1),  borderRadius: BorderRadius.circular(24.0)),
+                       child: Padding(padding: EdgeInsets.all(10.0),
+                          child: 
+                          Row(
+                            children :<Widget>[
+                          
+                         Text("Poids:    "
+                         ,
+                         style:TextStyle(fontSize: 14.5, color: Colors.grey.withOpacity(0.8) ) ,
+                         ),
+
+                             Text(document['Email'] +" Kg"
+                         ,
+                         style:TextStyle(fontSize: 14.5) ,
+                         ),
+                          
+                            ])),),
+
+                      SizedBox(height : 5),
+                            const Divider(
+                               height: 5,
+                               thickness: 1,
+                                 indent: 20,
+                                  endIndent: 20,
+                              ),
+                              SizedBox(height : 10),
+
+                         
+
+
+
+                  ]) 
+
+                //  )
+                
                     
                   
                   )

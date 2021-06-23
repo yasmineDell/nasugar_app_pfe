@@ -180,19 +180,24 @@ crossAxisAlignment: CrossAxisAlignment.start,
 
 children: <Widget>[
   
-  /*Text(
+  Text(
     
-                "Informations", 
+                "Medicaments d'aujourd'hui", 
                         style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 15,
                           color: Colors.grey[800],
                         ),
-  ),*/
+  ),
 
     
   Container(
 margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+
+
+
+
+
         // hada row li fih les cases hadok sghar  te3 le poids w te3 glycémie
    child: Row( 
       children: <Widget> [
@@ -422,6 +427,8 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
 
 
 ),
+
+
 
   ),
 

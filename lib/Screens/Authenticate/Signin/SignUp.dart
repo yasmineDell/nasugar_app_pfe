@@ -1,4 +1,3 @@
-
 import 'package:appf/Screens/Authenticate/Login/LoginPage.dart';
 import 'package:appf/Screens/Home/ProfileScreen.dart';
 import 'package:appf/models/PatientModel.dart';
@@ -162,7 +161,7 @@ class _SignUpState extends State<SignUp> {
 
 
                   TextFormField(
-                 validator: (val) => val!.isEmpty ? 'Entrer votre Numero de Telephone ' : null,
+                 validator: (val) => val!.length !=10 ? 'Entrer votre Numero de Telephone ' : null,
                  controller: _numTelController,
                  decoration: InputDecoration(
                 hintText: "Numero de Tel",
@@ -170,12 +169,11 @@ class _SignUpState extends State<SignUp> {
                // border: InputBorder.none,
                 icon: const Padding(
                       padding: const EdgeInsets.only(top: 5.0),
-                      child: const Icon(Icons.lock))),
+                      child: const Icon(Icons.phone))),
              
                 
                
-            
-                obscureText: true, // pour masquer le mot de passe 
+            // pour masquer le mot de passe 
                 onChanged :(val){
                   
                     setState(() {password = val; });
@@ -185,6 +183,8 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 15,),
                  TextFormField(
                    validator: (val) => (val!.isEmpty || !val.contains('@')) ? 'Entrez votre e-mail ' : null,
+                     
+                     
                      controller: _emailController,
                  decoration: InputDecoration(
               hintText: "Enterez votre e-mail",
@@ -235,8 +235,8 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height:15,),
              
 
-               TextFormField(
-                 validator: (val) => (val!.length<8 ||( _passwordController.toString().compareTo(_repasswordController.toString())) !=0)? 'Reconfirmez le mot de passe ' : null,
+               /*TextFormField(
+                 validator: (val) => (val!.length<8 ||( _passwordController.toString().compareTo(_repasswordController.toString())) ==0)? 'Reconfirmez le mot de passe ' : null,
                  controller: _repasswordController,
                  decoration: InputDecoration(
                 hintText: "Comfirmez votre mot de passe",
@@ -255,7 +255,7 @@ class _SignUpState extends State<SignUp> {
                     setState(() {password = val; });
 
                 }
-              ),
+              ),*/
               
               SizedBox(height:10,),
 
@@ -290,18 +290,44 @@ class _SignUpState extends State<SignUp> {
 
                 ),
                 onPressed: ()async{
-                 
-                 if (_formKey.currentState!.validate()) {
-                    await _firebaseAuth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+
+           if (_formKey.currentState!.validate()) {
+                   try {
+                  UserCredential userCredential=   await _firebaseAuth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
                    
                      User? updateUser = FirebaseAuth.instance.currentUser;
-                    //userSetup(_nameController.text,);
-                     //updateUser.updateProfile(dateNais: _nameController.text);
-                    // updateUser.updateProfile(displayName: _nameController.text);
+                   
                     userSetup(_nameController.text, _dateNaisController.text, _numTelController.text,_emailController.text);
+                   
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),));  } on FirebaseAuthException catch (e) {
+             if (e.code == 'weak-password') {
+              print('The password provided is too weak.');
+            } else if (e.code == 'email-already-in-use') {
+               print('The account already exists for that email.');
+               showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Ce compte existe déjà"),
+              content: Text("Erreur"),
+              actions: [
+                FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+
+            }
+           } catch (e) {
+                print(e);
+                 }
 
 
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),)); 
+                 
                  }
                   
 
@@ -438,6 +464,4 @@ class _SignUpState extends State<SignUp> {
     });
   }
 }
-
-
 

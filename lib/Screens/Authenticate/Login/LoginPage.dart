@@ -41,8 +41,10 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
         //color: Color.fromRGBO(27,104,152,1 ) //fromRGBO(31,119,174,1)   //(39,149,217,1), //fromRGBO(110, 120, 247, 1),
  gradient: LinearGradient(colors: <Color>[/*Color.fromRGBO(27,104,152,1 ),Color.fromRGBO(31,119,174,1) ,Color.fromRGBO(39,149,217,1),*/
 
-          Color.fromRGBO(11,44,135,1),
-          Color.fromRGBO(11,44,135,1),
+         // Color.fromRGBO(11,44,135,1),
+          //Color.fromRGBO(11,44,135,1),
+          Color.fromRGBO(19, 36, 64, 1),
+           Color.fromRGBO(19, 36, 64, 1),
                     
                       ])
         ),
@@ -62,7 +64,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               ),
 
               Center(
-                child: Text("Connexion",style:TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 24,fontWeight: FontWeight.bold))
+                child: Text("Connexion",style:TextStyle(color:Colors.white.withOpacity(0.5)/* Colors.white.withOpacity(0.5)*/,fontSize: 24,fontWeight: FontWeight.bold))
               ),
                
             
@@ -250,16 +252,27 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                 ),
                 onPressed: ()async{
                  
-                 await _firebaseAuth
+               try {
+  UserCredential userCredential=  await _firebaseAuth
                                 .signInWithEmailAndPassword(
                                     email: _emailController.text,
-                                    password: _passwordController.text) .catchError((err) {
-          showDialog(
+                                    password: _passwordController.text) ;
+                                    print(userCredential); // celui là affiche le uid 
+                                    print("signed in ");
+                           Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen(),/*ProfileScreen ()*/)); 
+                                    
+                                    
+                                    }
+          on FirebaseAuthException catch (e) {
+  if (e.code == 'user-not-found') {
+    print('No user found for that email.');
+
+   showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Erreur e-mail ou mot de passe incorrecte"),
-              content: Text(err.message),
+              title: Text("Cet utilisateur n'existe pas"),
+              content: Text("Erreur"),
               actions: [
                 FlatButton(
                   child: Text("Ok"),
@@ -270,9 +283,37 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               ],
             );
           });
-    });
-                               // .then((value) => print('Login Successful'));
-                                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen(),/*ProfileScreen ()*/)); 
+
+  } else if (e.code == 'wrong-password') {
+    print('Wrong password provided for that user.');
+
+   showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Mot de passe incorrecte"),
+              content: Text("Erreur"),
+              actions: [
+                FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+
+
+
+  }
+}
+
+
+
+
+                              
+                              
 
 
                 },

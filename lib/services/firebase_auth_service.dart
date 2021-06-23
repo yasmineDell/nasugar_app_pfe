@@ -5,10 +5,15 @@ class AuthService{
 
 FirebaseAuth auth =FirebaseAuth.instance;
 
-  get user => null;
 
 
-Future signOut () async {
+
+  Future<void> _signOut() async {
+  await FirebaseAuth.instance.signOut();
+}
+
+
+/*Future signOut () async {
 
 
 
@@ -23,7 +28,8 @@ return null;
 
 }
 
-}
+
+}*/
 
 
 

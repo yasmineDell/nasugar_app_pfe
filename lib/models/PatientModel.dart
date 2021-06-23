@@ -5,7 +5,10 @@ class PatientModel {
   late String numTel;
  late String uid;
  late  String dateNais;
-  
+
+  late String typeDiab;
+ late  String poids;
+ 
   static late  PatientModel currentUser;
 
 
@@ -17,6 +20,8 @@ class PatientModel {
       required this.numTel,
       required this.email,
       required this.photoUrl,
+      required this.typeDiab,
+      required this.poids,
      
       
       
@@ -31,6 +36,8 @@ class PatientModel {
       numTel: json['NumTel'],
       email: json['Email'],
       photoUrl: json['PhotoUrl'],
+      typeDiab: json['TypeD'],
+      poids: json['Poids'],
     );
   }
 
@@ -41,5 +48,7 @@ class PatientModel {
     "numTel" : numTel,
     "email" : email,
     "photoUrl": photoUrl,
+    "typeDiab" : typeDiab,
+    "poids": poids,
   };
 }

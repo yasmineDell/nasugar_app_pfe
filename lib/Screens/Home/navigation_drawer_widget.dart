@@ -24,12 +24,13 @@ import 'ProfileScreen.dart';
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
   FirebaseAuth auth =FirebaseAuth.instance;
+  
 
   @override
   Widget build(BuildContext context) {
     final name = 'Mohamed Hafed';
     final email = 'mohamed23@gmail.com';
-    
+  
    
     return ClipRRect(
      borderRadius: BorderRadius.only(
@@ -425,12 +426,8 @@ class NavigationDrawerWidget extends StatelessWidget {
         ));
         break;
           case 6:
-          await auth.signOut();   
-          setState((){
-
-
-            
-          })
+         await auth.signOut();
+         
 
 
 

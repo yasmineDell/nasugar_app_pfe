@@ -9,17 +9,19 @@ import 'ProfileMed.dart';
 
 
 class DoctorsList extends StatefulWidget {
+  
   @override
   _DoctorsListState createState() => _DoctorsListState();
 }
 
 class _DoctorsListState extends State<DoctorsList> {
+  late final String emaildoc;
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-        backgroundColor: Color.fromRGBO(11,44,135,1),
+        backgroundColor: Color.fromRGBO(19, 36, 64, 1), //Color.fromRGBO(11,44,135,1),
         centerTitle: true,
         title:SizedBox(
          // height: kToolbarHeight,
@@ -95,11 +97,12 @@ class _DoctorsListState extends State<DoctorsList> {
              
 
                children: snapshot.data!.docs.map((document) {
+                 
                 
               
              return  Padding(
                
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(top: 5.0),
                   
                   child: Container(
                      child: new FittedBox(
@@ -124,7 +127,7 @@ class _DoctorsListState extends State<DoctorsList> {
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Container(child: Text("Dr. "+document['Nom'],
-            style: TextStyle(color: Color.fromRGBO(65, 106, 190, 1), fontSize: 24.0,fontWeight: FontWeight.bold),)),
+            style: TextStyle(color: Color.fromRGBO(223,178,164,1), fontSize: 22.0,fontWeight: FontWeight.bold),)),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
@@ -132,8 +135,8 @@ class _DoctorsListState extends State<DoctorsList> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Container(child: Text("Adresse "+document['Adresse'],
-                   style: TextStyle(color: Colors.black54, fontSize: 12.0,),
+                  Container(child: Text("Adresse "+document['Adresse'], 
+                   style: TextStyle(color: Colors.black54, fontSize: 14.0,),
                              ),
                     ),
                   
@@ -142,12 +145,13 @@ class _DoctorsListState extends State<DoctorsList> {
                 ],)),
         ),
         Container(child: Text("Numéro de Tel : "+document['NumTel'],
-          style: TextStyle(color: Colors.black54, fontSize: 18.0,fontWeight: FontWeight.bold),)),
+          style: TextStyle(color: Colors.black54, fontSize: 16.0),)),
 
 
            Container(child: Text("E-mail: "+ document['emailMed'],
-          style: TextStyle(color: Colors.black54, fontSize: 18.0,fontWeight: FontWeight.bold),)),
+          style: TextStyle(color: Colors.black54, fontSize: 16.0,),)),
       ],
+      
     )
                             
                             
@@ -171,6 +175,7 @@ class _DoctorsListState extends State<DoctorsList> {
                                                    SizedBox(width:60),
                           GestureDetector( 
                             onTap:(){
+                             // emaildoc=document['emailMed'];
                         Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileMed()));
                              },
                       child:

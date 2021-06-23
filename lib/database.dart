@@ -115,6 +115,10 @@ Stream< List<Medicines>> get medicines{
         return GlycemieCollection.snapshots().map(_medicinesListFromSnapshot);
   }
 
+Stream< List<Medicines>> get medicin{
+        return GlycemieCollection.snapshots().map(_medicinesListFromSnapshot);
+  }
+
   List <PatientModel> _patientListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((
       doc
@@ -126,6 +130,8 @@ Stream< List<Medicines>> get medicines{
       numTel: doc.get('numTel') ?? '',
       photoUrl: doc.get('photoUrl') ?? 0,
       uid: doc.get('uid') ?? '',
+       typeDiab: doc.get('typeDiab') ?? '',
+        poids: doc.get('poids') ?? '',
       
       
       );
