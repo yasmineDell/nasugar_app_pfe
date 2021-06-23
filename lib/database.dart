@@ -1,3 +1,4 @@
+import 'package:appf/modules/Analys.dart';
 import 'package:appf/modules/Medicaments.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +15,7 @@ class DatabaseService{
   final CollectionReference GlycemieCollection = FirebaseFirestore.instance.collection('Glycemie');
   final CollectionReference usercol =
       FirebaseFirestore.instance.collection("Patient");
+  final CollectionReference analysecol = FirebaseFirestore.instance.collection('Analyse');
   /*Future getGly (String etat, String heure, String note, double taux, Timestamp date ) async {
 
     return await GlycemieCollection.doc(uid).set({
@@ -24,6 +26,20 @@ class DatabaseService{
         'taux' : taux,
     });
   }*/
+  Future<Null> ajoutAnalyse(Timestamp t,Analyse analyse) async {
+     var docRef = await analysecol.add({
+      'urlAnlayse' : analyse.urlAnalyse,
+      'name' : analyse.name,
+      'email' : analyse.email,
+    });
+    var docId = docRef.id;
+    analysecol.doc(docId).update({
+      'urlAnlayse' : analyse.urlAnalyse,
+      'name' : analyse.name,
+      'email' : analyse.email,
+      'id' : docId,
+    });
+  }
 
   Future<String> updateGly(Timestamp t, Glycemie gly ) async{
       var collection = FirebaseFirestore.instance.collection('collection');
@@ -90,11 +106,27 @@ class DatabaseService{
          );
     }).toList();
   }
+
+  List<Analyse> _analyseListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((doc){
+      return Analyse(urlAnalyse: doc.get('urlAnalyse') ?? ''
+      
+      , name: doc.get('name') ?? '',
+      
+       email: doc.get('email') ?? '',
+       id: doc.get('id') ?? '',
+       
+       ) ;
+    }).toList();
+  }
   Stream< List<Glycemie>> get gly{
         return GlycemieCollection.snapshots().map(_glycemieListFromSnapshot);
   }
    Stream< List<Medicines>> get medicine{
         return GlycemieCollection.snapshots().map(_medicinesListFromSnapshot);
+  }
+  Stream <List<Analyse>> get analyse{
+    return analysecol.snapshots().map(_analyseListFromSnapshot);
   }
 
 
@@ -150,11 +182,38 @@ Future deleteGly(String id) async {
       return false;
     }
   }
+ Future deleteAnalyse(String id) async {
+  try{
+    await analysecol.doc(id).delete();
+    return true;
+   } catch(e){
+     return false;
+   }
+ }
 
    Future<User?> get user async {
     final user = FirebaseAuth.instance.currentUser;
     return user;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //  Future getUser(String id) async {
   //   try {
   //     final data = await usercol.doc(id).get();

@@ -2,25 +2,40 @@
 //import 'package:login/screens/Authenticate/Login/LoginPage.dart';
 
 
-import 'package:appf/Provider/google_sign_in.dart';
 import 'package:appf/Screens/Authenticate/Login/LoginPage.dart';
-import 'package:appf/Screens/Home/ListMedicaments.dart';
-import 'package:appf/Screens/Home/ProfileScreen.dart';
-import 'package:appf/Screens/Home/homeScreen.dart';
-import 'package:appf/Screens/Home/lstMedicament.dart';
-import 'package:appf/step.dart';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/src/change_notifier_provider.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    'This channel is used for important notifications.', // description
+    importance: Importance.high,
+    playSound: true);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('A bg message just showed up :  ${message.messageId}');
+}
+
 
  Future <void> main( )async{
   
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   
-  runApp(MyApp());} 
+
+  runApp(MyApp());
+  
+  } 
 
 class MyApp extends StatelessWidget{
   static Color lightBackground = Color(0xfffcfcff);

@@ -8,7 +8,7 @@ class PatientModel {
 
   late String typeDiab;
  late  String poids;
- 
+
   static late  PatientModel currentUser;
 
 
@@ -22,9 +22,9 @@ class PatientModel {
       required this.photoUrl,
       required this.typeDiab,
       required this.poids,
-     
-      
-      
+
+
+
     }
   );
 

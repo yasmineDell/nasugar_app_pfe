@@ -26,7 +26,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
  bool _isLoggedIn = false;
   late GoogleSignInAccount _userObj;
   GoogleSignIn _googleSignIn = GoogleSignIn();
-  
+
 
  String error ='';
  String email ='';
@@ -45,16 +45,16 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
           //Color.fromRGBO(11,44,135,1),
           Color.fromRGBO(19, 36, 64, 1),
            Color.fromRGBO(19, 36, 64, 1),
-                    
+
                       ])
         ),
 
         child: Column(
           children: <Widget>[
-            
+
           Padding(
             padding: EdgeInsets.all(20),
-            
+
             child: Column(
              crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -66,19 +66,19 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               Center(
                 child: Text("Connexion",style:TextStyle(color:Colors.white.withOpacity(0.5)/* Colors.white.withOpacity(0.5)*/,fontSize: 24,fontWeight: FontWeight.bold))
               ),
-               
-            
 
 
 
 
 
-            ]  
+
+
+            ]
             ),
 
-          
-          
-          
+
+
+
           ),
 
              SizedBox(height: 30,),
@@ -87,33 +87,33 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               height: 80,
               width: 80,
 
-              decoration : BoxDecoration( 
-                image: DecorationImage(
+              // decoration : BoxDecoration(
+              //   // image: DecorationImage(
 
-                  image: AssetImage("assets/images/loGo.jpeg"),
-                  fit : BoxFit.cover,
-                )
+              //   //   image: AssetImage("assets/images/loGo.jpeg"),
+              //   //   fit : BoxFit.cover,
+              //   // )
 
-              )
+              // )
             )
           ),
 
             SizedBox(
                 height:30,
-              ),      
+              ),
             Center(
             child: Text("Bienvenue sur NaSugr", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 20),),
             ),
               SizedBox(
                 height:20,
               ),
-         
+
         Expanded(
-              
+
               child: Container(
               decoration: BoxDecoration(
                   color: Colors.white,
-                  
+
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
                     topRight: Radius.circular(60),
@@ -143,11 +143,11 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                icon: const Padding(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: const Icon(Icons.email)),
-             
 
-              
 
-              
+
+
+
             ),
 
                 onChanged :(val){
@@ -155,10 +155,10 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 
                 }
-            
+
             ),
             SizedBox(height:25,),
-             
+
 
                TextFormField(
                     validator: (val) => val!.length<8 ? 'Reentrez votre mot de passe ' : null,
@@ -170,13 +170,13 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                 icon: const Padding(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: const Icon(Icons.lock))),
-             
-                
-               
-            
-                obscureText: true, // pour masquer le mot de passe 
+
+
+
+
+                obscureText: true, // pour masquer le mot de passe
                 onChanged :(val){
-                  
+
                     setState(() {password = val; });
 
                 }
@@ -189,11 +189,11 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                 onTap: () => Navigator.pushNamed(context, 'forgotPass'),
                 child: Container(
                   child: TextButton(
-         onPressed: () { 
+         onPressed: () {
                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LoginPage(),));
                     },
                    child : const Text("Mot de passe oublié?",style: TextStyle(fontSize: 12),) ,
-                    
+
                   ),
                   decoration: BoxDecoration(
                       border:
@@ -205,18 +205,18 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                 onTap: () => Navigator.pushNamed(context, 'SignUp'),
                 child: Container(
                   child: TextButton(
-         onPressed: () { 
+         onPressed: () {
                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> SignUp(),));
                     },
                    child : Text("Créer un nouveau compte",style: TextStyle(fontSize: 12),) ,
-                    
+
                   ),
                   decoration: BoxDecoration(
                       border:
                           Border(bottom: BorderSide(width: 1, color: Colors.white))),
                 ),
               ),
-              
+
               ]
               ),
               SizedBox(height:20,),
@@ -229,13 +229,13 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                 ),
                 onPressed: ()async{
 
-                  
+
                    if (_formKey.currentState.validate()) {
                     await _firebaseAuth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text) .then((value) => print('Login Successful'));
-                   
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),)); 
+
+                  // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),));
                  }
-                      
+
 
                 },
 
@@ -243,7 +243,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               ),*/
                RaisedButton(
                  padding: EdgeInsets.symmetric(vertical:10,horizontal :80),
-           
+
                 color: Color.fromRGBO(223,178,164,1), //Color.fromRGBO(31,119,174,1),
                 child: Text(
                   "Se connecter ",
@@ -251,17 +251,17 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
                 ),
                 onPressed: ()async{
-                 
+
                try {
   UserCredential userCredential=  await _firebaseAuth
                                 .signInWithEmailAndPassword(
                                     email: _emailController.text,
                                     password: _passwordController.text) ;
-                                    print(userCredential); // celui là affiche le uid 
+                                    print(userCredential); // celui là affiche le uid
                                     print("signed in ");
-                           Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen(),/*ProfileScreen ()*/)); 
-                                    
-                                    
+                           Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen(),/*ProfileScreen ()*/));
+
+
                                     }
           on FirebaseAuthException catch (e) {
   if (e.code == 'user-not-found') {
@@ -312,8 +312,8 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 
 
-                              
-                              
+
+
 
 
                 },
@@ -338,14 +338,14 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                     });*/*/
             },
           ),
-            
-               
+
+
 
 
              /* Expanded(
-                
+
                       child: ElevatedButton(
-                        
+
                 child: Text(
                   "Se connecter ",
                   style: TextStyle(color: Colors.white),
@@ -357,37 +357,37 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                                     email: _emailController.text,
                                     password: _passwordController.text)
                                 .then((value) => print('Login Successful'));
-                                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),)); 
-                           
+                                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),));
+
                           },
                          )),*/
-              
+
 
 
                 ],
-              ),)  
+              ),)
             ),),
 
 
 
-              
+
               ),
               ),
         ],),
-  
-          
-        
 
 
 
 
-          
+
+
+
+
 
 
 
         ),
-      
-        
+
+
    ),
     );
   }
@@ -409,22 +409,22 @@ class LoginPage extends StatelessWidget {
             Color.fromRGBO(65, 106, 190, 1),
              Color.fromRGBO(65, 106, 190, 1),
              Color.fromRGBO(65, 106, 190, 1),
-          
-            
+
+
           ]),
         ),
         child: Column(
           children: <Widget>[
             Header(),
-            
+
             SizedBox(height: 50,),
-            
+
             Expanded(
-              
+
               child: Container(
               decoration: BoxDecoration(
                   color: Colors.white,
-                  
+
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
                     topRight: Radius.circular(60),
@@ -439,4 +439,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }*/
-

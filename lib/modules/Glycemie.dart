@@ -30,7 +30,7 @@ class Glycemie {
        
     );
   }
-  Glycemie.fromMap(Map<String, dynamic> map)
+  Glycemie.fromMap(Map<String,dynamic> map)
       : assert(map['etat'] != null),
         assert(map['heure'] != null),
         assert(map['taux'] != null),

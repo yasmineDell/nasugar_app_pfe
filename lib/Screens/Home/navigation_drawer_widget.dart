@@ -11,6 +11,7 @@ import 'package:appf/page/TodaysData.dart';
 import 'package:appf/page/analyse.dart';
 import 'package:appf/page/newPage.dart';
 import 'package:appf/page/rapport.dart';
+import 'package:appf/urils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -24,22 +25,22 @@ import 'ProfileScreen.dart';
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
   FirebaseAuth auth =FirebaseAuth.instance;
-  
+
 
   @override
   Widget build(BuildContext context) {
     final name = 'Mohamed Hafed';
     final email = 'mohamed23@gmail.com';
-  
-   
+
+
     return ClipRRect(
      borderRadius: BorderRadius.only(
       // topRight: Radius.circular(50),
       // bottomRight: Radius.circular(25)
      ),
     child: Drawer(
-      child: Material( 
-          
+      child: Material(
+
        //color: Color.fromRGBO(	65,106,190,1),
         //color: Color.fromRGBO(	126,181,61,1),
         color: Color(0xFFFFFFFF),
@@ -54,19 +55,19 @@ class NavigationDrawerWidget extends StatelessWidget {
                   child:
 
                   DrawerHeader(
-                    
+
                      child:
           //chooseImage(ImageSource.gallery);
-     
+
                       buildHeader(
-                       
+
             //  urlImage: ulImage,
               name: name,
               email: email,
-              
+
                ),
-                
-                    decoration: 
+
+                    decoration:
                     BoxDecoration(
                       borderRadius: BorderRadius.only(
                      // topRight: Radius.circular(65),
@@ -75,7 +76,7 @@ class NavigationDrawerWidget extends StatelessWidget {
 
                       ),
                       gradient: LinearGradient(colors: <Color>[
-                   // Color(0xFF3EC6FF),   
+                   // Color(0xFF3EC6FF),
                      //   Color.fromRGBO(54,68, 244	,1),
                       // Color.fromRGBO(110, 154, 247	,1),
                  //     Color.fromRGBO(129, 137, 248	,1),
@@ -84,12 +85,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                            Color.fromRGBO(11,44,135,1),
                             Color.fromRGBO(70,113,198,1),
 
-                   // Color.fromRGBO(110, 120, 247	,1),  
+                   // Color.fromRGBO(110, 120, 247	,1),
                     //  Color(0xFF3B72FF),
                      // Color(0xFF3B72FF),
                       ]),
                     ),
-                    
+
                   ),
                    //const SizedBox(height: 10),
                    //const SizedBox(height:5),
@@ -100,7 +101,7 @@ class NavigationDrawerWidget extends StatelessWidget {
  //SizedBox(height: 20),
                      ),
                   ListTile(
-                    
+
                   //   trailing: Icon(Icons.assessment_outlined) ,
 
                   // title:Padding(
@@ -109,12 +110,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                   //  style: TextStyle(fontSize: 14))),
 
                     title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.assessment_outlined) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,0,0, 0),
                       child: Text('  Graphiques',
                        style: TextStyle(fontSize: 14))),
@@ -125,12 +126,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                         selectedItem(context, 0);
 
                         },
-                    
+
                   ),
                  //  Divider(color: Colors.black12),
 
                   //const SizedBox(height: 5),
-                   ListTile(     
+                   ListTile(
                   //    trailing: Icon(Icons.favorite_border) ,
 
                   // title:Padding(
@@ -138,12 +139,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                   //  child: Text('',
                   //  style: TextStyle(fontSize: 14))),
                     title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.circle_outlined),
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,0,0, 0),
                       child: Text('  Médicaments',
                        style: TextStyle(fontSize: 14))),
@@ -165,12 +166,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                   //  child: Text('Rapport & Analyses',
                   //  style: TextStyle(fontSize: 14))),
                      title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.show_chart_rounded) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,0,0, 0),
                       child: Text('  Rapport & Analyses',
                        style: TextStyle(fontSize: 14))),
@@ -190,7 +191,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                       //    ],
                       //  ),
                   ),
-        
+
              //    const SizedBox(height: 10),
                 //  Divider(color: Colors.black12),
 
@@ -206,23 +207,23 @@ class NavigationDrawerWidget extends StatelessWidget {
                         selectedItem(context, 3);
                         },
                    title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.medical_services_outlined) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,4,0, 0),
                       child: Text('  Mon médecin',
                        style: TextStyle(fontSize: 14))),
 
                      ],)
-                    ,), 
-                  
+                    ,),
+
                   //),
-                  
+
                   const SizedBox(height: 19),
-                  Divider(color: Colors.black12, 
+                  Divider(color: Colors.black12,
                           height: 20,
                           thickness: 1,
                           indent: 20,
@@ -247,23 +248,23 @@ class NavigationDrawerWidget extends StatelessWidget {
 
 
                         title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.list_alt_outlined) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,3,0, 0),
                       child: Text('  Liste des médecins',
                        style: TextStyle(fontSize: 14))),
 
                      ],)
                   ),
-                  
+
               //    Divider(color: Colors.black12),
 
                  // const SizedBox(height: 16),
-                    ListTile(    
+                    ListTile(
 
                   //     trailing: Icon(Icons.room_preferences_outlined ) ,
 
@@ -277,19 +278,19 @@ class NavigationDrawerWidget extends StatelessWidget {
                         },
 
                           title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.room_preferences_outlined) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,3,0, 0),
                       child: Text('  Paramètres Application',
                        style: TextStyle(fontSize: 14,fontFamily: 'Circular'))),
                      ],)
                   ),
 
-                    ListTile(    
+                    ListTile(
 
                   //     trailing: Icon(Icons.room_preferences_outlined ) ,
 
@@ -305,26 +306,26 @@ class NavigationDrawerWidget extends StatelessWidget {
                         },
 
                           title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.exit_to_app) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,3,0, 0),
                       child: Text('  Déconnexion' ,
                        style: TextStyle(fontSize: 14,fontFamily: 'Circular'))),
                      ],)
                   ),
-                  
+
                 ],
               ),
-            
-          
+
+
         ),
-      
+
      )
-     
+
       );
   }
 
@@ -338,7 +339,7 @@ class NavigationDrawerWidget extends StatelessWidget {
           padding: padding.add(EdgeInsets.symmetric(vertical: 40)),
           child: Row(
             children: [
-            
+
             // backgroundImage: NetworkImage(urlImage)
               SizedBox(width: 4),
               Column(
@@ -359,7 +360,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                 CircleAvatar(radius: 30,  child: Icon(Icons.person, color: Colors.white),
             backgroundColor:// Color.fromRGBO(37,136,166,1),
                      Color.fromRGBO(11,44,135,1),
-                     
+
 
 
 ),
@@ -397,7 +398,7 @@ class NavigationDrawerWidget extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ListeMedicamentH(),/*Test()*/
         ));
-        
+
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
@@ -422,19 +423,18 @@ class NavigationDrawerWidget extends StatelessWidget {
         break;
         case 5:
           Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>SettingsPage(), 
+          builder: (context) =>SettingsPage(),
         ));
         break;
           case 6:
 <<<<<<< HEAD
          await auth.signOut();
-         
-=======
-          // await auth.signOut();   
+
+          // await auth.signOut();
           // setState((){
 
 
-            
+
           // })
 >>>>>>> 577f7f4bf14979bc5573ccfedce2a20441028c49
 
@@ -446,8 +446,8 @@ class NavigationDrawerWidget extends StatelessWidget {
           builder: (context) =>LoginPage(), // Analyses(),
         ));*/
         break;
-       
-       
+
+
     }
   }
 }
@@ -469,11 +469,11 @@ class NavigationDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final name = 'Rayane Hafed';
     final email = 'rayanewiza2@gmail.com';
-   
+
     return Drawer(
       child: Material(
-          
-    
+
+
         //color: Colors.green,
         child: ListView(
 
@@ -489,7 +489,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                      Color.fromRGBO(11,44,135,1),
                       ]),
                     ),
-                    
+
                   ),
                    //const SizedBox(height: 10),
                    //const SizedBox(height:5),
@@ -499,7 +499,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                  // const SizedBox(height: 24),
 
                   ListTile(
-                    
+
                   //   trailing: Icon(Icons.assessment_outlined) ,
 
                   // title:Padding(
@@ -508,12 +508,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                   //  style: TextStyle(fontSize: 14))),
 
                     title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.assessment_outlined) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,0,0, 0),
                       child: Text('  Graphiques',
                        style: TextStyle(fontSize: 14))),
@@ -524,12 +524,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                         //selectedItem(context, 0);
 
                         },
-                    
+
                   ),
                  //  Divider(color: Colors.black12),
 
                   //const SizedBox(height: 5),
-                   ListTile(     
+                   ListTile(
                   //    trailing: Icon(Icons.favorite_border) ,
 
                   // title:Padding(
@@ -537,12 +537,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                   //  child: Text('',
                   //  style: TextStyle(fontSize: 14))),
                     title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.favorite_border) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,0,0, 0),
                       child: Text('  Médicaments',
                        style: TextStyle(fontSize: 14))),
@@ -564,12 +564,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                   //  child: Text('Rapport & Analyses',
                   //  style: TextStyle(fontSize: 14))),
                      title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.assessment_outlined) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,0,0, 0),
                       child: Text('  Rapport & Analyses',
                        style: TextStyle(fontSize: 14))),
@@ -590,7 +590,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                       //  ),
                   ),
                   ListTile(
-                    
+
                   //   trailing: Icon(Icons.assessment_outlined) ,
 
                   // title:Padding(
@@ -599,12 +599,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                   //  style: TextStyle(fontSize: 14))),
 
                     title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.list) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,0,0, 0),
                       child: Text('  Liste des Diabetologues',
                        style: TextStyle(fontSize: 14))),
@@ -616,9 +616,9 @@ class NavigationDrawerWidget extends StatelessWidget {
                         //selectedItem(context, 0);
 
                         },
-                    
+
                   ),
-        
+
              //    const SizedBox(height: 10),
                 //  Divider(color: Colors.black12),
 
@@ -634,23 +634,23 @@ class NavigationDrawerWidget extends StatelessWidget {
                        // selectedItem(context, 3);
                         },
                    title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.medical_services_outlined) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,4,0, 0),
                       child: Text('  Mon médecin',
                        style: TextStyle(fontSize: 14))),
 
                      ],)
-                    ,), 
-                  
+                    ,),
+
                   //),
-                  
+
                   const SizedBox(height: 19),
-                  Divider(color: Colors.black12, 
+                  Divider(color: Colors.black12,
                           height: 20,
                           thickness: 1,
                           indent: 20,
@@ -675,23 +675,23 @@ class NavigationDrawerWidget extends StatelessWidget {
 
 
                         title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.notifications_outlined) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,3,0, 0),
                       child: Text('  Notifications',
                        style: TextStyle(fontSize: 14))),
 
                      ],)
                   ),
-                  
+
               //    Divider(color: Colors.black12),
 
                  // const SizedBox(height: 16),
-                    ListTile(    
+                    ListTile(
 
                   //     trailing: Icon(Icons.room_preferences_outlined ) ,
 
@@ -705,25 +705,25 @@ class NavigationDrawerWidget extends StatelessWidget {
                         },
 
                           title: Row(
-                      
+
                      mainAxisAlignment: MainAxisAlignment.start,
-                      
+
                        children: [
                        Icon(Icons.room_preferences_outlined) ,
-                        Padding( 
+                        Padding(
                       padding: EdgeInsets.fromLTRB(10,3,0, 0),
                       child: Text('  Paramètres Application',
                        style: TextStyle(fontSize: 14))),
 
                      ],)
                   ),
-                  
+
                 ],
               ),
-            
-          
+
+
         ),
-      
+
     );
   }
 
@@ -737,7 +737,7 @@ class NavigationDrawerWidget extends StatelessWidget {
           padding: padding.add(EdgeInsets.symmetric(vertical: 40)),
           child: Row(
             children: [
-            
+
             // backgroundImage: NetworkImage(urlImage)
               SizedBox(width: 5),
               Column(
@@ -791,7 +791,7 @@ class NavigationDrawerWidget extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => Test(),
         ));
-        
+
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
@@ -807,6 +807,3 @@ class NavigationDrawerWidget extends StatelessWidget {
   }*/
 }
 */
-
-
-

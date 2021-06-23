@@ -1,10 +1,14 @@
 
 
+import 'dart:async';
+
 import 'package:appf/Screens/Home/homeScreen.dart';
 import 'package:appf/Screens/Home/homeWidget.dart';
 import 'package:appf/Screens/ListeMedecins/ProfileMed.dart';
+import 'package:appf/main.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 
 
@@ -16,6 +20,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -67,8 +72,19 @@ class _ListeMedicmentState extends State<ListeMedicament> {
 
                children: snapshot.data!.docs.map((document) {
                 
-              
-             return Padding(
+
+             TimeOfDay now = TimeOfDay.now();
+              const TimeOfDay releaseTime = TimeOfDay(hour: 15, minute: 16); 
+          //  Timer.periodic(Duration(seconds:20), (timer) {
+     
+                if(now == releaseTime)       envoiNotification(document['NomMedicament']);
+
+        //var greeting = "After Some time ${DateTime.now().second}";
+     
+ //  }
+ //  ); 
+    
+                return Padding(
                
                  // padding: const EdgeInsets.only(left: 50.0,right: 50, top:20), nzid left w right
                    padding: const EdgeInsets.all(10.0),
@@ -214,6 +230,38 @@ class _ListeMedicmentState extends State<ListeMedicament> {
           }),
       
     );
+  }
+
+  void notif(){
+     TimeOfDay now = TimeOfDay.now();
+      const TimeOfDay releaseTime = TimeOfDay(hour: 14, minute: 56); 
+      Timer.periodic(Duration(hours:20), (timer) {
+     
+       // if(now == releaseTime)       envoiNotification();
+
+        //var greeting = "After Some time ${DateTime.now().second}";
+     
+    });
+  }
+
+   void envoiNotification(String medi) {
+  
+    flutterLocalNotificationsPlugin.show(0,
+     'Testing ',
+      'Il est temps de prendre votre médicament $medi',
+       NotificationDetails(
+         android:AndroidNotificationDetails(
+           channel.id,
+           channel.name,
+           channel.description,
+           importance: Importance.high,
+           color: Colors.blue,
+           playSound: true,
+           icon: '@mipmap/ic_launcher'
+         ) )
+       
+       );
+     
   }
 }
  
