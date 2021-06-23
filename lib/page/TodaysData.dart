@@ -232,7 +232,7 @@ class _TodaysDataState extends State<TodaysData> {
     
     
     StreamProvider<List<Glycemie>>.value(
-  catchError: (_, __) => nn,
+ // catchError: (_, __) => nn,
       
       value: DatabaseService().gly, 
      // initialData: null,

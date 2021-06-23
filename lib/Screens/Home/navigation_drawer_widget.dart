@@ -11,6 +11,7 @@ import 'package:appf/page/TodaysData.dart';
 import 'package:appf/page/analyse.dart';
 import 'package:appf/page/newPage.dart';
 import 'package:appf/page/rapport.dart';
+import 'package:appf/urils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -425,6 +426,14 @@ class NavigationDrawerWidget extends StatelessWidget {
         ));
         break;
           case 6:
+                   
+
+           Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>LoginPage(), 
+        ));
+         // loading(context);
+
+          break;
           // await auth.signOut();   
           // setState((){
 

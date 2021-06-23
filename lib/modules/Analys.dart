@@ -5,10 +5,10 @@ class Analyse{
   String urlAnalyse;
   String name;
   String email;
-
+  String id;
 
 Analyse({
-  required this.urlAnalyse,required this.name, required this.email
+  required this.urlAnalyse,required this.name, required this.email, required this.id
 });
 
 factory Analyse.fromJson(Map<String, dynamic> json,{ required String email}){
@@ -16,7 +16,7 @@ factory Analyse.fromJson(Map<String, dynamic> json,{ required String email}){
       
       urlAnalyse: json['urlAnalyse'], 
       name: json['name'], 
-      email: json['email'],
+      email: json['email'], id: json['id'],
        
     );
   }
@@ -27,6 +27,7 @@ Map<String,dynamic>toMap(){
      "urlAnalyse" : urlAnalyse,
      "name" : name,
       "email":email,
+      "id" : id,
 
     };
   }

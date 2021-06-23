@@ -1,14 +1,23 @@
+import 'dart:async';
 import 'package:appf/Screens/Home/homeWidget.dart';
 import 'package:appf/Screens/Home/navigation_drawer_widget.dart';
 import 'package:appf/Screens/Home/tabbar_material_widget.dart';
 //import 'package:appf/Screens/Home/radial_progress.dart';
 import 'package:appf/Screens/edite_profile.dart';
 import 'package:appf/Screens/Home/Editer.dart';
+import 'package:appf/main.dart';
 import 'package:appf/page/newPage.dart';
 import 'package:appf/step.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('A bg message just showed up : ${message.messageId}    onMessage:$message');
 
+}
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
 
@@ -17,6 +26,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {  
+
+  Future notif() async{
+      WidgetsFlutterBinding.ensureInitialized();
+
+      await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+  }
+
+
         GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   
@@ -24,9 +52,90 @@ class _HomeScreenState extends State<HomeScreen> {
        final pages = <Widget>[
          home(),
   ];
-      
+
+
+     @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channel.description,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher',
+              ),
+            ));
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new notif on app event was published! onMessage:$message');
+
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if(notification != null && android !=null){
+        showDialog(
+          
+          context: context,
+           builder:(_) {
+             return AlertDialog(
+               title: Text(notification.title.toString()),
+               content: SingleChildScrollView(child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 
+                 children: [
+                   Text(
+                     notification.body.toString()
+                   ),
+
+               ],),),
+             );
+           }
+           );
+      }
+     });
+  }
+  void sendNotification() {
+  
+    flutterLocalNotificationsPlugin.show(0,
+     'Reminder ',
+      'Did you check you sugar level today?',
+       NotificationDetails(
+         android:AndroidNotificationDetails(
+           channel.id,
+           channel.name,
+           channel.description,
+           importance: Importance.high,
+           color: Colors.blue,
+           playSound: true,
+           icon: '@mipmap/ic_launcher'
+         ) )
+       
+       );
+     
+  }
+
   @override
   Widget build(BuildContext context) {
+
+      //      Timer.periodic(Duration(seconds:20), (timer) {
+     
+    //               sendNotification();
+
+     
+  //}
+  // ); 
      final height = MediaQuery.of(context).size.height;
    
     return   Scaffold(
@@ -299,7 +408,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 
               ),
               
-
+           
              ] ,
              ),
            ),
@@ -429,7 +538,18 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
 
 
 Center(
-  child: RadialProgress(),
+  child:Column(children: [
+    RadialProgress(),
+
+    // test notif brk 
+    //  FloatingActionButton(onPressed:(){
+    //           sendNotification();
+    //           print("object");
+    //         } 
+            
+            
+    //         )
+  ],) 
   )
 
 

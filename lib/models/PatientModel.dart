@@ -4,9 +4,8 @@ class PatientModel {
   late int photoUrl;
   late String numTel;
  late String uid;
- late  String dateNais;
-  
-  static late  PatientModel currentUser;
+ late  String dateNais;  
+ static late  PatientModel currentUser;
 
 
   PatientModel(

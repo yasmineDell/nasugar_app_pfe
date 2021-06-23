@@ -62,7 +62,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               ),
 
               Center(
-                child: Text("Connexion",style:TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 24,fontWeight: FontWeight.bold))
+                child: Text("Connexion",style:TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 28,fontWeight: FontWeight.bold))
               ),
                
             
@@ -85,14 +85,14 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               height: 80,
               width: 80,
 
-              decoration : BoxDecoration( 
-                image: DecorationImage(
+              // decoration : BoxDecoration( 
+              //   // image: DecorationImage(
 
-                  image: AssetImage("assets/images/loGo.jpeg"),
-                  fit : BoxFit.cover,
-                )
+              //   //   image: AssetImage("assets/images/loGo.jpeg"),
+              //   //   fit : BoxFit.cover,
+              //   // )
 
-              )
+              // )
             )
           ),
 
