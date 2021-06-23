@@ -53,14 +53,13 @@ class DatabaseService{
     });
     return docId;
   }
- Future<Null> updateGlycemie(Timestamp t, Glycemie gly, var docId) async{
+ Future<Null> updateGlycemie( Glycemie gly, var docId) async{
    
   GlycemieCollection.doc(docId).update({
        'etat' : gly.etat,
         'heure' : gly.heure,
         'note': gly.note,
         'taux' : gly.taux,
-        'date' : t,
         'uid': gly.uid,
         'id': docId,
         'email' :gly.email,

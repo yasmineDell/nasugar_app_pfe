@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget{
     return new MaterialApp(
         theme: ThemeData(
          fontFamily: 'Circular',
+         
         // primaryColor: Color.fromRGBO(	65,106,190,1),),
          primaryColor: // Color.fromRGBO(37,136,166,1), vert
          Color.fromRGBO(11,44,135,1),

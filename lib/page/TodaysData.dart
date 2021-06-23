@@ -1,7 +1,9 @@
 
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:appf/Screens/Home/navigation_drawer_widget.dart';
 import 'package:appf/modules/Glycemie.dart';
+import 'package:appf/page/dataFromAnyday.dart';
 import 'package:appf/page/modifGly.dart';
 import 'package:appf/urils/constant.dart';
 import 'package:appf/urils/loading.dart';
@@ -68,6 +70,8 @@ class _TodaysDataState extends State<TodaysData> {
 //-------------------------------------------------------------------------------------------------------------------
 //DATE PICKER--------------------------------------------------------------------------------------------------------
   Future<Null> _selectDate(BuildContext context) async {
+      initializeDateFormatting('fr_FR', null);
+
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -77,9 +81,14 @@ class _TodaysDataState extends State<TodaysData> {
     if (picked != null)
       setState(() {
         selectedDate = picked;
-        _dateController.text = DateFormat.yMd().format(selectedDate);
-        print(_dateController.text);
-        DatePicker();
+        _dateController.text = DateFormat.yMMMd('fr_FR').format(selectedDate);
+       // print(_dateController.text);
+
+         Navigator.of(context).push(MaterialPageRoute(
+                     builder: (context) => Anyday( day: _dateController.text,fullDate: picked,),
+                       )
+                      );
+
       });
   }
 
@@ -233,7 +242,7 @@ class _TodaysDataState extends State<TodaysData> {
       
     
      Scaffold(
-          drawer: NavigationDrawerWidget(),
+        //  drawer: NavigationDrawerWidget(),
 
         appBar: AppBar(centerTitle: true,
          title: Text("Niveau de glycémie d'aujourd'hui", textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
@@ -281,7 +290,7 @@ class _TodaysDataState extends State<TodaysData> {
             return Center(
               child: CircularProgressIndicator(),
             );
-          }
+          } 
   
          return  ListView(
            children: snapshot.data!.docs.map((document)
@@ -314,6 +323,7 @@ class _TodaysDataState extends State<TodaysData> {
                    document['email'])
 
                   );
+  print(document['date'].toDate().day.toString());
 
        /*  AwesomeDialog(
             context: context,
@@ -377,7 +387,7 @@ class _TodaysDataState extends State<TodaysData> {
                   
                   )
 
-                  : SizedBox(height:0.1),
+                  : SizedBox(height:0.00001),
                   
               ),
              );

@@ -426,8 +426,17 @@ class NavigationDrawerWidget extends StatelessWidget {
         ));
         break;
           case 6:
+<<<<<<< HEAD
          await auth.signOut();
          
+=======
+          // await auth.signOut();   
+          // setState((){
+
+
+            
+          // })
+>>>>>>> 577f7f4bf14979bc5573ccfedce2a20441028c49
 
 
 

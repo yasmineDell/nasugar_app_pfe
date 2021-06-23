@@ -1,3 +1,4 @@
+import 'package:appf/Screens/graphics/graphics.dart';
 import 'package:appf/page/TodaysData.dart';
 import 'package:appf/page/analyse.dart';
 import 'package:appf/page/newPage.dart';
@@ -337,7 +338,7 @@ class NavigationDrawerWidget extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Rapport_Analyse(),/*Test()*/
+          builder: (context) =>  SplineTypes(),// Rapport_Analyse(),/*Test()*/
         ));
         
         break;

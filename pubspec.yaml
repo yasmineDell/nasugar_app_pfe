@@ -58,6 +58,8 @@ dependencies:
   #font
   font_awesome_flutter : ^9.0.0 
   image_picker: ^0.8.0+3
+  chart_sparkline: ^1.0.5
+  syncfusion_flutter_charts: ^19.1.69+1
 
 dev_dependencies:
   flutter_test:
