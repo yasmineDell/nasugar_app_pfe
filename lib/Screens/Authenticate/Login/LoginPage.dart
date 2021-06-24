@@ -41,10 +41,10 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
         //color: Color.fromRGBO(27,104,152,1 ) //fromRGBO(31,119,174,1)   //(39,149,217,1), //fromRGBO(110, 120, 247, 1),
  gradient: LinearGradient(colors: <Color>[/*Color.fromRGBO(27,104,152,1 ),Color.fromRGBO(31,119,174,1) ,Color.fromRGBO(39,149,217,1),*/
 
-         // Color.fromRGBO(11,44,135,1),
-          //Color.fromRGBO(11,44,135,1),
-          Color.fromRGBO(19, 36, 64, 1),
-           Color.fromRGBO(19, 36, 64, 1),
+          Color.fromRGBO(11,44,135,1),
+          Color.fromRGBO(11,44,135,1),
+         // Color.fromRGBO(19, 36, 64, 1),
+     //      Color.fromRGBO(19, 36, 64, 1),
 
                       ])
         ),
@@ -320,24 +320,24 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 
               ),
-              IconButton(
-            icon:FaIcon(FontAwesomeIcons.google,color: Color.fromRGBO(223,178,164,1),),
-            onPressed: () async {
-              /*bool success = await loginService.signInWithGoogle();
+          //     IconButton(
+          //   icon:FaIcon(FontAwesomeIcons.google,color: Color.fromRGBO(223,178,164,1),),
+          //   onPressed: () async {
+          //     /*bool success = await loginService.signInWithGoogle();
 
-                      if (success) {
-                        Navigator.push(context, MaterialPageRoute(builder:(context)=> ProfileScreen( )));
-                    }
-              /* _googleSignIn.signIn().then((userData) {
-                      setState(() {
-                        _isLoggedIn = true;
-                        _userObj = userData;
-                      });
-                    }).catchError((e) {
-                      print(e);
-                    });*/*/
-            },
-          ),
+          //             if (success) {
+          //               Navigator.push(context, MaterialPageRoute(builder:(context)=> ProfileScreen( )));
+          //           }
+          //     /* _googleSignIn.signIn().then((userData) {
+          //             setState(() {
+          //               _isLoggedIn = true;
+          //               _userObj = userData;
+          //             });
+          //           }).catchError((e) {
+          //             print(e);
+          //           });*/*/
+          //   },
+          // ),
 
 
 

@@ -21,7 +21,7 @@ class _DoctorsListState extends State<DoctorsList> {
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-        backgroundColor: Color.fromRGBO(19, 36, 64, 1), //Color.fromRGBO(11,44,135,1),
+       // backgroundColor: Color.fromRGBO(19, 36, 64, 1), //Color.fromRGBO(11,44,135,1),
         centerTitle: true,
         title:SizedBox(
          // height: kToolbarHeight,

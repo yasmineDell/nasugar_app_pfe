@@ -31,7 +31,13 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
       ),
     
       
-       body:   StreamBuilder(
+       body:   buildbody()
+      
+    );
+  }
+
+   buildbody(){
+    return StreamBuilder(
          
           stream: FirebaseFirestore.instance.collection('Medicaments').where('email',isEqualTo: user!.email).snapshots(),
           builder:
@@ -43,7 +49,6 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
             }
 
               
-               //*******************liste des medecin *************/
             return
              ListView(
               scrollDirection: Axis.horizontal,
@@ -56,7 +61,7 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
               
              return Padding(
                
-                  padding: const EdgeInsets.only( top:250, left: 20, bottom: 250), //nzid left w right
+                  padding: const EdgeInsets.only( top:250, left: 20, bottom: 320), //nzid left w right
                    //padding: const EdgeInsets.all(10.0),
                   
                   child:   Container(
@@ -65,7 +70,7 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
                       
                      
                     child:SizedBox(
-                      height: 100,
+                      height: 80,
                      //width: 200,
                     
                                       
@@ -164,7 +169,7 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
 
 
                           SizedBox(width: 50,
-                height: 50,),
+              ),
                          ] ),
                         )),
 
@@ -182,9 +187,7 @@ class _ListeMedicmentHState extends State<ListeMedicamentH> {
               );
               }).toList(),
             );
-          }),
-      
-    );
+          });
   }
 }
  

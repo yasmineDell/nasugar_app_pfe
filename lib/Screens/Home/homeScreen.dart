@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:appf/Screens/Home/homeWidget.dart';
 import 'package:appf/Screens/Home/navigation_drawer_widget.dart';
 import 'package:appf/Screens/Home/tabbar_material_widget.dart';
+import 'package:appf/Screens/ListeMedecins/lst.dart';
 //import 'package:appf/Screens/Home/radial_progress.dart';
 import 'package:appf/Screens/edite_profile.dart';
 import 'package:appf/Screens/Home/Editer.dart';
@@ -288,16 +289,16 @@ padding: const EdgeInsets.only( left: 10,top :10),
 crossAxisAlignment: CrossAxisAlignment.start,
 
 children: <Widget>[
-  
-  Text(
+  //buildbody(),
+  // Text(
     
-                "Medicaments d'aujourd'hui", 
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 15,
-                          color: Colors.grey[800],
-                        ),
-  ),
+  //               "Medicaments d'aujourd'hui", 
+  //                       style: TextStyle(
+  //                         fontWeight: FontWeight.w800,
+  //                         fontSize: 15,
+  //                         color: Colors.grey[800],
+  //                       ),
+  // ),
 
     
   Container(
@@ -389,22 +390,22 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
              
              crossAxisAlignment: CrossAxisAlignment.center,
              children: <Widget>[
-
-            Text( "90 \n mg/mol",
+        SizedBox( 
+               width: 27,
+             ),
+            Text( "0.9 g/l",
                 
-                style: TextStyle(fontSize: 15 , color: Colors.white),
+                style: TextStyle(fontSize: 18 , color: Colors.white),
 
              ) ,
-             SizedBox( 
-               width: 5,
-             ),
+            
             
              
-              Text( "14 avril \n 2021",
+            //   Text( "14 avril \n 2021",
                 
-                style: TextStyle(fontSize: 15 , color: Colors.white),
+            //     style: TextStyle(fontSize: 15 , color: Colors.white),
 
-             ) ,
+            //  ) ,
             
              ],
              
@@ -500,22 +501,22 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
              
              crossAxisAlignment: CrossAxisAlignment.center,
              children: <Widget>[
-
-            Text( "85 \n kg",
+  SizedBox(
+               width: 40,
+             ),
+            Text( "85 kg",
                 
-                style: TextStyle(fontSize: 15 , color: Colors.white),
+                style: TextStyle(fontSize: 18 , color: Colors.white),
 
              ) ,
-             SizedBox(
-               width: 30,
-             ),
+           
             
              
-              Text( "12 avril \n 2021",
+            //   Text( "12 avril \n 2021",
                 
-                style: TextStyle(fontSize: 15 , color: Colors.white),
+            //     style: TextStyle(fontSize: 15 , color: Colors.white),
 
-             ) ,
+            //  ) ,
             
              ],
              

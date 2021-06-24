@@ -3,6 +3,7 @@ import 'package:appf/Screens/graphics/graphics.dart';
 import 'package:appf/page/TodaysData.dart';
 import 'package:flutter/material.dart';
 
+import '../viewProfile.dart';
 import 'Editer.dart';
 
 class TabBarMaterialWidget extends StatefulWidget {
@@ -42,7 +43,7 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
             icon: Icon(Icons.bar_chart_outlined),
              onPressed: () {  
                   Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => /*SplineTypes()*/ Graphes()));
+                  builder: (context) => SplineTypes() /*Graphes()*/));
              },
           
           ),
@@ -59,7 +60,7 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
             icon: Icon(Icons.person_outline_outlined),
              onPressed: () {  
                   Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => TodaysData()));
+                  builder: (context) => viewProfil()));
              },
           
           ),

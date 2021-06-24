@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/src/material/icons.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:vector_math/vector_math_64.dart' as math;
+
+import 'main.dart';
 
 String formatDate(DateTime d) {
   return d.toString().substring(0, 19);
@@ -153,13 +156,31 @@ class _RadialProgressState extends State<RadialProgress>
 
    late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _status = '?', _steps = '?';
+  String _status = 'arret', _steps = '?';
 
-  @override
   /*void initState1() {
     super.initState();
     initPlatformState();
   }*/
+    void sendNotification() {
+  
+    flutterLocalNotificationsPlugin.show(0,
+     'Bravo!!! ',
+      'Vous avez atteind votre goal du jour!',
+       NotificationDetails(
+         android:AndroidNotificationDetails(
+           channel.id,
+           channel.name,
+           channel.description,
+           importance: Importance.high,
+           color: Colors.blue,
+           playSound: true,
+           icon: '@mipmap/ic_launcher'
+         ) )
+       
+       );
+     
+  }
 
 
 
@@ -167,6 +188,9 @@ class _RadialProgressState extends State<RadialProgress>
     print(event);
     setState(() {
       _steps = event.steps.toString();
+      if(event.steps==12660){
+        sendNotification();
+      }
     });
   }
 
@@ -208,7 +232,7 @@ class _RadialProgressState extends State<RadialProgress>
     setState(() {
       int steps = 0;
       steps = 0;
-      //_steps = "$steps";
+      _steps = resetPedo(_steps);
       
     });
   }
@@ -243,22 +267,21 @@ class _RadialProgressState extends State<RadialProgress>
   }
 
 // la méthode qui initialise le step counter chaque jour
-void resetPedo()
+String  resetPedo(String s)
 {
   var duration;
     int i= duration.inDays ;
     int diff = difference(date1, DateTime.now());
   
-     
-if (diff < 1  ) {
+    if (diff < 1  ) {
   print("hello ");
 
  _steps = 0 as String;
-
+ return _steps;
 
   
 }
-
+return s;
 
 }
   
@@ -276,10 +299,6 @@ if (diff < 1  ) {
           duration: fadeInDuration,
           child: Column(
             children: <Widget>[
-
-                 
-
-
                  Text(
                 'Nombre de pas:',
                 style: TextStyle(fontSize: 15),
@@ -299,10 +318,10 @@ if (diff < 1  ) {
                 style: TextStyle(fontSize: 15 , color: Colors.black),
               ),
               Icon(
-                _status == 'walking'
+                _status == 'marche'
                     ? Icons.directions_walk 
                     
-                    : _status == 'stopped'
+                    : _status == 'arret'
                         ? Icons.accessibility_new
                         : Icons.error,
                 size: 20,
@@ -311,7 +330,7 @@ if (diff < 1  ) {
               Center(
                 child: Text(
                   _status,
-                  style: _status == 'walking' || _status == 'stopped'
+                  style: _status == 'marche' || _status == 'arret'
                       ? TextStyle(fontSize: 16)
                       : TextStyle(fontSize: 16, color: Colors.blue ),
                 ),

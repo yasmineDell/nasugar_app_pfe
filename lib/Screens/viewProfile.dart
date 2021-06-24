@@ -89,7 +89,7 @@ FixedExtentScrollController fixedExtentScrollController =
 
                    }
                   },
-  child: (document['Email'] == 'test@gmail.com')
+  child: (document['Email'] == user!.email.toString())
                 ?
                 
                 Container(
@@ -253,14 +253,14 @@ FixedExtentScrollController fixedExtentScrollController =
                           child: 
                           Row(
                             children :<Widget>[
-                            Text("Type de diabète : "
+                            Text("Type de diabète :  "
                          ,
                          style:TextStyle(fontSize: 14.5 , color: Colors.grey.withOpacity(0.8) ) ,
                          ),
                            
-                    SizedBox(width:20),
+                    SizedBox(width:17),
 
-                          Text( "E-mail"
+                          Text( "Type-1"
                          ,
                          style:TextStyle(fontSize: 14.5) ,
                          ),
@@ -300,7 +300,7 @@ FixedExtentScrollController fixedExtentScrollController =
                          style:TextStyle(fontSize: 14.5, color: Colors.grey.withOpacity(0.8) ) ,
                          ),
 
-                             Text(document['Email'] +" Kg"
+                             Text(" 85 Kg"
                          ,
                          style:TextStyle(fontSize: 14.5) ,
                          ),

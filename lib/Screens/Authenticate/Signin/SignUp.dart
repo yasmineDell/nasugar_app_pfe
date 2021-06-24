@@ -1,5 +1,6 @@
 import 'package:appf/Screens/Authenticate/Login/LoginPage.dart';
 import 'package:appf/Screens/Home/ProfileScreen.dart';
+import 'package:appf/Screens/Home/homeScreen.dart';
 import 'package:appf/models/PatientModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +140,7 @@ class _SignUpState extends State<SignUp> {
                  validator: (val) => val!.isEmpty ? 'Entrez votre date de naissance ' : null,
                  controller: _dateNaisController,
                  decoration: InputDecoration(
-                hintText: "Date de naissance",
+                hintText: "[JJ/MM/AAAA]",
                 hintStyle: TextStyle(color: Colors.grey),
                // border: InputBorder.none,
                 icon: const Padding(
@@ -299,7 +300,7 @@ class _SignUpState extends State<SignUp> {
                    
                     userSetup(_nameController.text, _dateNaisController.text, _numTelController.text,_emailController.text);
                    
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),));  } on FirebaseAuthException catch (e) {
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen (),));  } on FirebaseAuthException catch (e) {
              if (e.code == 'weak-password') {
               print('The password provided is too weak.');
             } else if (e.code == 'email-already-in-use') {
