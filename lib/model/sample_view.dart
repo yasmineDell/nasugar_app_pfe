@@ -8,6 +8,8 @@ import 'model.dart';
 abstract class SampleView extends StatefulWidget {
   /// base class constructor of sample's stateful widget class
   const SampleView({Key? key}) : super(key: key);
+
+  get map => null;
 }
 
 /// Base class of the sample's state class

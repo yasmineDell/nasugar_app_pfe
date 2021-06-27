@@ -9,10 +9,15 @@ import 'package:appf/Screens/Home/Editer.dart';
 import 'package:appf/main.dart';
 import 'package:appf/page/newPage.dart';
 import 'package:appf/step.dart';
+import 'package:appf/widget/Card_section.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import '../../const copy.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -48,7 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
         GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  
+      final user = FirebaseAuth.instance.currentUser;
+
    int index = 0;
        final pages = <Widget>[
          home(),
@@ -299,8 +305,41 @@ children: <Widget>[
   //                         color: Colors.grey[800],
   //                       ),
   // ),
+                 SizedBox(height: 16),
 
     
+               Container(
+                    height: 125,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        CardSection(
+                          image: AssetImage("assets/images/pill.png"),
+                          title: "Metforminv",
+                          value: "2",
+                          unit: "Comprimés",
+                          time: "6-7 AM",
+                          isDone: false,
+                        ),
+                        CardSection(
+                          image: AssetImage("assets/images/pill.png"),
+                          title: "Trulicity",
+                          value: "1",
+                          unit: "Comprimé",
+                          time: "8-9 AM",
+                          isDone: true,
+                        )
+                      ],
+                    )),
+SizedBox(height:40),
+Center(
+  child:Column(children: [
+    RadialProgress(),
+
+ 
+
+  ],) 
+  ),
   Container(
 margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
 
@@ -327,10 +366,10 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
            child: Column( 
            children: <Widget> [
               Container(
-                width : 140,
+                width : 130,
            
-           height: 75,
-           decoration: BoxDecoration(color: Colors.grey[100],
+           height: 73,
+           decoration: BoxDecoration(color: Colors.grey[50],
             borderRadius: BorderRadius.vertical(top:Radius.circular(40))
            
            
@@ -355,16 +394,20 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                          
                       
                           shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage("assets/images/glycemie.png"))),
+                          
+                         image: DecorationImage(
+                             fit: BoxFit.cover,
+                              image: AssetImage("assets/images/glycemie.png")
+                             )
+                             )
+                             ,
                     ),),
-             SizedBox(height: 3),
+             SizedBox(height: 1),
              
              
             Text( "Glycémie",
                 
-                style: TextStyle(fontSize: 15 , color :   Color.fromRGBO(11,44,135,1),
+                style: TextStyle(fontSize: 13 , color :   Color.fromRGBO(11,44,135,1),
       ),
 
              ) ,
@@ -375,9 +418,9 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 
               ),
               Container(
-                width : 140,
+                width : 130,
            
-           height: 75,
+           height: 60,
            decoration: BoxDecoration(color :  Color.fromRGBO(11,44,135,1),
             borderRadius: BorderRadius.vertical(bottom:Radius.circular(40))
            
@@ -391,11 +434,11 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
              crossAxisAlignment: CrossAxisAlignment.center,
              children: <Widget>[
         SizedBox( 
-               width: 27,
+               width: 30,
              ),
             Text( "0.9 g/l",
                 
-                style: TextStyle(fontSize: 18 , color: Colors.white),
+                style: TextStyle(fontSize: 15 , color: Colors.white),
 
              ) ,
             
@@ -443,12 +486,15 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
            child: Column( 
            children: <Widget> [
               Container(
-                width : 150,
+                width : 130,
            
-           height: 75,
-           decoration: BoxDecoration(color: Colors.grey[100],
-            borderRadius: BorderRadius.vertical(top:Radius.circular(40))
-           
+           height: 73,
+           decoration: BoxDecoration(color: Colors.grey[50],
+            borderRadius: BorderRadius.vertical(top:Radius.circular(40)),
+            border: Border.all(
+      color: Color(0x5B3576AA).withOpacity(0.1),
+      width: 1,
+    ),
            
            ),
            child: Padding(padding: const EdgeInsets.all(12.0),
@@ -469,10 +515,10 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                               fit: BoxFit.fill,
                               image: AssetImage("assets/images/pes.jpg"))),
                     ),),
-             SizedBox(height: 3),
+             SizedBox(height: 1),
                Text( "Poids",
                 
-                style: TextStyle(fontSize: 15 , color :  Color.fromRGBO(11,44,135,1),),
+                style: TextStyle(fontSize: 13 , color :  Color.fromRGBO(11,44,135,1),),
 
              ) ,
 
@@ -486,9 +532,9 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 
               ),
               Container(
-                width : 150,
+                width : 130,
            
-           height: 75,
+           height: 60,
            decoration: BoxDecoration(color : Color.fromRGBO(11,44,135,1),
             borderRadius: BorderRadius.vertical(bottom:Radius.circular(40))
            
@@ -506,7 +552,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
              ),
             Text( "85 kg",
                 
-                style: TextStyle(fontSize: 18 , color: Colors.white),
+                style: TextStyle(fontSize: 15 , color: Colors.white),
 
              ) ,
            
@@ -545,20 +591,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
   // espace li entre les 2 box w la box li tahthom 
 
 
-Center(
-  child:Column(children: [
-    RadialProgress(),
 
-    // test notif brk 
-    //  FloatingActionButton(onPressed:(){
-    //           sendNotification();
-    //           print("object");
-    //         } 
-            
-            
-    //         )
-  ],) 
-  )
 
 
 
@@ -594,7 +627,159 @@ Center(
     });
   }
 
+  Widget buildbody(){
+    return StreamBuilder(
+         
+          stream: FirebaseFirestore.instance.collection('Medicaments').where('email',isEqualTo: user!.email).snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return 
+                 CircularProgressIndicator();
+              
+            }
 
+              
+            return
+             ListView(
+              scrollDirection: Axis.horizontal,
+             
+             
+             
+
+               children: snapshot.data!.docs.map((document) {
+                
+              
+             return Padding(
+               
+                  padding: const EdgeInsets.only( top:10, left: 20, bottom: 20), //nzid left w right
+                   //padding: const EdgeInsets.all(10.0),
+                  
+                  child:   Container(
+                     
+                    
+                      
+                     
+                    child:SizedBox(
+                      height: 80,
+                     //width: 200,
+                    
+                                      
+                
+                   child: Material(
+                    color: Colors.white,
+                    elevation: 4.0,
+                    
+                    borderRadius: BorderRadius.circular(15.0),
+                    shadowColor: Color(0x802196F3),
+                    child:
+                       
+                       Row(
+                          // le container contenant les info du premier medecin
+                     mainAxisAlignment: MainAxisAlignment.start,
+                    
+                            children:[ 
+                            
+
+                                       
+                    Container(
+                       width: 50,
+                       height: 50,
+                      decoration: BoxDecoration(
+                        
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.white.withOpacity(0.1),
+                                //offset: Offset(0, 10)
+                                )
+                          ],
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/images/pill.png"))),
+                    ),
+
+                SizedBox(width: 50,
+                ),
+                
+                        Container(
+                          
+                          // margin: EdgeInsets.symmetric(horizontal :20.0),
+                          
+                            // le container contenant les info du premier medecin
+                          child:  Column (
+                            children: [
+                               SizedBox(width: 30,
+                height: 30,),
+     
+                          Container(
+          
+          
+          
+               child: Text(document['NomMedicament'],
+            style: TextStyle(color: Color.fromRGBO(65, 106, 190, 1), fontSize: 20.0,),),),
+        
+    
+       
+        
+          Container(
+              
+              child:Text("Dose : "+document['dose'],
+                   style: TextStyle(color: Colors.black54, fontSize: 16.0,), ),
+                
+          ),
+                   
+                
+           Container(
+             
+             
+             child:
+       Text("Heure : "+document['Time'] +"  heures"
+       ,
+          style: TextStyle(color: Colors.black54, fontSize: 15.0),),),       
+               
+
+           Container(
+
+
+            child :Text("Periode : "+ document['Period'],
+          style: TextStyle(color: Colors.black54, fontSize: 12.0,),)),
+
+        ],)
+        
+        
+        
+
+      
+                            
+                            
+                        
+                         ),
+
+
+                          SizedBox(width: 50,
+              ),
+                         ] ),
+                        )),
+
+           
+              
+                
+              ),
+
+
+
+
+
+                  
+                
+              );
+              }).toList(),
+            );
+          });
+  }
 
  
   

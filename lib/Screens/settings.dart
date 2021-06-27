@@ -1,5 +1,9 @@
+import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import '../main.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -7,6 +11,10 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  bool isOn =false;
+  int alarmId=1;
+    int alarmId2=2;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,8 +92,40 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: 10,
             ),
-            buildNotificationOptionRow("Activer les notifications", true),
-            
+           // buildNotificationOptionRow("Activer les notifications", true),
+            Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                children: [
+                  Text("Activer les notifications",
+                   style: TextStyle(fontSize: 18,color: Colors.black54 ),),
+                   CupertinoSwitch(value: isOn,
+                   
+                    onChanged: (value)
+                    {
+                      setState(() {
+                         isOn =value;
+                       //AndroidAlarmManager.oneShot(Duration(seconds: 5), alarmId, sendNotification);
+                     //  AndroidAlarmManager.oneShotAt(DateTime(2021,06,27,15,09), alarmId, sendNotification);
+//alarmId=2;
+                      
+
+                      });
+
+                      if(isOn==true){
+                         AndroidAlarmManager.periodic(
+                           Duration(seconds: 5),
+                            alarmId, 
+                            sendNotification
+                            );
+
+                      }else{
+                        AndroidAlarmManager.cancel(alarmId);
+                      }
+                    }
+                    )
+                ],
+            ),
             SizedBox(
               height: 150,
             ),
@@ -176,3 +216,29 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 }
+
+void fireAlarm(){
+  print("Alarm Fireed at ${DateTime.now()}");
+}
+sendNotification() {
+      flutterLocalNotificationsPlugin.show(0,
+     'Reminder ',
+      'veuillez verifier votre taux de glycemie',
+       NotificationDetails(
+         android:AndroidNotificationDetails(
+           channel.id,
+           channel.name,
+           channel.description,
+           importance: Importance.high,
+           color: Colors.blue,
+           playSound: true,
+           icon: '@mipmap/ic_launcher'
+         ) )
+
+       );
+  
+
+    
+
+
+  }

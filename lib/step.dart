@@ -75,16 +75,16 @@ class _StepCounterState extends State<StepCounter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        
+
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              
-              
-              
-              
-              
+
+
+
+
+
               Text(
                 'Steps taken:',
                 style: TextStyle(fontSize: 30),
@@ -121,15 +121,15 @@ class _StepCounterState extends State<StepCounter> {
             ],
           ),
         ),
-     
+
     );
   }
 }*/
 
 
 class RadialProgress extends StatefulWidget {
-  final double goalCompleted = 0.7;
- 
+  final double goalCompleted = 0.8;
+
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
@@ -144,15 +144,15 @@ class _RadialProgressState extends State<RadialProgress>
   var date1 = DateTime.now();
 
 
-  
-  
 
 
-   
+
+
+
 
   double progressDegrees = 0;
   var count = 0;
-  
+
 
    late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
@@ -163,7 +163,7 @@ class _RadialProgressState extends State<RadialProgress>
     initPlatformState();
   }*/
     void sendNotification() {
-  
+
     flutterLocalNotificationsPlugin.show(0,
      'Bravo!!! ',
       'Vous avez atteind votre goal du jour!',
@@ -177,9 +177,9 @@ class _RadialProgressState extends State<RadialProgress>
            playSound: true,
            icon: '@mipmap/ic_launcher'
          ) )
-       
+
        );
-     
+
   }
 
 
@@ -188,7 +188,7 @@ class _RadialProgressState extends State<RadialProgress>
     print(event);
     setState(() {
       _steps = event.steps.toString();
-      if(event.steps==12660){
+      if(event.steps==8000){
         sendNotification();
       }
     });
@@ -230,16 +230,16 @@ class _RadialProgressState extends State<RadialProgress>
 
   void reset() {
     setState(() {
-      int steps = 0;
-      steps = 0;
-      _steps = resetPedo(_steps);
-      
+    //  int steps = 0;
+     // steps = 0;
+     // _steps = resetPedo(_steps);
+
     });
   }
   @override
   void initState() {
     super.initState();
-    
+    reset();
     initPlatformState();
     _radialProgressAnimationController =
         AnimationController(vsync: this, duration: fillDuration);
@@ -272,27 +272,27 @@ String  resetPedo(String s)
   var duration;
     int i= duration.inDays ;
     int diff = difference(date1, DateTime.now());
-  
+
     if (diff < 1  ) {
   print("hello ");
 
- _steps = 0 as String;
+ _steps = "0" ;
  return _steps;
 
-  
+
 }
 return s;
 
 }
-  
+
 
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       child: Container(
-        height: 200.0,
-        width: 200.0,
+        height: 190.0,
+        width: 190.0,
         padding: EdgeInsets.symmetric(vertical: 40.0),
         child: AnimatedOpacity(
           opacity: progressDegrees > 30 ? 1.0 : 0.0,
@@ -301,48 +301,56 @@ return s;
             children: <Widget>[
                  Text(
                 'Nombre de pas:',
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 16),
               ),
               Text(
-                
+
                 _steps.toString() ,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 19),
               ),
-              Divider(
-                //height: 100,
-                thickness: 2,
-                color: Colors.white,
+              // Divider(
+              //   // //height: 100,
+              //   
+
+              // ),
+              // Divider(
+              //   thickness: 1,
+              //    color: Colors.white,
+
+              // ),
+              SizedBox(
+                height:9
               ),
               Text(
                 'Votre état',
-                style: TextStyle(fontSize: 15 , color: Colors.black),
+                style: TextStyle(fontSize: 16 , color: Colors.black),
               ),
               Icon(
                 _status == 'marche'
-                    ? Icons.directions_walk 
-                    
+                    ? Icons.directions_walk
+
                     : _status == 'arret'
                         ? Icons.accessibility_new
                         : Icons.error,
-                size: 20,
+                size: 21,
                 color: Colors.blue,
               ),
               Center(
                 child: Text(
                   _status,
                   style: _status == 'marche' || _status == 'arret'
-                      ? TextStyle(fontSize: 16)
-                      : TextStyle(fontSize: 16, color: Colors.blue ),
+                      ? TextStyle(fontSize: 14)
+                      : TextStyle(fontSize: 14, color: Colors.blue ),
                 ),
               )
               /*Text(
-                'Objectif : 6000 ', // on prend la valeur saisi par le malade 
+                'Objectif : 6000 ', // on prend la valeur saisi par le malade
                 style: TextStyle(fontSize: 15.0, letterSpacing: 1.5 ,color: Colors.grey[400]),
               ),
               SizedBox(
                 height: 4.0,
               ),
-             
+
                   Container(
                 height: 2.0,
                 width: 80.0,

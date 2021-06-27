@@ -3,6 +3,7 @@ import 'package:appf/Provider/google_sign_in.dart';
 import 'package:appf/Screens/Authenticate/Signin/SignUp.dart';
 import 'package:appf/Screens/Home/ProfileScreen.dart';
 import 'package:appf/Screens/Home/homeScreen.dart';
+import 'package:appf/urils/MyCustomWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -259,138 +260,142 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                                     password: _passwordController.text) ;
                                     print(userCredential); // celui là affiche le uid
                                     print("signed in ");
-                           Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen(),/*ProfileScreen ()*/));
-
-
-                                    }
-          on FirebaseAuthException catch (e) {
-  if (e.code == 'user-not-found') {
-    print('No user found for that email.');
-
-   showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Cet utilisateur n'existe pas"),
-              content: Text("Erreur"),
-              actions: [
-                FlatButton(
-                  child: Text("Ok"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
-
-  } else if (e.code == 'wrong-password') {
-    print('Wrong password provided for that user.');
-
-   showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Mot de passe incorrecte"),
-              content: Text("Erreur"),
-              actions: [
-                FlatButton(
-                  child: Text("Ok"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
-
-
-
-  }
-}
-
-
-
-
-
-
-
-
-                },
-
-
-              ),
-          //     IconButton(
-          //   icon:FaIcon(FontAwesomeIcons.google,color: Color.fromRGBO(223,178,164,1),),
-          //   onPressed: () async {
-          //     /*bool success = await loginService.signInWithGoogle();
-
-          //             if (success) {
-          //               Navigator.push(context, MaterialPageRoute(builder:(context)=> ProfileScreen( )));
-          //           }
-          //     /* _googleSignIn.signIn().then((userData) {
-          //             setState(() {
-          //               _isLoggedIn = true;
-          //               _userObj = userData;
-          //             });
-          //           }).catchError((e) {
-          //             print(e);
-          //           });*/*/
-          //   },
-          // ),
-
-
-
-
-             /* Expanded(
-
-                      child: ElevatedButton(
-
-                child: Text(
-                  "Se connecter ",
-                  style: TextStyle(color: Colors.white),
-
-                ),
-                          onPressed: () async {
-                                await _firebaseAuth
-                                .signInWithEmailAndPassword(
-                                    email: _emailController.text,
-                                    password: _passwordController.text)
-                                .then((value) => print('Login Successful'));
-                                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),));
-
-                          },
-                         )),*/
-
-
-
-                ],
-              ),)
-            ),),
-
-
-
-
-              ),
-              ),
-        ],),
-
-
-
-
-
-
-
-
-
-
-
-        ),
-
-
-   ),
-    );
-  }
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen(),/*ProfileScreen ()*/));
+                              //   SecondClass();
+              
+                           
+                                                               }
+                                     on FirebaseAuthException catch (e) {
+                             if (e.code == 'user-not-found') {
+                               print('No user found for that email.');
+                           
+                              showDialog(
+                                     context: context,
+                                     builder: (BuildContext context) {
+                                       return AlertDialog(
+                                         title: Text("Cet utilisateur n'existe pas"),
+                                         content: Text("Erreur"),
+                                         actions: [
+                                           FlatButton(
+                                             child: Text("Ok"),
+                                             onPressed: () {
+                                               Navigator.of(context).pop();
+                                             },
+                                           )
+                                         ],
+                                       );
+                                     });
+                           
+                             } else if (e.code == 'wrong-password') {
+                               print('Wrong password provided for that user.');
+                           
+                              showDialog(
+                                     context: context,
+                                     builder: (BuildContext context) {
+                                       return AlertDialog(
+                                         title: Text("Mot de passe incorrecte"),
+                                         content: Text("Erreur"),
+                                         actions: [
+                                           FlatButton(
+                                             child: Text("Ok"),
+                                             onPressed: () {
+                                               Navigator.of(context).pop();
+                                             },
+                                           )
+                                         ],
+                                       );
+                                     });
+                           
+                           
+                           
+                             }
+                           }
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                                           },
+                           
+                           
+                                         ),
+                                     //     IconButton(
+                                     //   icon:FaIcon(FontAwesomeIcons.google,color: Color.fromRGBO(223,178,164,1),),
+                                     //   onPressed: () async {
+                                     //     /*bool success = await loginService.signInWithGoogle();
+                           
+                                     //             if (success) {
+                                     //               Navigator.push(context, MaterialPageRoute(builder:(context)=> ProfileScreen( )));
+                                     //           }
+                                     //     /* _googleSignIn.signIn().then((userData) {
+                                     //             setState(() {
+                                     //               _isLoggedIn = true;
+                                     //               _userObj = userData;
+                                     //             });
+                                     //           }).catchError((e) {
+                                     //             print(e);
+                                     //           });*/*/
+                                     //   },
+                                     // ),
+                           
+                           
+                           
+                           
+                                        /* Expanded(
+                           
+                                                 child: ElevatedButton(
+                           
+                                           child: Text(
+                                             "Se connecter ",
+                                             style: TextStyle(color: Colors.white),
+                           
+                                           ),
+                                                     onPressed: () async {
+                                                           await _firebaseAuth
+                                                           .signInWithEmailAndPassword(
+                                                               email: _emailController.text,
+                                                               password: _passwordController.text)
+                                                           .then((value) => print('Login Successful'));
+                                                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen (),));
+                           
+                                                     },
+                                                    )),*/
+                           
+                           
+                           
+                                           ],
+                                         ),)
+                                       ),),
+                           
+                           
+                           
+                           
+                                         ),
+                                         ),
+                                   ],),
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                                   ),
+                           
+                           
+                              ),
+                               );
+                             }
+                           }
+                           
+                           class SecondClass {
 }
 
 /*import 'package:flutter/material.dart';

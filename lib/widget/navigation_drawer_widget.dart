@@ -337,9 +337,9 @@ class NavigationDrawerWidget extends StatelessWidget {
 
     switch (index) {
       case 0:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>  SplineTypes(),// Rapport_Analyse(),/*Test()*/
-        ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) =>  //SplineTypes(map: map,),// Rapport_Analyse(),/*Test()*/
+        // ));
         
         break;
       case 1:

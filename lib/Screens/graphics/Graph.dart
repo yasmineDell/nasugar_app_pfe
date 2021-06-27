@@ -7,8 +7,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class Graphes extends StatefulWidget {
-  const Graphes({ Key? key }) : super(key: key);
 
+  const Graphes({ Key? key, required this.tl }) : super(key: key);
+  final Map<DateTime,double> tl;
   @override
   _GraphesState createState() => _GraphesState();
 }
@@ -17,7 +18,7 @@ class _GraphesState extends State<Graphes> {
 
 // late Glycemie glycemie =new Glycemie(etat: "", heure: "", note: "", taux: 0, uid: "", id: "", email: "");
   //late List<charts.Series<Glycemie,String>> _seriesBarData;
-   late List<Glycemie> myData;
+   late List<double> myData;
   // _generateData(myData){
   //   _seriesBarData.add(
   //     charts.Series(
@@ -39,9 +40,14 @@ class _GraphesState extends State<Graphes> {
     return Scaffold(
 
       appBar: AppBar(title: Text('Graphe'),),
-      body:_buildbody(context, glycemie),
-          );
+      body://_buildbody(context, glycemie),
+      Text(widget.tl.toString()),
+      
+     );
+          
         }
+
+   
       
      Widget _buildbody( context, Glycemie glycemie) {
         return StreamBuilder<QuerySnapshot>(
@@ -63,6 +69,7 @@ class _GraphesState extends State<Graphes> {
                             Glycemie  gly = new Glycemie(etat: document['etat'], heure:  document['heure'], note:  document['note'], taux:  document['taux'], uid:  document['uid'], id:  document['id'], email:  document['email']);
                            // myData.add(gly);
                            // if(gly!= null)
+                           
                             print(gly);
                     },
                   )

@@ -1,4 +1,5 @@
 
+import 'package:appf/Screens/Home/homeScreen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:appf/Screens/Home/navigation_drawer_widget.dart';
@@ -247,6 +248,15 @@ class _TodaysDataState extends State<TodaysData> {
         appBar: AppBar(centerTitle: true,
          title: Text("Niveau de glycémie d'aujourd'hui", textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
          actions: <Widget>[
+               IconButton(
+            icon: const Icon(Icons.arrow_back),
+            tooltip: 'revenir',
+            onPressed: () {
+               Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>HomeScreen(), 
+        ));
+           // Navigator.pop(context);
+          },),
             IconButton(
             icon: const Icon(Icons.calendar_today),
             tooltip: 'choisir date',
@@ -360,8 +370,8 @@ class _TodaysDataState extends State<TodaysData> {
                 ?
                 
                 Card(
-                     margin: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 0.0),
-                     borderOnForeground: false,
+                     margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                     borderOnForeground: true,
                  // width: MediaQuery.of(context).size.width/1.2,
                  // height: MediaQuery.of(context).size.height/6,
                   child:// 
@@ -387,7 +397,7 @@ class _TodaysDataState extends State<TodaysData> {
                   
                   )
 
-                  : SizedBox(height:0.00001),
+                  :SizedBox(width:0),
                   
               ),
              );
@@ -486,7 +496,7 @@ class _TodaysDataState extends State<TodaysData> {
 
       }
       
-    return '';
+    return "";
     
   }
   
