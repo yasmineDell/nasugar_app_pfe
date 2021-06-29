@@ -33,6 +33,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {  
 
+     FirebaseMessaging messaging = FirebaseMessaging.instance;
+    Future<void> showMeMyToken()
+    async {
+      var myToken = await messaging.getToken();
+      print("My Token is: " + myToken.toString());
+    }
   Future notif() async{
       WidgetsFlutterBinding.ensureInitialized();
 
@@ -65,9 +71,18 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+           showMeMyToken();
+    var androidd = AndroidInitializationSettings('mipmap/ic_launcher');
+  var ios =  IOSInitializationSettings();
+  var platform = InitializationSettings();
+          flutterLocalNotificationsPlugin.initialize(platform);
+
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
+    
+
+
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
             notification.hashCode,
@@ -85,6 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
       }
     });
+
+   messaging.subscribeToTopic('order-created');
+   
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new notif on app event was published! onMessage:$message');
@@ -112,6 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
            );
       }
      });
+
+     
   }
   void sendNotification() {
   
@@ -305,7 +325,7 @@ children: <Widget>[
   //                         color: Colors.grey[800],
   //                       ),
   // ),
-                 SizedBox(height: 16),
+                 SizedBox(height: 17),
 
     
                Container(
@@ -782,7 +802,32 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
   }
 
  
-  
+  void _navigateToItemDetail(Map<String, dynamic> message) async {
+    Navigator.popUntil(context, (Route<dynamic> route) => route is PageRoute);
+    await Navigator.of(context).push(PageRouteBuilder(
+        opaque: false, pageBuilder: (context, _, __) => NewPage()));
+
+  }
+
+
+ Future onSelectNotification(String payload) async {
+  this.build(context);
+   Navigator.push(
+     context,
+     MaterialPageRoute(builder: (context) => NewPage()),
+   );
+   if (payload != null) {
+    debugPrint('notification payload: ' + payload);
+  }
+
 }
 
 
+
+   Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+     await Firebase.initializeApp();
+
+      print("Handling a background message :-): ${message.data}");
+      //Here you can do what you want with the message :-)
+     }
+}

@@ -1,11 +1,14 @@
+import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:appf/Screens/graphics/Graph.dart';
 import 'package:appf/Screens/graphics/graphics.dart';
 import 'package:appf/page/TodaysData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sortedmap/sortedmap.dart';
 
+import '../../main.dart';
 import '../viewProfile.dart';
 import 'Editer.dart';
 
@@ -27,12 +30,17 @@ class TabBarMaterialWidget extends StatefulWidget {
 
 class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
       late Map<DateTime,double> map=new SortedMap(Ordering.byKey());
+  int alarmId=1;
 
   @override
   Widget build(BuildContext context) {
     final placeholder = Opacity(
       opacity: 0,
-      child: IconButton(icon: Icon(Icons.no_cell), onPressed: null),
+      child: IconButton(icon: Icon(Icons.no_cell), onPressed:(){
+                 var   now = new DateTime.now();
+
+              //   AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,21,00), alarmId, sendNotification);
+      } ),
     );
 
     return BottomAppBar(
@@ -50,6 +58,9 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
             icon: Icon(Icons.bar_chart_outlined),
              onPressed: () {  
                      map= test(context, map);
+                     var   now = new DateTime.now();
+
+                    //  AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,7,00), alarmId, sendNotification);
 
                    Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => SplineTypes(map: map,), /*Graphes()*/));
@@ -60,6 +71,10 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
           IconButton(
             icon: Icon(Icons.today_outlined),
              onPressed: () {  
+                //                     var   now = new DateTime.now();
+
+                //  AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,19,15), 1, sendNotification);
+
                   Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => TodaysData()));
              },
@@ -68,6 +83,9 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
          IconButton(
             icon: Icon(Icons.person_outline_outlined),
              onPressed: () {  
+                  var   now = new DateTime.now();
+
+                // AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,19,10),2, sendNotification);
                   Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => viewProfil()));
              },
@@ -180,3 +198,21 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
     );
   }
 }
+sendNotification() {
+      flutterLocalNotificationsPlugin.show(0,
+     'Rappel ',
+      'veuillez verifier votre taux de glycemie \n Appuiez ici pour l`enregistrer',
+      
+       NotificationDetails(
+         android:AndroidNotificationDetails(
+           channel.id,
+           channel.name,
+           channel.description,
+           importance: Importance.high,
+           color: Colors.blue[900],
+           playSound: true,
+           icon: '@mipmap/ic_launcher'
+         ) )
+
+       );
+  }

@@ -1,4 +1,7 @@
 
+import 'package:appf/database.dart';
+import 'package:appf/modules/act_phy.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -143,8 +146,8 @@ class _RadialProgressState extends State<RadialProgress>
   final Duration fillDuration = Duration(seconds: 2);
   var date1 = DateTime.now();
 
-
-
+  Actphy act = Actphy(date: "", e_pat: "", nb_pas: 0);
+  int nb=0;
 
 
 
@@ -187,7 +190,25 @@ class _RadialProgressState extends State<RadialProgress>
   void onStepCount(StepCount event) {
     print(event);
     setState(() {
+                    final user = FirebaseAuth.instance.currentUser;
+
+      DateTime now = DateTime.now();
       _steps = event.steps.toString();
+      act.nb_pas = event.steps;
+      act.date=  "${now.day}/${now.month}/${now.year}";
+      act.e_pat= user!.email!;
+
+        DateTime t = DateTime(12,40);
+        int diff = difference(t, DateTime.now());
+
+       if(DateTime.now().isAfter(t) && nb == 0 ){
+          nb=1;
+        DatabaseService().ajoutAct(act);
+      }
+      
+      print(act.date);
+      print(act.e_pat);
+      print(act.nb_pas);
       if(event.steps==8000){
         sendNotification();
       }
@@ -239,7 +260,6 @@ class _RadialProgressState extends State<RadialProgress>
   @override
   void initState() {
     super.initState();
-    reset();
     initPlatformState();
     _radialProgressAnimationController =
         AnimationController(vsync: this, duration: fillDuration);
@@ -272,7 +292,7 @@ String  resetPedo(String s)
   var duration;
     int i= duration.inDays ;
     int diff = difference(date1, DateTime.now());
-
+    
     if (diff < 1  ) {
   print("hello ");
 

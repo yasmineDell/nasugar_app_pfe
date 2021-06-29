@@ -1,9 +1,11 @@
 import 'package:android_alarm_manager/android_alarm_manager.dart';
+import 'package:appf/urils/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../main.dart';
+import 'Authenticate/Login/LoginPage.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -113,12 +115,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       });
 
                       if(isOn==true){
-                         AndroidAlarmManager.periodic(
-                           Duration(seconds: 5),
-                            alarmId, 
-                            sendNotification
-                            );
+                  var   now = new DateTime.now();
 
+                 AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,20,00), 1, sendNotification);
                       }else{
                         AndroidAlarmManager.cancel(alarmId);
                       }
@@ -134,7 +133,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                onPressed: () {},
+                onPressed: () {
+                  
+           Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>LoginPage(), 
+        ));
+       // loading(context);
+                },
                 child: Text("Se déconnecter",
                     style: TextStyle(
                         fontSize: 16, letterSpacing: 2.2, color: Colors.black)),
@@ -217,28 +222,24 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 }
 
-void fireAlarm(){
-  print("Alarm Fireed at ${DateTime.now()}");
-}
+// void fireAlarm(){
+//   print("Alarm Fireed at ${DateTime.now()}");
+// }
 sendNotification() {
       flutterLocalNotificationsPlugin.show(0,
-     'Reminder ',
-      'veuillez verifier votre taux de glycemie',
+     'Rappel ',
+      'veuillez verifier votre taux de glycemie \n Appuiez ici pour l`enregistrer',
+      
        NotificationDetails(
          android:AndroidNotificationDetails(
            channel.id,
            channel.name,
            channel.description,
            importance: Importance.high,
-           color: Colors.blue,
+           color: Colors.blue[900],
            playSound: true,
            icon: '@mipmap/ic_launcher'
          ) )
 
        );
-  
-
-    
-
-
   }

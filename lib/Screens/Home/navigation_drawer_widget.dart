@@ -402,7 +402,8 @@ class NavigationDrawerWidget extends StatelessWidget {
 
        
        
-      map= test(context, map);
+        map= test(context, map);
+        print(map);
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) =>SplineTypes(map: map,),//SplineDefault(),////DateTimeDefault(map : map),// //Graphes(tl: map,),/*Test()*/
         ));
@@ -420,7 +421,7 @@ class NavigationDrawerWidget extends StatelessWidget {
         break;
         case 3:
           Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ListeMedicamentH()//monMedecin(), // Analyses(),
+          builder: (context) => monMedecin(numMed: '',), //ListeMedicamentH()//monMedecin(), // Analyses(),
          ));
         break;
         case 4:
@@ -547,6 +548,8 @@ class NavigationDrawerWidget extends StatelessWidget {
   
     return tL;
         }
+
+        
 }
 
 
