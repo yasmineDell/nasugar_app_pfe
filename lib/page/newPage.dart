@@ -490,25 +490,25 @@ class _NewPageState extends State<NewPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
-            Icon(
-             Icons.camera_alt_outlined,
-             color: //Color(0xFFB89C55),
-             // Color.fromRGBO(37,136,166,1),
-                     Color.fromRGBO(11,44,135,1),
+            // Icon(
+            //  Icons.camera_alt_outlined,
+            //  color: //Color(0xFFB89C55),
+            //  // Color.fromRGBO(37,136,166,1),
+            //          Color.fromRGBO(11,44,135,1),
               
-             size: 30,
-             ),
-            SizedBox(height:5),
-             Text(
-             '  Ajouter ',
-              style: TextStyle(color:  //Color(0xFFCAAC5E),
-             // Color.fromRGBO(37,136,166,1),
-              Color.fromRGBO(11,44,135,1),
+            //  size: 30,
+            //  ),
+            // SizedBox(height:5),
+            //  Text(
+            //  '  Ajouter ',
+            //   style: TextStyle(color:  //Color(0xFFCAAC5E),
+            //  // Color.fromRGBO(37,136,166,1),
+            //   Color.fromRGBO(11,44,135,1),
 
-              fontSize: 15
+            //   fontSize: 15
               
-             ),
-             ),
+            //  ),
+            //  ),
           ],
 
         ),

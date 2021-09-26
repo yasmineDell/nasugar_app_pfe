@@ -1,10 +1,10 @@
 import 'package:appf/Screens/Authenticate/Login/LoginPage.dart';
-import 'package:appf/Screens/Home/ProfileScreen.dart';
 import 'package:appf/Screens/Home/homeScreen.dart';
+import 'package:appf/database.dart';
 import 'package:appf/models/PatientModel.dart';
+import 'package:dropdown_below/dropdown_below.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../fireBase.dart';
@@ -21,24 +21,27 @@ class _SignUpState extends State<SignUp> {
    final _formKey= GlobalKey<FormState>();
    final TextEditingController _nameController = TextEditingController();
    final TextEditingController _dateNaisController = TextEditingController();
+      final TextEditingController _poids = TextEditingController();
+   final TextEditingController _type= TextEditingController();
+
    final TextEditingController _numTelController = TextEditingController();
    final TextEditingController _emailController = TextEditingController();
    final TextEditingController _passwordController = TextEditingController();
-   final TextEditingController _repasswordController = TextEditingController();
-  
-
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
+   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
    final ImagePicker _picker = ImagePicker();
-  
+     List _testList = [{'no': 1, 'keyword': 'Type-1'},{'no': 2, 'keyword': 'Type-2 '},];
+ late List<DropdownMenuItem> _dropdownTestItems;
+  var _selectedTest;
   bool showPassword = false;
   late PickedFile _imageFile;
-  
+    late bool vf = false;
 
+String poids ="";
  String error ='';
   String name ='';
  String email ='';
  String password ='';
+ String type ="";
   @override
   Widget build(BuildContext context) {
      return SafeArea( child :Scaffold(
@@ -82,8 +85,11 @@ class _SignUpState extends State<SignUp> {
           children: <Widget>[
       
           SizedBox(height : 25),
-             imageProfile(), 
-               
+           //  imageProfile(), 
+               Center(   child:  CircleAvatar(radius: 50,  child: Icon(Icons.person, color: Colors.white, size:50),
+                    backgroundColor:// Color.fromRGBO(37,136,166,1),
+                     Color.fromRGBO(11,44,135,1),
+),),
             Expanded(
               
               child: Container(
@@ -140,7 +146,7 @@ class _SignUpState extends State<SignUp> {
                  validator: (val) => val!.isEmpty ? 'Entrez votre date de naissance ' : null,
                  controller: _dateNaisController,
                  decoration: InputDecoration(
-                hintText: "[JJ/MM/AAAA]",
+                hintText: "Naissance [JJ/MM/AAAA]",
                 hintStyle: TextStyle(color: Colors.grey),
                // border: InputBorder.none,
                 icon: const Padding(
@@ -158,12 +164,64 @@ class _SignUpState extends State<SignUp> {
                 }
               ),
                  SizedBox(height: 15,),
+  //  TextFormField(
+  //                validator: (val) => val!.isEmpty ? 'Entrez votre date de naissance ' : null,
+  //                controller: _dateNaisController,
+  //                decoration: InputDecoration(
+  //               hintText: "Naissance [JJ/MM/AAAA]",
+  //               hintStyle: TextStyle(color: Colors.grey),
+  //              // border: InputBorder.none,
+  //               icon: const Padding(
+  //                     padding: const EdgeInsets.only(top: 5.0),
+  //                     child: const Icon(Icons.calendar_today),),),
+             
+                
+               
+            
+  //              // pour masquer la date de naissance 
+  //               onChanged :(val){
+                  
+  //                   setState(() {name = val; });
+
+  //               }
+  //             ),
+
+    
+
+                            //   SizedBox(height: 15,),
+
+               TextFormField(
+                 validator: (val) => val!.isEmpty ? 'Entrez votre Poids ' : null,
+                 controller: _poids,
+                 keyboardType: TextInputType.number,
+
+                 decoration: InputDecoration(
+                hintText: "Poids (kg) ",
+                hintStyle: TextStyle(color: Colors.grey),
+               // border: InputBorder.none,
+                icon: const Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: const Icon(Icons.monitor_weight_outlined),),),
+             
+                
+               
+            
+               // pour masquer la date de naissance 
+                onChanged :(val){
+                  
+                    setState(() {poids = val; });
+
+                }
+              ),
+                 SizedBox(height: 15,),
 
 
 
                   TextFormField(
                  validator: (val) => val!.length !=10 ? 'Entrer votre Numero de Telephone ' : null,
                  controller: _numTelController,
+                 keyboardType: TextInputType.number,
+
                  decoration: InputDecoration(
                 hintText: "Numero de Tel",
                 hintStyle: TextStyle(color: Colors.grey),
@@ -233,8 +291,38 @@ class _SignUpState extends State<SignUp> {
 
                 }
               ),
+              SizedBox(height:17,),
+             Row(
+  children: [
+
+    Icon(Icons.arrow_drop_down_circle_outlined, color: Colors.grey),
+                     SizedBox(width: 12.6,),
+
+ DropdownBelow(
+            itemWidth: 250,
+      
+             itemTextstyle: TextStyle(fontSize: 16, color: Colors.black),
+           boxTextstyle: TextStyle(fontSize: 16, color:Colors.grey[800],fontWeight: FontWeight.w400, fontFamily: 'Circular'),
+           boxDecoration: new BoxDecoration(
+           //  color: Colors.grey[200],
+           
+             borderRadius: BorderRadius.circular(10) ,
+             border: Border.all(color: Colors.black12),
+           ),
+           boxPadding: EdgeInsets.fromLTRB(17, 12, 0, 12),
+           boxHeight: 48,
+           boxWidth: 256.1,
+          // iconSize: 23,
+             hint: Text('Type Diabète', textAlign: TextAlign.center,style: TextStyle(color: Colors.grey),),
+             icon: Icon(Icons.arrow_drop_down),
+            value: _selectedTest,
+            items: _dropdownTestItems,
+            onChanged: onChangeDropdownTests,
+    ),
+  ],
+
+),
               SizedBox(height:15,),
-             
 
                /*TextFormField(
                  validator: (val) => (val!.length<8 ||( _passwordController.toString().compareTo(_repasswordController.toString())) ==0)? 'Reconfirmez le mot de passe ' : null,
@@ -258,6 +346,16 @@ class _SignUpState extends State<SignUp> {
                 }
               ),*/
               
+  // onPressed: () {
+  //          // Navigator.pop(context);
+  //   final PatientModel pat= new PatientModel(uid: "", name: "", dateNais: "", numTel: "", email:user!.email.toString() , typeDiab: "", poids: "");
+
+  //            Navigator.of(context).push(MaterialPageRoute(
+  //         builder: (context) => SignUp( pat: pat,)
+  //       ));
+  //         },
+
+
               SizedBox(height:10,),
 
            GestureDetector(
@@ -298,8 +396,10 @@ class _SignUpState extends State<SignUp> {
                    
                      User? updateUser = FirebaseAuth.instance.currentUser;
                    
-                    userSetup(_nameController.text, _dateNaisController.text, _numTelController.text,_emailController.text);
+                    userSetup(_nameController.text, _dateNaisController.text, _numTelController.text,_emailController.text, _poids.text, type);
+                   PatientModel pat = new PatientModel(uid: updateUser!.uid, name: _nameController.text, dateNais: _dateNaisController.text, numTel: _numTelController.text, email: _emailController.text, typeDiab: type, poids: poids);
                    
+                    DatabaseService().ajoutPat(pat);
                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen (),));  } on FirebaseAuthException catch (e) {
              if (e.code == 'weak-password') {
               print('The password provided is too weak.');
@@ -309,7 +409,7 @@ class _SignUpState extends State<SignUp> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Ce compte existe déjà"),
+              title: Text("Cet email est déjà utilisé! "),
               content: Text("Erreur"),
               actions: [
                 FlatButton(
@@ -368,15 +468,13 @@ class _SignUpState extends State<SignUp> {
 
   }
   Widget imageProfile() {
-  
-   
-   
-        
+    
                 return Center (
                   child :Stack(
                   children :<Widget> [
                     CircleAvatar(
-                      radius :60.0,
+                      radius :50.0,
+                      child: Icon(Icons.person, color: Colors.white, size:50),
               //         backgroundImage: _imageFile == null
               // ? AssetImage("assets/images/profile.jpeg")
               // : FileImage(File(_imageFile.path)),
@@ -393,8 +491,8 @@ class _SignUpState extends State<SignUp> {
 
           } ,
 
-          child: Icon( Icons.camera_alt_rounded
-          , color: Colors.indigo.shade900,size: 28.0,),  
+          // child: Icon( Icons.camera_alt_rounded
+          // , color: Colors.indigo.shade900,size: 28.0,),  
           )
           
 
@@ -462,6 +560,33 @@ class _SignUpState extends State<SignUp> {
     );
     setState(() {
       _imageFile = pickedFile!;
+    });
+  }
+ @override
+  void initState() {
+    _dropdownTestItems = buildDropdownTestItems(_testList);
+   
+    super.initState();
+  }
+
+  List<DropdownMenuItem> buildDropdownTestItems(List _testList) {
+    List<DropdownMenuItem> items =[];
+    for (var i in _testList) {
+      items.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i['keyword']),
+        ),
+      );
+    }
+    return items;
+  }
+   onChangeDropdownTests(selectedTest) {
+    print(selectedTest['keyword']);
+    setState(() {
+      _selectedTest = selectedTest;
+      type = selectedTest['keyword'];
+      vf=true;
     });
   }
 }

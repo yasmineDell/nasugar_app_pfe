@@ -247,16 +247,14 @@ class _TodaysDataState extends State<TodaysData> {
 
         appBar: AppBar(centerTitle: true,
          title: Text("Niveau de glycémie d'aujourd'hui", textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
+
+          leading :IconButton(
+          icon: Icon(Icons.arrow_back,
+          color: Colors.white.withOpacity(0.5),),
+           onPressed: () { Navigator.push(context,
+            MaterialPageRoute(builder: (context) => HomeScreen()));}),
          actions: <Widget>[
-               IconButton(
-            icon: const Icon(Icons.arrow_back),
-            tooltip: 'revenir',
-            onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>HomeScreen(), 
-        ));
-           // Navigator.pop(context);
-          },),
+             
             IconButton(
             icon: const Icon(Icons.calendar_today),
             tooltip: 'choisir date',
@@ -292,7 +290,7 @@ class _TodaysDataState extends State<TodaysData> {
    StreamBuilder(    
      
 
-        stream: FirebaseFirestore.instance.collection('Glycemie').where('email',isEqualTo: user!.email).snapshots(),
+        stream: FirebaseFirestore.instance.collection('Glycemie').where('email',isEqualTo: user!.email) .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
          // citiesRef.where('country', 'in', ['USA', 'Japan']);
 
@@ -305,7 +303,7 @@ class _TodaysDataState extends State<TodaysData> {
          return  ListView(
            children: snapshot.data!.docs.map((document)
            {return Padding(
-             padding: const EdgeInsets.only(top: 8.0),
+             padding: const EdgeInsets.fromLTRB( 1.0,1.0,1.0,0.0),
              child: GestureDetector(
 
             onTap: () { 
@@ -370,7 +368,9 @@ class _TodaysDataState extends State<TodaysData> {
                 ?
                 
                 Card(
-                     margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                                              elevation:3,
+
+                     margin: EdgeInsets.fromLTRB(20, 2.0, 20.0, 3.0),
                      borderOnForeground: true,
                  // width: MediaQuery.of(context).size.width/1.2,
                  // height: MediaQuery.of(context).size.height/6,

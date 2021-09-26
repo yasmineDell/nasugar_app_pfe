@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
+import 'Home/Editer.dart';
 import '../database.dart';
 import '../fireBase.dart';
 import 'Home/ProfileScreen.dart';
@@ -27,8 +27,7 @@ class _viewProfilState extends State<viewProfil> {
     // TODO: implement initState
     super.initState();
   }
-  PatientModel p =PatientModel(uid: '', name: '', dateNais: '', numTel: '', email: '', photoUrl: 0,typeDiab: '',poids: '');
-  late PatientModel pat;
+  PatientModel p =PatientModel(uid: '', name: '', dateNais: '', numTel: '', email: '',typeDiab: '',poids: '');
   final user = FirebaseAuth.instance.currentUser;
       var nn = List<PatientModel>.empty();
 FixedExtentScrollController fixedExtentScrollController =
@@ -51,12 +50,22 @@ FixedExtentScrollController fixedExtentScrollController =
            appBar: AppBar(centerTitle: true,
          title: Text("Profile", textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
          actions: <Widget>[
-            IconButton(
-            icon: const Icon(Icons.cancel_outlined),
-            tooltip: 'annuler',
-            onPressed: () {
-            Navigator.pop(context);
-          },)]
+            // IconButton(
+            // icon: const Icon(Icons.settings),
+            // tooltip: 'modifier',
+    //         onPressed: () {
+    //        // Navigator.pop(context);
+    // final PatientModel pat= new PatientModel(uid: "", name: "", dateNais: "", numTel: "", email:user!.email.toString() , typeDiab: "", poids: "");
+
+    //          Navigator.of(context).push(MaterialPageRoute(
+    //       builder: (context) => SignUp( pat: pat,)
+    //     ));
+    //       },
+          
+          
+          //)
+          
+          ]
       ),
         body: 
         StreamBuilder(    
@@ -260,7 +269,7 @@ FixedExtentScrollController fixedExtentScrollController =
                            
                     SizedBox(width:17),
 
-                          Text( "Type-1"
+                          Text( document['type']
                          ,
                          style:TextStyle(fontSize: 14.5) ,
                          ),
@@ -295,12 +304,12 @@ FixedExtentScrollController fixedExtentScrollController =
                           Row(
                             children :<Widget>[
                           
-                         Text("Poids:    "
+                         Text("Poids (kg) :  "
                          ,
                          style:TextStyle(fontSize: 14.5, color: Colors.grey.withOpacity(0.8) ) ,
                          ),
 
-                             Text(" 85 Kg"
+                             Text(document['poids']
                          ,
                          style:TextStyle(fontSize: 14.5) ,
                          ),
@@ -314,13 +323,21 @@ FixedExtentScrollController fixedExtentScrollController =
                                  indent: 20,
                                   endIndent: 20,
                               ),
-                              SizedBox(height : 10),
+                              SizedBox(height : 40),
 
-                         
+                        Container(
+                          child:TextButton(
+         onPressed: () { 
+           final PatientModel patt= new PatientModel(uid: document['UID'], name: document['Name'], dateNais:document['DateNais'], numTel: document['NumTel'], email:user!.email.toString() , typeDiab: document['type'], poids: document['poids']);
+                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=> SignUp(pat: patt,),));
+                    },
+                                       child : const Text("Modifier Profile") ,
+
+                        )  
 
 
 
-                  ]) 
+                   ) ]) 
 
                 //  )
                 

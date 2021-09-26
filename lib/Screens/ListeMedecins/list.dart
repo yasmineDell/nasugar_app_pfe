@@ -2,10 +2,12 @@
 
 import 'package:appf/Screens/Home/homeScreen.dart';
 import 'package:appf/Screens/Home/homeWidget.dart';
+import 'package:appf/models/Diabeto.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'ProfileMed.dart';
+import 'conatctDoct.dart';
 
 
 class DoctorsList extends StatefulWidget {
@@ -16,6 +18,7 @@ class DoctorsList extends StatefulWidget {
 
 class _DoctorsListState extends State<DoctorsList> {
   late final String emaildoc;
+
   
   @override
   Widget build(BuildContext context) {
@@ -175,8 +178,13 @@ class _DoctorsListState extends State<DoctorsList> {
                                                    SizedBox(width:60),
                           GestureDetector( 
                             onTap:(){
+      Diabeto diabeto= new Diabeto(fullname: document['Nom'], phoneNumber: document['NumTel'], emailadrs: document['emailMed'], adress: document['Adresse']);
+
                              // emaildoc=document['emailMed'];
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileMed()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>Contact(diabeto: diabeto,) //ProfileMed()
+                        
+                        
+                        ));
                              },
                       child:
                      

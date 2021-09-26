@@ -129,9 +129,12 @@ import '../../../../../model/sample_view.dart';
 /// Renders the spline types cahrt sample.
 class SplineTypes extends SampleView {
   /// Creates the spline types cahrt sample.
-  const SplineTypes({Key? key, required this.map}) : super(key: key);
+  const SplineTypes( {Key? key, required this.map1, required this.map2, required this.map3, required this.map4}) : super(key: key);
 
-  final Map<DateTime,double> map;
+  final Map<DateTime,double> map1;
+  final Map<DateTime,double> map2;
+  final Map<DateTime,double> map3;
+  final Map<DateTime,double> map4;
 
   @override
   _SplineTypesState createState() => _SplineTypesState();
@@ -142,22 +145,23 @@ class _SplineTypesState extends SampleViewState {
   _SplineTypesState();
 
   final List<String> _splineList =
-      <String>['natural', 'monotonic', 'cardinal', 'clamped'].toList();
+      <String>['juin', 'juillet',].toList();
   late String _selectedSplineType;
   late SplineType _spline;
   late TooltipBehavior _tooltipBehavior;
 
   @override
   void initState() {
-    _selectedSplineType = 'natural';
+    _selectedSplineType = 'juin';
     _spline = SplineType.natural;
     _tooltipBehavior =
-        TooltipBehavior(enable: true, header: '', canShowMarker: false);
+        TooltipBehavior(enable: true, header: 'jour : ', canShowMarker: false);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    String t="";
     return
     DefaultTabController(
   length: 2,
@@ -193,50 +197,62 @@ class _SplineTypesState extends SampleViewState {
   // height: 1500,
   child: Column(
      crossAxisAlignment: CrossAxisAlignment.center,
-             children: <Widget>[
+             children: <Widget>[    buildSettings(context),
+
     Card(
    // semanticContainer: true,
     clipBehavior: Clip.antiAliasWithSaveLayer,
-    child:         _buildTypesSplineChart(widget.map,1)
+    child:         _buildTypesSplineChart(widget.map1,1)
 
     ),
     SizedBox(height:20),
   Divider(height:2, color: Colors.black45,thickness: 1,),
   SizedBox(height:20),
 
-  Text(" Graphe représentant la moyenne du taux de Glycémie"),
+  Text(" À jeune"),
   SizedBox(height:20),
 
   Divider(height:2, color: Colors.black45,thickness: 1,),
     SizedBox(height:15),
 
 
-  //        _buildTypesSplineChart(widget.map,2),
-  //          SizedBox(height:20),
+         _buildTypesSplineChart(widget.map2,2),
 
-  // Text(" Avant le déjeuner"),
-  // SizedBox(height:20),
+           Divider(height:2, color: Colors.black45,thickness: 1,),
 
-  // Divider(height:2, color: Colors.black45,thickness: 1,),
-  //   SizedBox(height:15),
-  //            _buildTypesSplineChart(widget.map,2),
-  //              SizedBox(height:20),
+           SizedBox(height:20),
 
-  // Text(" Après midi"),
-  // SizedBox(height:20),
+  Text(" Avant le déjeuner"),
+  SizedBox(height:20),
 
-  // Divider(height:2, color: Colors.black45,thickness: 1,),
-  //   SizedBox(height:15),
+  Divider(height:2, color: Colors.black45,thickness: 1,),
+    SizedBox(height:15),
+             _buildTypesSplineChart(widget.map3,2),
 
-  //            _buildTypesSplineChart(widget.map,2),
 
-  // SizedBox(height:20),
+               Divider(height:2, color: Colors.black45,thickness: 1,),
 
-  // Text("Avant coucher"),
-  // SizedBox(height:20),
+               SizedBox(height:20),
 
-  // Divider(height:2, color: Colors.black45,thickness: 1,),
-  //   SizedBox(height:15),
+  Text(" Après midi"),
+
+
+  SizedBox(height:20),
+
+  Divider(height:2, color: Colors.black45,thickness: 1,),
+    SizedBox(height:15),
+
+             _buildTypesSplineChart(widget.map4,2),
+
+  Divider(height:2, color: Colors.black45,thickness: 1,),
+
+  SizedBox(height:20),
+
+  Text("Avant coucher"),
+  SizedBox(height:20),
+
+  Divider(height:2, color: Colors.black45,thickness: 1,),
+    SizedBox(height:15),
     ],
   ),
 ),),
@@ -251,17 +267,20 @@ class _SplineTypesState extends SampleViewState {
    // semanticContainer: true,
     clipBehavior: Clip.antiAliasWithSaveLayer,
     child:    
-              _buildDefaultColumnChart()),
+              _buildDefaultColumnChart()
+
+              ),
 
                SizedBox(height:20),
   Divider(height:2, color: Colors.black45,thickness: 1,),
   SizedBox(height:20),
 
-  Text(" Graphe représentant l'activité phisique "),
+  Text(" Graphique représentant l'activité phisique "),
   SizedBox(height:20),
 
   Divider(height:2, color: Colors.black45,thickness: 1,),
     SizedBox(height:15),
+
                   ],
       ),
    //  ),
@@ -313,17 +332,17 @@ class _SplineTypesState extends SampleViewState {
         builder: (BuildContext context, StateSetter stateSetter) {
       return Row(
         children: <Widget>[
-          Text('Spline type ',
+          Text('  Selectionnez le mois ',
               style: TextStyle(
                 color: model.textColor,
-                fontSize: 12,
+                fontSize: 13
               )),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
             height: 50,
             alignment: Alignment.bottomLeft,
             child: DropdownButton<String>(
-                underline: Container(color: const Color(0xFFBDBDBD), height: 1),
+                underline: Container(color: const Color(0xFF3F2929), height: 1),
                 value: _selectedSplineType,
                 items: _splineList.map((String value) {
                   return DropdownMenuItem<String>(
@@ -364,13 +383,15 @@ class _SplineTypesState extends SampleViewState {
 
   /// Returns the list of chart series which need to render on the spline chart.
   List<SplineSeries<_ChartData, num>> _getSplineTypesSeries(Map<DateTime, double> map, int i) {
-    final List<_ChartData> chartData = <_ChartData>[
-       ];
+    final List<_ChartData> chartData = <_ChartData>[];
 
   
      map.forEach((k,v) {
        print('${k}: ${v}');
+       if(k.month==DateTime.june){
        chartData.add(_ChartData(k.day, v));
+
+       }
      } 
 ); 
 
@@ -390,8 +411,9 @@ class _SplineTypesState extends SampleViewState {
   /// Method to change the spline type using dropdown menu.
   void _onPositionTypeChange(String item) {
     _selectedSplineType = item;
-    if (_selectedSplineType == 'natural') {
-      _spline = SplineType.natural;
+    if (_selectedSplineType == 'juin') {
+     // _spline = SplineType.natural;
+     print("rahi f juin");
     }
    
     setState(() {
@@ -429,6 +451,19 @@ class _SplineTypesState extends SampleViewState {
       ChartSampleData(x: '24', y: 1302),
       ChartSampleData(x: '25', y: 2017),
       ChartSampleData(x: '26', y: 3683),
+      ChartSampleData(x: '27', y: 345),
+      ChartSampleData(x: '28', y: 1302),
+      ChartSampleData(x: '29', y: 8762),
+      ChartSampleData(x: '30', y: 12779),
+      ChartSampleData(x: '1', y: 231),
+      ChartSampleData(x: '2', y: 198),
+       ChartSampleData(x: '3', y: 64),
+       ChartSampleData(x: '4', y: 123),
+       ChartSampleData(x: '5', y: 261),
+       ChartSampleData(x: '6', y: 7851),
+       ChartSampleData(x: '7', y: 172),
+
+
     ];
     return <ColumnSeries<ChartSampleData, String>>[
       ColumnSeries<ChartSampleData, String>(

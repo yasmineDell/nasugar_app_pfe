@@ -120,7 +120,7 @@ class _modifGlyState extends State<modifGly> {
           //drawer: NavigationDrawerWidget(),
 
         appBar: AppBar(centerTitle: true,
-         title: Text(widget.glycemie.email, textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
+         title: Text("Modifier", textAlign:TextAlign.center,style: TextStyle(fontSize: 15),),
          actions: <Widget>[
             IconButton(
             icon: const Icon(Icons.cancel_outlined),
@@ -337,55 +337,55 @@ class _modifGlyState extends State<modifGly> {
   Row(children: [
      
 
-    GestureDetector(
-      onTap:(){ print('sd');
-          //chooseImage(ImageSource.gallery);
-          chooseImage(ImageSource.camera);
-      },
+    // GestureDetector(
+    //   onTap:(){ print('sd');
+    //       //chooseImage(ImageSource.gallery);
+    //       chooseImage(ImageSource.camera);
+    //   },
 
-      // ignore: unnecessary_null_comparison
-      child: 
+    //   // ignore: unnecessary_null_comparison
+    //   child: 
     
-       Container(
-        height: 30,
-        width: 100,
-        margin: EdgeInsets.symmetric(horizontal: 10),
+    //    Container(
+    //     height: 30,
+    //     width: 100,
+    //     margin: EdgeInsets.symmetric(horizontal: 10),
         
-        decoration: BoxDecoration(
-          color: //Color(0x6EFFD97A),
-                 // Color.fromRGBO(182,215,225,1), 
-          Color(0xfffcfcff),
-          borderRadius: BorderRadius.circular(9),
+    //     decoration: BoxDecoration(
+    //       color: //Color(0x6EFFD97A),
+    //              // Color.fromRGBO(182,215,225,1), 
+    //       Color(0xfffcfcff),
+    //       borderRadius: BorderRadius.circular(9),
  
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+    //     ),
+    //     child: Row(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
 
-            Icon(
-             Icons.camera_alt_outlined,
-             color: //Color(0xFFB89C55),
-             // Color.fromRGBO(37,136,166,1),
-                     Color.fromRGBO(11,44,135,1),
+    //         Icon(
+    //          Icons.camera_alt_outlined,
+    //          color: //Color(0xFFB89C55),
+    //          // Color.fromRGBO(37,136,166,1),
+    //                  Color.fromRGBO(11,44,135,1),
               
-             size: 30,
-             ),
-            SizedBox(height:5),
-             Text(
-             '  Ajouter ',
-              style: TextStyle(color:  //Color(0xFFCAAC5E),
-             // Color.fromRGBO(37,136,166,1),
-              Color.fromRGBO(11,44,135,1),
+    //          size: 30,
+    //          ),
+    //         SizedBox(height:5),
+    //          Text(
+    //          '  Ajouter ',
+    //           style: TextStyle(color:  //Color(0xFFCAAC5E),
+    //          // Color.fromRGBO(37,136,166,1),
+    //           Color.fromRGBO(11,44,135,1),
 
-              fontSize: 15
+    //           fontSize: 15
               
-             ),
-             ),
-          ],
+    //          ),
+    //          ),
+    //       ],
 
-        ),
-    ),
-    ),
+    //     ),
+    // ),
+    // ),
    
 
 

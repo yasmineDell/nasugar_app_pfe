@@ -1,11 +1,14 @@
+import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:appf/Screens/graphics/Graph.dart';
 import 'package:appf/Screens/graphics/graphics.dart';
 import 'package:appf/page/TodaysData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sortedmap/sortedmap.dart';
 
+import '../../main.dart';
 import '../viewProfile.dart';
 import 'Editer.dart';
 
@@ -27,12 +30,21 @@ class TabBarMaterialWidget extends StatefulWidget {
 
 class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
       late Map<DateTime,double> map=new SortedMap(Ordering.byKey());
+  int alarmId=1;
+  Map<DateTime,double> map1=new SortedMap(Ordering.byKey()); //ajeune
+    Map<DateTime,double> map2=new SortedMap(Ordering.byKey()); //avant dejeuner
+    Map<DateTime,double> map3=new SortedMap(Ordering.byKey()); //apres midi 
+    Map<DateTime,double> map4=new SortedMap(Ordering.byKey()); 
 
   @override
   Widget build(BuildContext context) {
     final placeholder = Opacity(
       opacity: 0,
-      child: IconButton(icon: Icon(Icons.no_cell), onPressed: null),
+      child: IconButton(icon: Icon(Icons.no_cell), onPressed:(){
+                 var   now = new DateTime.now();
+
+              //   AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,21,00), alarmId, sendNotification);
+      } ),
     );
 
     return BottomAppBar(
@@ -49,10 +61,18 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
            IconButton(
             icon: Icon(Icons.bar_chart_outlined),
              onPressed: () {  
-                     map= test(context, map);
+                     var   now = new DateTime.now();
+  map1= test(context, map1,1);
+        print(map1);
+        map2= test(context,map2,2);
+        map3= test(context,map3,3);
+        map4= test(context,map4,4);
+                    //  AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,7,00), alarmId, sendNotification);
 
                    Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SplineTypes(map: map,), /*Graphes()*/));
+                   builder: (context) =>SplineTypes(map1: map1, map2: map2,map3: map3,map4: map4,),//SplineDefault(),////DateTimeDefault(map : map),// //Graphes(tl: map,),/*Test()*/
+   
+                  ));
              },
           
           ),
@@ -60,6 +80,10 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
           IconButton(
             icon: Icon(Icons.today_outlined),
              onPressed: () {  
+                //                     var   now = new DateTime.now();
+
+                //  AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,19,15), 1, sendNotification);
+
                   Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => TodaysData()));
              },
@@ -68,6 +92,9 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
          IconButton(
             icon: Icon(Icons.person_outline_outlined),
              onPressed: () {  
+                  var   now = new DateTime.now();
+
+                // AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,19,10),2, sendNotification);
                   Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => viewProfil()));
              },
@@ -77,9 +104,47 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
       ),
     );
   }
-     Map<DateTime,double> test(context, Map<DateTime,double> tL){
+   
+  Widget buildTabItem({
+    required int index,
+    required Icon icon,
+  }) {
+    final isSelected = index == widget.index;
+
+    return IconTheme(
+      data: IconThemeData(
+        color: isSelected ?           Color.fromRGBO(65, 106, 190, 1)
+ : Colors.black,
+      ),
+      child: IconButton(
+        icon: icon,
+        onPressed: () => widget.onChangedTab(index),
+      ),
+    );
+  }
+}
+sendNotification() {
+      flutterLocalNotificationsPlugin.show(0,
+     'Rappel ',
+      'veuillez verifier votre taux de glycemie \n Appuiez ici pour l`enregistrer',
+      
+       NotificationDetails(
+         android:AndroidNotificationDetails(
+           channel.id,
+           channel.name,
+           channel.description,
+           importance: Importance.high,
+           color: Colors.blue[900],
+           playSound: true,
+           icon: '@mipmap/ic_launcher'
+         ) )
+
+       );
+  }
+
+    Map<DateTime,double> test(context, Map<DateTime,double> tL, int i ){
                     final user = FirebaseAuth.instance.currentUser;
-                    int i=1;
+                    // int i=1;
                     double s=0;
                     DateTime dd;
      // if(tL.isEmpty){
@@ -93,8 +158,26 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
               print(doc["taux"]);
               
              DateTime d= doc["date"].toDate();
-           // tL.add(doc["taux"]);
+          // tL.add(doc["taux"]);
+           if(i==1 && doc['etat']=="à jeun"){
            tL[d] = doc["taux"];
+
+           }
+           else {
+             if(i==2 && doc['etat']=="avant le déjeuner "){
+                          tL[d] = doc["taux"];  
+             }else{
+               if(i==3 && doc['etat']=="aprés-midi"){
+                          tL[d] = doc["taux"];  
+             }else{
+               if(i==4 && doc['etat']=="avant se coucher"){
+                          tL[d] = doc["taux"];  
+             }
+             }
+
+             }
+           }
+           
             //print(user.email);
           }
           });
@@ -120,6 +203,9 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
               //    }
               //  }
 
+                            print(liste);
+
+
         if(liste.isNotEmpty){
           print("liste "+liste[0].toString());
           liste2.add(liste[0]);
@@ -130,7 +216,6 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
                    liste2.add(liste[j]);
                    x++;
                }
-             // print(liste[j]);
                 }
 
                 for(int j=0;j<liste2.length;j++){
@@ -151,7 +236,7 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
                 for(int j=0;j<liste3.length;j++){
                   newMap[liste2[j]]=liste3[j];
                 }                 
-                return newMap;
+              //  return newMap;
 
                // print(liste3);
           }
@@ -162,21 +247,6 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
   
     return tL;
         }
-  Widget buildTabItem({
-    required int index,
-    required Icon icon,
-  }) {
-    final isSelected = index == widget.index;
 
-    return IconTheme(
-      data: IconThemeData(
-        color: isSelected ?           Color.fromRGBO(65, 106, 190, 1)
- : Colors.black,
-      ),
-      child: IconButton(
-        icon: icon,
-        onPressed: () => widget.onChangedTab(index),
-      ),
-    );
-  }
-}
+        
+

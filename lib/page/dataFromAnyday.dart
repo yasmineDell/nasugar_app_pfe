@@ -184,7 +184,7 @@ class _AnydayState extends State<Anyday> {
          return  ListView(
            children: snapshot.data!.docs.map((document)
            {return Padding(
-             padding: const EdgeInsets.only(top: 8.0),
+             padding: const EdgeInsets.fromLTRB( 1.0,1.0,1.0,0.0),
              child: GestureDetector(
 
             onTap: () { 
@@ -219,6 +219,8 @@ class _AnydayState extends State<Anyday> {
                 ?
                 
                 Card(
+                                                                elevation:2,
+
                      margin: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 0.0),
                      borderOnForeground: false,
                  // width: MediaQuery.of(context).size.width/1.2,

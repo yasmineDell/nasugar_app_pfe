@@ -35,6 +35,8 @@ class ListeMedicament extends StatefulWidget {
 }
 
 class _ListeMedicmentState extends State<ListeMedicament> {
+    int alarmId=1;
+
     final user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
@@ -264,4 +266,20 @@ class _ListeMedicmentState extends State<ListeMedicament> {
      
   }
 }
- 
+ sendNotification() {
+      flutterLocalNotificationsPlugin.show(0,
+     'Reminder ',
+      'Il est temps de prendre votre médicament',
+       NotificationDetails(
+         android:AndroidNotificationDetails(
+           channel.id,
+           channel.name,
+           channel.description,
+           importance: Importance.high,
+           color: Colors.blue,
+           playSound: true,
+           icon: '@mipmap/ic_launcher'
+         ) )
+
+       );
+  }

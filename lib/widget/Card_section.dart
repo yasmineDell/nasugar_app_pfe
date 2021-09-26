@@ -32,7 +32,7 @@ class CardSection extends StatelessWidget {
             width: 230,
 
             decoration: new BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(17.0)),
+              borderRadius: BorderRadius.all(Radius.circular(35.0)),//17
               shape: BoxShape.rectangle,
               color: Colors.white,
              border: Border.all(

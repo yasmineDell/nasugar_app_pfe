@@ -4,21 +4,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'models/PatientModel.dart';
 // la Creation de la table patient et ses attributs
 
-Future<void> userSetup(String name, String dateNais, String numTel  ,String email ) async {
+Future<void> userSetup(String name, String dateNais, String numTel  ,String email, String poids, String type ) async {
   CollectionReference users = FirebaseFirestore.instance.collection('Patient');
   FirebaseAuth auth = FirebaseAuth.instance;  // c'est pour réuccupérer le user ID de la collection Patient 
   String uid = auth.currentUser!.uid.toString();
-  users.doc(uid).update(
+  users.doc(uid).update( // try tae add peut etre c ca???
     {
   'Name': name, 
   'UID': uid, 
   'DateNais' : dateNais , 
   'NumTel' : numTel,
   'Email': email,
- 
+  'poids' :poids,
+  'type' : type,
   }
    );
-  return;
+  //return;
 }
 
   

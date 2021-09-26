@@ -11,14 +11,10 @@ static late  Diabeto currentUser;
     {
      // required this.mId,
       required this.fullname,
-      
       required this.phoneNumber,
       required this.emailadrs,
-       required this.adress,
-      
-     
-      
-      
+      required this.adress,
+    
     }
   );
 

@@ -61,12 +61,12 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
             children:<Widget>[
               SizedBox(
-                height:30,
+                height:60,
               ),
 
-              Center(
-                child: Text("Connexion",style:TextStyle(color:Colors.white.withOpacity(0.5)/* Colors.white.withOpacity(0.5)*/,fontSize: 24,fontWeight: FontWeight.bold))
-              ),
+              // Center(
+              //   child: Text("Connexion",style:TextStyle(color:Colors.white.withOpacity(0.5)/* Colors.white.withOpacity(0.5)*/,fontSize: 24,fontWeight: FontWeight.bold))
+              // ),
 
 
 
@@ -82,11 +82,19 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
           ),
 
-             SizedBox(height: 30,),
+            // SizedBox(height: 30,),
           Center(
-            child: Container(
-              height: 80,
-              width: 80,
+            child:
+          
+            
+            Row(
+              children:[
+
+                SizedBox(width:130),
+  Container(
+              child: Text("Connexion",style:TextStyle(color:Colors.white.withOpacity(0.5)/* Colors.white.withOpacity(0.5)*/,fontSize: 27,fontWeight: FontWeight.bold)),
+              height: 100,
+              width: 200,
 
               // decoration : BoxDecoration(
               //   // image: DecorationImage(
@@ -96,7 +104,12 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               //   // )
 
               // )
+            ),
+
+              ]
             )
+            
+           
           ),
 
             SizedBox(
@@ -184,18 +197,18 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               ),
               SizedBox(height:15,),
                Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                GestureDetector(
                 onTap: () => Navigator.pushNamed(context, 'forgotPass'),
                 child: Container(
-                  child: TextButton(
-         onPressed: () {
-                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LoginPage(),));
-                    },
-                   child : const Text("Mot de passe oublié?",style: TextStyle(fontSize: 12),) ,
+        //           child: TextButton(
+        //  onPressed: () {
+        //              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LoginPage(),));
+        //             },
+        //            child : const Text("Mot de passe oublié?",style: TextStyle(fontSize: 12),) ,
 
-                  ),
+        //           ),
                   decoration: BoxDecoration(
                       border:
                           Border(bottom: BorderSide(width: 1, color: Colors.white))),
