@@ -11,14 +11,13 @@
 
 
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
-
-
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+  
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
 
 
     <title>Nasugr -AjouterPatient</title>
@@ -309,39 +308,39 @@
                     <div class="col-8">
                         <div class="card">
                             <div class="card-body">
-   
+                                <form id="add-pat-form">
                                     <div class="row mb-3">
 
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Nom et prénom</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value="" id= "name">
                                     </div>
-                                </div>
-                                <div class="row mb-3">
+                                 </div>
+                                 <div class="row mb-3">
 
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Date de naissance</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value=""  id ="dateN">
                                     </div>
-                                </div>
-                                <div class="row mb-3">
+                                  </div>
+                                   <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Email</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value=""id= "emailP">
                                     </div>
-                                </div>
-                                <div class="row mb-3">
+                                  </div>
+                                  <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">N° Tel</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value=""id ="numTel">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -349,7 +348,7 @@
                                         <h6 class="mb-0">Adresse</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value=""id="adressP">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -357,7 +356,7 @@
                                         <h6 class="mb-0">Type de diabète</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value="" id="typeDiab">
                                     </div>
                                 </div>
                               
@@ -365,10 +364,11 @@
                                 <div class="row justify-content-center">
                                     <div class="col-sm-3"></div>
                                     <div class="col-sm-9 text-secondary">
+                                        <button id="saveButton" >Save</button>
                                         <input type="button" class="btn btn-primary px-4" href="index.html" value="Sauvegarder">
                                     </div>
                                 </div>
-                                
+                            </form>
                             </div>
                         </div>
                  
@@ -447,11 +447,12 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
 
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="app.js"></script>
 
 </body>
 

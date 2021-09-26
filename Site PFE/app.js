@@ -16,138 +16,199 @@
 
 
 
+  const db = firebase.firestore();
+
+
+
+
+ //_______const cafeList = document.querySelector('#cafe-list');
+  const form = document.querySelector('#add-cafe-form');
+
+  
+  
+  // // create element & render docotor
+  // function renderDoctor(doc){
+  //   let db = firebase.firestore().collection("Diabtologue");
+  //   let li = document.createElement('li');
+  //   let name = document.createElement('span');
+  //   let email = document.createElement('span');
 
 
 
 
 
-    const db = firebase.firestore();
-
-        // pour ne pas avoir des warnning
-        db.settings({ timestampInnapshots: true });
-
-
-
-// const docRef=firestore.doc("Medecin/Name"); // ici j'ai mis le path la ou on va stocker la donnée
-
-// const inputextField=document.querySelector('#name'); // ici je met le id de la case d'ou je v reccuperer la donnée
-
-// //const inputextField=document.querySelector('#email');// ici je met le id de la case d'ou je v reccuperer la donnée
-// // const  type = doc.querySelector(#id )
-//  const saveButton=document.querySelector('#saveButton');
-
-// // ici j'ajoute la fonction qui va etre executer quand j'appuie sur le boutton save
-// // la syntaxe :    de cette expression je prend le nom de la variable (const saveButton=document.querySelector('#save');) et je fais .addEventListener()
-
-//  saveButton.addEventListener("click",function(){
+  //    li.setAttribute('data-id', doc.id);
+  //    name.textContent = doc.data().Nom;
+  //    email.textContent = doc.data().emailMed;
+  
+  //    li.appendChild(name);
+  //    li.appendChild(email);
+  //    cafeList.appendChild(li);
+  // }
+  
+  // // getting data
+  // db.collection('Diabtologue').get().then(snapshot => {
+  //     snapshot.docs.forEach(doc => {
+  //         renderDoctor(doc);
+  //     });
+  // });
+  
 
 
 
-//     const textToSave=inputextField.value;
-//     console.log(" am going to save "+textToSave+"o firestore");
-//     docRef.set({
-
-
-//         // ici je précise le id de text fied 'ou j vais reccuperer la data
-
-//         // ma syntaxe : <le id du text field dans html> : < la variable >
-//         name : textToSave
-//     }).then(function(){console.log("Statut saved!");}).catch(function(error){
-//         console.log("error",error);
-//     });
-//  });
-// ----------------------------add data--------------------------------------------------
-
-// saving data
-
-
-// const form = document.querySelector('#registerForm'); // id de form  rana n9ololo roh l hadik balise te3 html li b had l id hotha f var form
-
-// form.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     db.collection('Diabtologue').add({
-//         Nom: form.exampleInputName.value,
-//         NumTel: form.Number.value,
-//         Adresse: form.exampleInputEmail.value,
-//         emailMed: form.adress.value,
-//         //emailMed: form.email.value
-//     });
-//     form.exampleInputName.value = '';
-//     form.Number.value = '';
-//     form.exampleInputEmail.value = '';
-//     form.adress.value = '';
-
-// });
 
 
 
-//************************commentaire  *******************************/
-// id de form  rana n9ololo roh l hadik balise te3 html li b had l id hotha f var form
-// const form = document.querySelector('#registerForm'); 
 
-
-// form.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     db.collection('Diabtologue').add({
-//         Nom: form.name.value,
-//         emailMed: form.email.value
-       
-//     });
-//     form.name.value = '';
-//     form.email.value = '';
-// });
-
-
-
-const form = document.querySelector('#registerForm');
-
-form.addEventListener('submit', (e) => {
+ // saving data
+ form.addEventListener('submit', (e) => {
   e.preventDefault();
-  db.collection('Diabtologue').add({
-    Nom: form.exampleInputName.value,
-           NumTel: form.Number.value,
-         Adresse: form.exampleInputEmail.value,
-            emailMed: form.adress.value,
-  });
-      form.exampleInputName.value = '';
-      form.Number.value = '';
-     form.exampleInputEmail.value = '';
-     form.adress.value = '';
+  db.collection('Patient').add({
+              Name: form.name.value,
+              NumTel: form.numTel.value,
+              DateNais: form.dateN.value,
+              Email: form.emailP.value,
+              NumTel: form.adressP.value,
+                   
+      });
+         form.name.value = '';
+         form.emailP.value = '';
+         form.dateN.value = '';
+         form.numTel.value = '';
+         form.adressP.value = '';
+        
 });
 
-//________________________________________________________________________________
 
 
 
 
-// _____________________________fetch data_______________________________________________
 
-const cafeList = document.querySelector('#cafe-list');
+//     const db = firebase.firestore();
+
+//         // pour ne pas avoir des warnning
+//         db.settings({ timestampInnapshots: true });
+
+//         const cafeList = document.querySelector('#cafe-list');
+//         const form = document.querySelector('#add-cafe-form');
+        
+
+// // const docRef=firestore.doc("Medecin/Name"); // ici j'ai mis le path la ou on va stocker la donnée
+
+// // const inputextField=document.querySelector('#name'); // ici je met le id de la case d'ou je v reccuperer la donnée
+
+// // //const inputextField=document.querySelector('#email');// ici je met le id de la case d'ou je v reccuperer la donnée
+// // // const  type = doc.querySelector(#id )
+// //  const saveButton=document.querySelector('#saveButton');
+
+// // // ici j'ajoute la fonction qui va etre executer quand j'appuie sur le boutton save
+// // // la syntaxe :    de cette expression je prend le nom de la variable (const saveButton=document.querySelector('#save');) et je fais .addEventListener()
+
+// //  saveButton.addEventListener("click",function(){
 
 
-function renderCafe(doc){
+
+// //     const textToSave=inputextField.value;
+// //     console.log(" am going to save "+textToSave+"o firestore");
+// //     docRef.set({
 
 
-    let db = firebase.firestore().collection("caffe");
-    let li = document.createElement('li');
-    let name = document.createElement('span');
-    let email = document.createElement('span');
+// //         // ici je précise le id de text fied 'ou j vais reccuperer la data
+
+// //         // ma syntaxe : <le id du text field dans html> : < la variable >
+// //         name : textToSave
+// //     }).then(function(){console.log("Statut saved!");}).catch(function(error){
+// //         console.log("error",error);
+// //     });
+// //  });
+// // ----------------------------add data--------------------------------------------------
+
+// // saving data
 
 
-    li.setAttribute('data-id', doc.id);
-    name.textContent = doc.data().Nom;
-    email.textContent = doc.data().emailMed;
+// // const form = document.querySelector('#registerForm'); // id de form  rana n9ololo roh l hadik balise te3 html li b had l id hotha f var form
+
+// // form.addEventListener('submit', (e) => {
+// //     e.preventDefault();
+// //     db.collection('Diabtologue').add({
+// //         Nom: form.exampleInputName.value,
+// //         NumTel: form.Number.value,
+// //         Adresse: form.exampleInputEmail.value,
+// //         emailMed: form.adress.value,
+// //         //emailMed: form.email.value
+// //     });
+// //     form.exampleInputName.value = '';
+// //     form.Number.value = '';
+// //     form.exampleInputEmail.value = '';
+// //     form.adress.value = '';
+
+// // });
 
 
 
-    li.appendChild(name);
-    li.appendChild(email);
-    cafeList.appendChild(li);
+// //************************commentaire  *******************************/
+// // id de form  rana n9ololo roh l hadik balise te3 html li b had l id hotha f var form
+// // const form = document.querySelector('#registerForm'); 
 
-}
 
-db.collection('Medicaments').get().then((snapshot)=>{console.log(snapshot.docs);})
+// // form.addEventListener('submit', (e) => {
+// //     e.preventDefault();
+// //     db.collection('Diabtologue').add({
+// //         Nom: form.name.value,
+// //         emailMed: form.email.value
+       
+// //     });
+// //     form.name.value = '';
+// //     form.email.value = '';
+// // });
 
-db.collection('Diabtologue').get().then((snapshot)=>{ snapshot.docs.forEach(doc=>{renderCafe(doc)})})
+// form.addEventListener('submit', (e) => {
+//   e.preventDefault();
+//   db.collection('Diabtologue').add({
+//     Nom: form.exampleInputName.value,
+//            NumTel: form.Number.value,
+//          Adresse: form.exampleInputEmail.value,
+//             emailMed: form.adress.value,
+//   });
+//       form.exampleInputName.value = '';
+//       form.Number.value = '';
+//      form.exampleInputEmail.value = '';
+//      form.adress.value = '';
+// });
 
-//_________________________________________________________________________________________________________//
+// //________________________________________________________________________________
+
+
+
+
+// // _____________________________fetch data_______________________________________________
+
+
+
+
+// function renderCafe(doc){
+
+
+//     let db = firebase.firestore().collection("caffe");
+//     let li = document.createElement('li');
+//     let name = document.createElement('span');
+//     let email = document.createElement('span');
+
+
+//     li.setAttribute('data-id', doc.id);
+//     name.textContent = doc.data().Nom;
+//     email.textContent = doc.data().emailMed;
+
+
+
+//     li.appendChild(name);
+//     li.appendChild(email);
+//     cafeList.appendChild(li);
+
+// }
+
+// db.collection('Medicaments').get().then((snapshot)=>{console.log(snapshot.docs);})
+
+// db.collection('Diabtologue').get().then((snapshot)=>{ snapshot.docs.forEach(doc=>{renderCafe(doc)})})
+
+// //_________________________________________________________________________________________________________//
