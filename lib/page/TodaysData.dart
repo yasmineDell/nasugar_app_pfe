@@ -290,7 +290,7 @@ class _TodaysDataState extends State<TodaysData> {
    StreamBuilder(    
      
 
-        stream: FirebaseFirestore.instance.collection('Glycemie').where('email',isEqualTo: "test@gmail.com") .snapshots(),
+        stream: FirebaseFirestore.instance.collection('Glycemie').where('email',isEqualTo: user!.email) .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
          // citiesRef.where('country', 'in', ['USA', 'Japan']);
 

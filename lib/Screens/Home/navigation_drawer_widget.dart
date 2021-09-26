@@ -27,13 +27,18 @@ import 'ProfileScreen.dart';
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
   FirebaseAuth auth =FirebaseAuth.instance;
-    Map<DateTime,double> map=new SortedMap(Ordering.byKey());
+    Map<DateTime,double> map1=new SortedMap(Ordering.byKey()); //ajeune
+    Map<DateTime,double> map2=new SortedMap(Ordering.byKey()); //avant dejeuner
+    Map<DateTime,double> map3=new SortedMap(Ordering.byKey()); //apres midi 
+    Map<DateTime,double> map4=new SortedMap(Ordering.byKey()); // avant coucher
+
+    Map<DateTime,double> pas=new SortedMap(Ordering.byKey());
 
   @override
   Widget build(BuildContext context) {       
                      User? updateUser = FirebaseAuth.instance.currentUser;
 
-    final name = 'Mohamed Hafed';
+    final name = 'Mon Menu';
     final email = updateUser!.email.toString();
     
 
@@ -402,10 +407,15 @@ class NavigationDrawerWidget extends StatelessWidget {
 
        
        
-        map= test(context, map);
-        print(map);
+        map1= test(context, map1,1);
+        print(map1);
+        map2= test(context,map2,2);
+        map3= test(context,map3,3);
+        map4= test(context,map4,4);
+
+        //pas=pass(context, pas);
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>SplineTypes(map: map,),//SplineDefault(),////DateTimeDefault(map : map),// //Graphes(tl: map,),/*Test()*/
+          builder: (context) =>SplineTypes(map1: map1, map2: map2,map3: map3,map4: map4,),//SplineDefault(),////DateTimeDefault(map : map),// //Graphes(tl: map,),/*Test()*/
         ));
         
         break;
@@ -463,9 +473,32 @@ class NavigationDrawerWidget extends StatelessWidget {
     }
   }
 
-      Map<DateTime,double> test(context, Map<DateTime,double> tL){
+  // Map<DateTime, double> pass(context,Map<DateTime,double> p){
+  //       final user = FirebaseAuth.instance.currentUser;
+  //  FirebaseFirestore.instance
+  //   .collection('act_phy')
+  //   .get()
+  //   .then((QuerySnapshot querySnapshot) {
+  //       querySnapshot.docs.forEach((doc) {
+          
+  //           if(doc["e_pat"]== user!.email){
+  //             print(doc["nb_pas"]);
+              
+  //            DateTime d= doc["date"];
+  //            p[d]=doc["nb_pas"];
+  //          // tL.add(doc["taux"]);
+  //           //print(user.email);
+  //         }
+  //         });});
+
+
+
+  //   return p;
+  // }
+
+      Map<DateTime,double> test(context, Map<DateTime,double> tL, int i ){
                     final user = FirebaseAuth.instance.currentUser;
-                    int i=1;
+                    // int i=1;
                     double s=0;
                     DateTime dd;
      // if(tL.isEmpty){
@@ -479,8 +512,26 @@ class NavigationDrawerWidget extends StatelessWidget {
               print(doc["taux"]);
               
              DateTime d= doc["date"].toDate();
-           // tL.add(doc["taux"]);
+          // tL.add(doc["taux"]);
+           if(i==1 && doc['etat']=="à jeun"){
            tL[d] = doc["taux"];
+
+           }
+           else {
+             if(i==2 && doc['etat']=="avant le déjeuner "){
+                          tL[d] = doc["taux"];  
+             }else{
+               if(i==3 && doc['etat']=="aprés-midi"){
+                          tL[d] = doc["taux"];  
+             }else{
+               if(i==4 && doc['etat']=="avant se coucher"){
+                          tL[d] = doc["taux"];  
+             }
+             }
+
+             }
+           }
+           
             //print(user.email);
           }
           });
@@ -506,6 +557,9 @@ class NavigationDrawerWidget extends StatelessWidget {
               //    }
               //  }
 
+                            print(liste);
+
+
         if(liste.isNotEmpty){
           print("liste "+liste[0].toString());
           liste2.add(liste[0]);
@@ -516,7 +570,6 @@ class NavigationDrawerWidget extends StatelessWidget {
                    liste2.add(liste[j]);
                    x++;
                }
-             // print(liste[j]);
                 }
 
                 for(int j=0;j<liste2.length;j++){
@@ -537,7 +590,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                 for(int j=0;j<liste3.length;j++){
                   newMap[liste2[j]]=liste3[j];
                 }                 
-                return newMap;
+              //  return newMap;
 
                // print(liste3);
           }

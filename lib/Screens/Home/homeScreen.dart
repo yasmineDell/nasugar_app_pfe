@@ -56,6 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
   );
   }
 
+  
+
 
         GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -66,6 +68,10 @@ class _HomeScreenState extends State<HomeScreen> {
          home(),
   ];
 
+           String poids="";
+
+double taux=0;
+  
 
      @override
   void initState() {
@@ -81,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
     
-
+   
 
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
@@ -152,9 +158,43 @@ class _HomeScreenState extends State<HomeScreen> {
        );
      
   }
+   
 
   @override
   Widget build(BuildContext context) {
+
+                    
+            FirebaseFirestore.instance
+    .collection('Patient')
+    .get()
+    .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          
+            if(doc["Email"]== user!.email){
+              //print(doc["poids"]);
+
+              poids= doc["poids"];
+           print(poids);         
+          }
+          });
+
+  });
+  
+           FirebaseFirestore.instance
+    .collection('Glycemie')
+    .get()
+    .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          
+            if(doc["email"]== user!.email){
+              //print(doc["poids"]);
+
+              taux= doc["taux"];
+           print(taux);         
+          }
+          });
+
+  });
 
       //      Timer.periodic(Duration(seconds:20), (timer) {
      
@@ -163,6 +203,18 @@ class _HomeScreenState extends State<HomeScreen> {
      
   //}
   // ); 
+
+    //   FirebaseFirestore.instance
+    // .collection('Patient')
+    // .get()
+    // .then((QuerySnapshot querySnapshot) {
+    //     querySnapshot.docs.forEach((doc) {
+          
+    //         if(doc["Email"]== user!.email){
+
+
+    //       }
+    //       });
      final height = MediaQuery.of(context).size.height;
    
     return   Scaffold(
@@ -219,7 +271,7 @@ color : Color.fromRGBO(11,44,135,1),
 
  
                 child:   Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                  
                 
                 children: [
@@ -269,11 +321,15 @@ color : Color.fromRGBO(11,44,135,1),
  ),
               SizedBox(
                         width:50,
-                        height: 10,
+                        height: 23,
                       ),
-                         
-                Text( 
-                         "Bonjour, Mohammed", // je dois réccupérer le prénom du malade de la data base
+                   Row(children:[
+ SizedBox(
+                        width:65,
+                        height: 17,
+                      ),
+                      Text(  "Bonjour, Bienvenue! ",
+                         //"Bonjour, ", // je dois réccupérer le prénom du malade de la data base
                         style: TextStyle(
                           
                           fontSize: 22,
@@ -281,6 +337,8 @@ color : Color.fromRGBO(11,44,135,1),
                         ),
                       ),
 
+                   ]) ,     
+                
 
 
                 ],
@@ -330,27 +388,13 @@ children: <Widget>[
     
                Container(
                     height: 125,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        CardSection(
-                          image: AssetImage("assets/images/pill.png"),
-                          title: "Metforminv",
-                          value: "2",
-                          unit: "Comprimés",
-                          time: "6-7 AM",
-                          isDone: false,
-                        ),
-                        CardSection(
-                          image: AssetImage("assets/images/pill.png"),
-                          title: "Trulicity",
-                          value: "1",
-                          unit: "Comprimé",
-                          time: "8-9 AM",
-                          isDone: true,
-                        )
-                      ],
-                    )),
+                    child:
+                  //  Text("fce"),
+                    name(),
+                    
+             
+                    
+                    ),
 SizedBox(height:40),
 Center(
   child:Column(children: [
@@ -456,7 +500,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         SizedBox( 
                width: 30,
              ),
-            Text( "0.9 g/l",
+            Text(  "1.4 g/l",//taux.toString()
                 
                 style: TextStyle(fontSize: 15 , color: Colors.white),
 
@@ -570,7 +614,7 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
   SizedBox(
                width: 40,
              ),
-            Text( "85 kg",
+            Text( " 85 Kg ",// poids
                 
                 style: TextStyle(fontSize: 15 , color: Colors.white),
 
@@ -831,3 +875,223 @@ margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       //Here you can do what you want with the message :-)
      }
 }
+
+ String getPoids(context, String poids){
+         final user = FirebaseAuth.instance.currentUser;
+
+    //  String poids ="";
+       FirebaseFirestore.instance
+    .collection('Patient')
+    .get()
+    .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          
+            if(doc["Email"]== user!.email){
+              //print(doc["poids"]);
+              
+              poids= doc["poids"];
+         
+          }
+          });
+
+  });
+ // print("hello"+poids);
+  return poids;
+  }
+
+ class name extends StatefulWidget {
+    name({Key? key}) : super(key: key);
+  
+    @override
+    _nameState createState() => _nameState();
+  }
+  
+  class _nameState extends State<name> {
+        final user = FirebaseAuth.instance.currentUser;
+
+    @override
+    Widget build(BuildContext context) {
+      return Container(
+         child:  StreamBuilder(
+         
+          stream: FirebaseFirestore.instance.collection('Medicaments').where('email',isEqualTo: user!.email).snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) {
+              return Text("No data yet");
+
+                      
+              
+            }
+
+              
+            return
+             ListView(
+              scrollDirection: Axis.horizontal,
+             
+             
+             
+
+               children: snapshot.data!.docs.map((document) {
+                
+              
+             return Padding(
+               
+                  padding: const EdgeInsets.only( top:2, left: 20, bottom: 2), //nzid left w right
+                   //padding: const EdgeInsets.all(10.0),
+                  
+                  child:   Container(
+                     
+                    
+                      
+                     
+                    child:SizedBox(
+                      height: 80,
+                     //width: 200,
+                    
+                                      
+                
+                   child: Material(
+                    color: Colors.white,
+                    elevation: 4.0,
+                    borderRadius: BorderRadius.circular(15.0),
+                    
+                    shadowColor: Color(0x5B3576AA).withOpacity(0.6),
+                    child:
+                       
+                       Row(
+                          // le container contenant les info du premier medecin
+                     mainAxisAlignment: MainAxisAlignment.start,
+                    
+                            children:[ 
+                            
+
+                                       
+                    Container(
+                       width: 50,
+                       height: 50,
+                      decoration: BoxDecoration(
+                        
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.white.withOpacity(1),
+                                //offset: Offset(0, 10)
+                                )
+                          ],
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/images/pill.png"))),
+                    ),
+
+                SizedBox(width: 14,
+                ),
+                
+                        Container(
+                          
+                          // margin: EdgeInsets.symmetric(horizontal :20.0),
+                          
+                            // le container contenant les info du premier medecin
+                          child:  Column (
+                            children: [
+                               SizedBox(width: 30,
+                height: 30,),
+     
+                          Container(
+          
+          
+          
+               child: Text(document['NomMedicament'],
+            style: TextStyle(color: Color.fromRGBO(65, 106, 190, 1), fontSize: 20.0,),),),
+        
+    
+       
+        
+          Container(
+              
+              child:Text("Dose : "+document['dose'],
+                   style: TextStyle(color: Colors.black54, fontSize: 16.0,), ),
+                
+          ),
+                   
+                
+           Container(
+             
+             
+             child:
+       Text("Heure : "+document['Time'] 
+       ,
+          style: TextStyle(color: Colors.black54, fontSize: 15.0),),),       
+               
+
+           Container(
+
+
+          //   child :Text("Periode : "+ document['Period'],
+          // style: TextStyle(color: Colors.black54, fontSize: 12.0,),)
+          
+          ),
+
+        ],)
+        
+        
+        
+// ListView(
+//                       scrollDirection: Axis.horizontal,
+//                       children: <Widget>[
+//                         CardSection(
+//                           image: AssetImage("assets/images/pill.png"),
+//                           title: "Metforminv",
+//                           value: "2",
+//                           unit: "Comprimés",
+//                           time: "6-7 AM",
+//                           isDone: false,
+//                         ),
+//                         CardSection(
+//                           image: AssetImage("assets/images/pill.png"),
+//                           title: "Trulicity",
+//                           value: "1",
+//                           unit: "Comprimé",
+//                           time: "8-9 AM",
+//                           isDone: true,
+//                         )
+//                       ],
+//                     );
+      
+                            
+                            
+                        
+                         ),
+
+
+                          SizedBox(width: 40,
+              ),
+                         ] ),
+                        )),
+
+           
+              
+                
+              ),
+
+
+
+
+
+                  
+                
+              );
+              }).toList(),
+            );
+          }),
+
+
+      );
+    }
+  }
+
+
+    
+  

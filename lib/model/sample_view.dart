@@ -9,7 +9,17 @@ abstract class SampleView extends StatefulWidget {
   /// base class constructor of sample's stateful widget class
   const SampleView({Key? key}) : super(key: key);
 
-  get map => null;
+  //get map => null;
+
+   get pas => null;
+
+  get map1 => null;
+
+  get map2 => null;
+
+   get map3 => null;
+
+   get map4 => null;
 }
 
 /// Base class of the sample's state class

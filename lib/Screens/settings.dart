@@ -107,7 +107,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     {
                       setState(() {
                          isOn =value;
-                       //AndroidAlarmManager.oneShot(Duration(seconds: 5), alarmId, sendNotification);
+                      // AndroidAlarmManager.oneShot(Duration(seconds: 5), alarmId, sendNotification);
                      //  AndroidAlarmManager.oneShotAt(DateTime(2021,06,27,15,09), alarmId, sendNotification);
 //alarmId=2;
                       
@@ -117,7 +117,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       if(isOn==true){
                   var   now = new DateTime.now();
 
-                 AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,20,00), 1, sendNotification);
+                 AndroidAlarmManager.oneShotAt(DateTime(now.year,now.month,now.day,12,32), 1, sendNotification);
                       }else{
                         AndroidAlarmManager.cancel(alarmId);
                       }
@@ -228,7 +228,7 @@ class _SettingsPageState extends State<SettingsPage> {
 sendNotification() {
       flutterLocalNotificationsPlugin.show(0,
      'Rappel ',
-      'veuillez verifier votre taux de glycemie \n Appuiez ici pour l`enregistrer',
+      'veuillez verifier votre taux de glycemie \n ',
       
        NotificationDetails(
          android:AndroidNotificationDetails(

@@ -159,7 +159,7 @@ class _RadialProgressState extends State<RadialProgress>
 
    late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _status = 'arret', _steps = '?';
+  String _status = 'stopped', _steps = '?';
 
   /*void initState1() {
     super.initState();
@@ -169,7 +169,7 @@ class _RadialProgressState extends State<RadialProgress>
 
     flutterLocalNotificationsPlugin.show(0,
      'Bravo!!! ',
-      'Vous avez atteind votre goal du jour!',
+      'Vous avez atteind votre but du jour!',
        NotificationDetails(
          android:AndroidNotificationDetails(
            channel.id,
@@ -198,11 +198,11 @@ class _RadialProgressState extends State<RadialProgress>
       act.date=  "${now.day}/${now.month}/${now.year}";
       act.e_pat= user!.email!;
 
-        DateTime t = DateTime(12,40);
+        DateTime t = DateTime(00,00);
         int diff = difference(t, DateTime.now());
 
-       if(DateTime.now().isAfter(t) && nb == 0 ){
-          nb=1;
+       if(DateTime.now().isAfter(t)  ){
+        //  StepCount;
         DatabaseService().ajoutAct(act);
       }
       
@@ -346,10 +346,10 @@ return s;
                 style: TextStyle(fontSize: 16 , color: Colors.black),
               ),
               Icon(
-                _status == 'marche'
+                _status == 'walking'
                     ? Icons.directions_walk
 
-                    : _status == 'arret'
+                    : _status == 'stopped'
                         ? Icons.accessibility_new
                         : Icons.error,
                 size: 21,
@@ -358,7 +358,7 @@ return s;
               Center(
                 child: Text(
                   _status,
-                  style: _status == 'marche' || _status == 'arret'
+                  style: _status == 'walking' || _status == 'stopped'
                       ? TextStyle(fontSize: 14)
                       : TextStyle(fontSize: 14, color: Colors.blue ),
                 ),

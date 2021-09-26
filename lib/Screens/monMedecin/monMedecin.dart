@@ -43,7 +43,7 @@ class _monMedecinState extends State<monMedecin> {
   late String e_med="";
   late String heure;
   late Rdv rdv;
-  late String id;
+  late String id="";
    Rdv rdv2=Rdv(date: "", etat: "", e_med: "", e_pat: "", heure: "",id: "");
   @override
   Widget build(BuildContext context) {    
@@ -194,6 +194,7 @@ body:  TabBarView(
                     // B=5 
                     // le calcule se fait haka :
                     // D=B+(monthCounting-A)
+                    DateTime.now().add(Duration(days: 0)),
 
                     DateTime.now().add(Duration(days: 4)),
                    DateTime.now().add(Duration(days: 3)),

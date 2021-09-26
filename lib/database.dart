@@ -119,6 +119,22 @@ class DatabaseService{
     });
  }
 
+  Future<Null> updatePatient( PatientModel pat, String docId) async{
+   
+  usercol.doc(docId).update({
+       'DateNais': pat.dateNais,
+       'Email': pat.email,
+       'Name' : pat.name,
+       'NumTel' : pat.numTel,
+        'e_med' : "katiya@gmail.com",
+        'poids' : pat.poids,
+        'type' : pat.typeDiab,
+        'UID': pat.uid,
+    
+       
+    });
+ }
+
   Future sauvGly(Glycemie g,Timestamp t) async{
     try{
       await GlycemieCollection.doc().set(g.toMap(t));
@@ -171,6 +187,40 @@ class DatabaseService{
        ) ;
     }).toList();
   }
+  List <PatientModel> _patientListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((
+      doc
+    ){
+      return PatientModel(dateNais: doc.get('DateNais') ?? '',
+      
+      email: doc.get('Email') ?? '',
+      name: doc.get('Name') ?? '',
+      numTel: doc.get('NumTel') ?? '',
+      uid: doc.get('UID') ?? '',
+       typeDiab: doc.get('type') ?? '',
+        poids: doc.get('poids') ?? '',
+      
+      
+      );
+    }).toList();
+  }
+   Future<Null> ajoutPat(PatientModel pat) async{
+         final user = FirebaseAuth.instance.currentUser;
+
+   await usercol.add(
+      {
+       'DateNais': pat.dateNais,
+       'Email': pat.email,
+       'Name' : pat.name,
+       'NumTel' : pat.numTel,
+        'e_med' : "",
+        'poids' : pat.poids,
+        'type' : pat.typeDiab,
+        'UID': user!.uid,
+      }
+    );
+    
+  }
 
 
   Stream< List<Actphy>> get act{
@@ -188,6 +238,7 @@ class DatabaseService{
   Stream <List<Rdv>> get rdv{
     return rdvcol.snapshots().map(_rdvListFromSnapshot);
   }
+ 
 
    List<Medicines> _medicinesListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc){
@@ -222,24 +273,7 @@ Stream< List<Medicines>> get medicin{
         return GlycemieCollection.snapshots().map(_medicinesListFromSnapshot);
   }
 
-  List <PatientModel> _patientListFromSnapshot(QuerySnapshot snapshot){
-    return snapshot.docs.map((
-      doc
-    ){
-      return PatientModel(dateNais: doc.get('dateNais') ?? '',
-      
-      email: doc.get('email') ?? '',
-      name: doc.get('name') ?? '',
-      numTel: doc.get('numTel') ?? '',
-      photoUrl: doc.get('photoUrl') ?? 0,
-      uid: doc.get('uid') ?? '',
-       typeDiab: doc.get('typeDiab') ?? '',
-        poids: doc.get('poids') ?? '',
-      
-      
-      );
-    }).toList();
-  }
+  
 
   Stream <List<PatientModel>> get pat{
     return usercol.snapshots().map(_patientListFromSnapshot);
