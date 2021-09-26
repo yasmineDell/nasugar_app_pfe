@@ -1,0 +1,146 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    Name <input type= "NameTbox" type="text" oninput="Update(this.value,'name')"> <br> <br>
+    RollNo <input type= "RollTbox" type="text" oninput="Update(this.value,'roll')"> <br> <br>
+    Section <input type= "SecTbox" type="text" oninput="Update(this.value,'section')"> <br> <br>
+    Gender <input type= "GenTbox" type="text" oninput="Update(this.value,'gender')"> <br> <br>
+    <hr>
+    <button id= "insert"> Insert </button>
+    <button id= "select"> Select </button>
+    <button id= "update"> Update </button>
+    <button id= "delete"> Delete </button>
+
+
+    <!--Firestore Libraries-->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+<script id= "MainScript">
+
+
+
+
+let NameT= document.getElementById('NameTbox');
+let RollT= document.getElementById('RollTbox');
+let SecT= document.getElementById('SecTbox');
+let GenT= document.getElementById('GenTbox');
+
+let nameV = NameT.value;
+let rollV = RollTbox.value;
+let secV = SecTbox.value;
+let genV = GenTbox.value;
+
+
+function Update(val,type){
+
+    if(type='name')nameV=val;
+    else if(type='roll')rollV=val;
+    else if(type='section')secV=val;
+    else if(type='gender')genV=val;
+
+
+
+
+}
+
+
+
+// _--------------------------------------configuration firestore-------------------------------
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDPVIEZnnWIRX0fCOa6I2Cdv_ecQDIQYqY",
+  authDomain: "myfb-f304c.firebaseapp.com",
+  projectId: "myfb-f304c",
+  storageBucket: "myfb-f304c.appspot.com",
+  messagingSenderId: "136371102543",
+  appId: "1:136371102543:web:948c294d4c65cfe5cadb3a",
+  measurementId: "G-2M290V0KKH"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+
+let cloudDB = firebase.firestore();
+
+//-----------------------------writting data-----------------------------------------------------
+
+
+
+
+
+//--------------------------------Add document with Auto Generated ID 
+
+
+// function Add_Doc_WithAutoId(){
+
+
+
+//     cloudDB.collection("Students").add(
+//         {
+
+
+//            NameOfStd : nameV,
+//            RollNo : Number(rollV),
+//            Section:secV,
+//            Gender:genV,
+
+
+
+//         }
+//     ).then(function(docRef){
+
+
+
+
+//         console.log("Doc written with Id ",docRef.id);
+
+//     }).catch(function(error){
+
+//         console.log("Error adding doc ",error);
+
+//     })
+// }
+
+
+const cityRef = cloudDB.collection('Students').doc('BJ');
+
+
+await cloudDB.collection('Students').doc('new-city-id').set(data);
+
+// Add a new document with a generated id.
+
+
+function Add_Doc_WithAutoId(){
+const res = await cloudDB.collection('Students').add({
+ 
+    NameOfStd : nameV,
+           RollNo : Number(rollV),
+           Section:secV,
+           Gender:genV,
+
+});
+
+console.log('Added document with ID: ', res.id);
+
+}
+
+// -------------------------------- Button events-------------------------------------------------
+
+document.getElementById('insert').onclick=function(){
+    Add_Doc_WithAutoId();
+}
+
+</script>
+
+</body>
+</html>
